@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 764" width="760" height="764" role="img" aria-label="Elo power ratings vs. league average (1505)">
+<style>
+  .bg{fill:#fcfcfb} .t{fill:#0b0b0b} .t2{fill:#52514e} .m{fill:#898781}
+  .grid{stroke:#e1e0d9;stroke-width:1} .axis{stroke:#c3c2b7;stroke-width:1} .ring{stroke:#fcfcfb;stroke-width:2}
+  .pos{fill:#2a78d6} .neg{fill:#e34948} .on{fill:#ffffff} .s1{fill:#2a78d6} .l1{stroke:#2a78d6} .s2{fill:#eb6834} .l2{stroke:#eb6834} .s3{fill:#1baf7a} .l3{stroke:#1baf7a} .s4{fill:#eda100} .l4{stroke:#eda100} .s5{fill:#e87ba4} .l5{stroke:#e87ba4} .s6{fill:#008300} .l6{stroke:#008300}
+  @media (prefers-color-scheme: dark){
+    .bg{fill:#1a1a19} .t{fill:#ffffff} .t2{fill:#c3c2b7}
+    .grid{stroke:#2c2c2a} .axis{stroke:#383835} .ring{stroke:#1a1a19}
+    .pos{fill:#3987e5} .neg{fill:#e66767} .s1{fill:#3987e5} .l1{stroke:#3987e5} .s2{fill:#d95926} .l2{stroke:#d95926} .s3{fill:#199e70} .l3{stroke:#199e70} .s4{fill:#c98500} .l4{stroke:#c98500} .s5{fill:#d55181} .l5{stroke:#d55181} .s6{fill:#008300} .l6{stroke:#008300}
+  }
+  .title{font-size:16px;font-weight:600} .sub{font-size:12px}
+  text{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:12px}
+  .num{font-variant-numeric:tabular-nums}
+  .hover:hover{opacity:.82}
+</style>
+<rect class="bg" width="760" height="764" rx="8"/>
+<text class="t title" x="24" y="32">Elo power ratings vs. league average (1505)</text>
+<text class="t2 sub" x="24" y="52">Margin-of-victory Elo: 2025 season regressed 1/3 to the mean, then 2026 results</text>
+<line class="grid" x1="100.0" x2="100.0" y1="78.0" y2="724.0"/><text class="m num" x="100.0" y="742.0" text-anchor="middle">1305</text>
+<line class="grid" x1="250.0" x2="250.0" y1="78.0" y2="724.0"/><text class="m num" x="250.0" y="742.0" text-anchor="middle">1405</text>
+<line class="grid" x1="400.0" x2="400.0" y1="78.0" y2="724.0"/><text class="m num" x="400.0" y="742.0" text-anchor="middle">1505</text>
+<line class="grid" x1="550.0" x2="550.0" y1="78.0" y2="724.0"/><text class="m num" x="550.0" y="742.0" text-anchor="middle">1605</text>
+<line class="grid" x1="700.0" x2="700.0" y1="78.0" y2="724.0"/><text class="m num" x="700.0" y="742.0" text-anchor="middle">1705</text>
+<line class="axis" x1="400.0" x2="400.0" y1="78.0" y2="724.0"/>
+<g class="hover"><title>San Francisco 49ers (5-0): Elo 1660 (+155 vs avg)</title>
+              <rect x="0" y="84.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 87.0 H629.2476071718282 Q633.2476071718282 87.0 633.2476071718282 91.0 V97.0 Q633.2476071718282 101.0 629.2476071718282 101.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="98.0" text-anchor="end" font-size="11">SF</text></g>
+<g class="hover"><title>Seattle Seahawks (3-3): Elo 1655 (+150 vs avg)</title>
+              <rect x="0" y="104.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 107.0 H621.7068866768698 Q625.7068866768698 107.0 625.7068866768698 111.0 V117.0 Q625.7068866768698 121.0 621.7068866768698 121.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="118.0" text-anchor="end" font-size="11">SEA</text></g>
+<g class="hover"><title>Buffalo Bills (5-1): Elo 1635 (+130 vs avg)</title>
+              <rect x="0" y="124.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 127.0 H591.0326655015701 Q595.0326655015701 127.0 595.0326655015701 131.0 V137.0 Q595.0326655015701 141.0 591.0326655015701 141.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="138.0" text-anchor="end" font-size="11">BUF</text></g>
+<g class="hover"><title>New England Patriots (4-2): Elo 1634 (+129 vs avg)</title>
+              <rect x="0" y="144.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 147.0 H588.9223632481812 Q592.9223632481812 147.0 592.9223632481812 151.0 V157.0 Q592.9223632481812 161.0 588.9223632481812 161.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="158.0" text-anchor="end" font-size="11">NE</text></g>
+<g class="hover"><title>Jacksonville Jaguars (4-2): Elo 1621 (+116 vs avg)</title>
+              <rect x="0" y="164.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 167.0 H570.3779152224115 Q574.3779152224115 167.0 574.3779152224115 171.0 V177.0 Q574.3779152224115 181.0 570.3779152224115 181.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="178.0" text-anchor="end" font-size="11">JAX</text></g>
+<g class="hover"><title>Minnesota Vikings (5-0): Elo 1613 (+108 vs avg)</title>
+              <rect x="0" y="184.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 187.0 H557.9930665690691 Q561.9930665690691 187.0 561.9930665690691 191.0 V197.0 Q561.9930665690691 201.0 557.9930665690691 201.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="198.0" text-anchor="end" font-size="11">MIN</text></g>
+<g class="hover"><title>Denver Broncos (4-2): Elo 1603 (+98 vs avg)</title>
+              <rect x="0" y="204.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 207.0 H542.7640869435161 Q546.7640869435161 207.0 546.7640869435161 211.0 V217.0 Q546.7640869435161 221.0 542.7640869435161 221.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="218.0" text-anchor="end" font-size="11">DEN</text></g>
+<g class="hover"><title>Kansas City Chiefs (5-0): Elo 1563 (+58 vs avg)</title>
+              <rect x="0" y="224.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 227.0 H483.5431908007371 Q487.5431908007371 227.0 487.5431908007371 231.0 V237.0 Q487.5431908007371 241.0 483.5431908007371 241.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="238.0" text-anchor="end" font-size="11">KC</text></g>
+<g class="hover"><title>Chicago Bears (4-2): Elo 1560 (+55 vs avg)</title>
+              <rect x="0" y="244.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 247.0 H478.8732926725975 Q482.8732926725975 247.0 482.8732926725975 251.0 V257.0 Q482.8732926725975 261.0 478.8732926725975 261.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="258.0" text-anchor="end" font-size="11">CHI</text></g>
+<g class="hover"><title>Los Angeles Rams (2-4): Elo 1554 (+49 vs avg)</title>
+              <rect x="0" y="264.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 267.0 H468.8636301973072 Q472.8636301973072 267.0 472.8636301973072 271.0 V277.0 Q472.8636301973072 281.0 468.8636301973072 281.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="278.0" text-anchor="end" font-size="11">LAR</text></g>
+<g class="hover"><title>Houston Texans (2-4): Elo 1545 (+40 vs avg)</title>
+              <rect x="0" y="284.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 287.0 H455.4764513519641 Q459.4764513519641 287.0 459.4764513519641 291.0 V297.0 Q459.4764513519641 301.0 455.4764513519641 301.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="298.0" text-anchor="end" font-size="11">HOU</text></g>
+<g class="hover"><title>Baltimore Ravens (4-2): Elo 1543 (+38 vs avg)</title>
+              <rect x="0" y="304.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 307.0 H453.27067621478056 Q457.27067621478056 307.0 457.27067621478056 311.0 V317.0 Q457.27067621478056 321.0 453.27067621478056 321.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="318.0" text-anchor="end" font-size="11">BAL</text></g>
+<g class="hover"><title>Pittsburgh Steelers (4-2): Elo 1542 (+37 vs avg)</title>
+              <rect x="0" y="324.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 327.0 H450.8117625267031 Q454.8117625267031 327.0 454.8117625267031 331.0 V337.0 Q454.8117625267031 341.0 450.8117625267031 341.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="338.0" text-anchor="end" font-size="11">PIT</text></g>
+<g class="hover"><title>Detroit Lions (3-2): Elo 1530 (+25 vs avg)</title>
+              <rect x="0" y="344.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 347.0 H432.889934246582 Q436.889934246582 347.0 436.889934246582 351.0 V357.0 Q436.889934246582 361.0 432.889934246582 361.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="358.0" text-anchor="end" font-size="11">DET</text></g>
+<g class="hover"><title>Green Bay Packers (4-2): Elo 1522 (+17 vs avg)</title>
+              <rect x="0" y="364.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 367.0 H421.8949126197041 Q425.8949126197041 367.0 425.8949126197041 371.0 V377.0 Q425.8949126197041 381.0 421.8949126197041 381.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="378.0" text-anchor="end" font-size="11">GB</text></g>
+<g class="hover"><title>Carolina Panthers (3-2): Elo 1516 (+11 vs avg)</title>
+              <rect x="0" y="384.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 387.0 H412.78657291487184 Q416.78657291487184 387.0 416.78657291487184 391.0 V397.0 Q416.78657291487184 401.0 412.78657291487184 401.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="398.0" text-anchor="end" font-size="11">CAR</text></g>
+<g class="hover"><title>Cincinnati Bengals (3-2): Elo 1515 (+10 vs avg)</title>
+              <rect x="0" y="404.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 407.0 H410.9341467633618 Q414.9341467633618 407.0 414.9341467633618 411.0 V417.0 Q414.9341467633618 421.0 410.9341467633618 421.0 H400.0 Z" class="pos"/>
+              <text class="t2" x="392.0" y="418.0" text-anchor="end" font-size="11">CIN</text></g>
+<g class="hover"><title>Cleveland Browns (4-2): Elo 1476 (-29 vs avg)</title>
+              <rect x="0" y="424.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 427.0 H360.7323366784584 Q356.7323366784584 427.0 356.7323366784584 431.0 V437.0 Q356.7323366784584 441.0 360.7323366784584 441.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="438.0" text-anchor="start" font-size="11">CLE</text></g>
+<g class="hover"><title>Atlanta Falcons (2-4): Elo 1466 (-39 vs avg)</title>
+              <rect x="0" y="444.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 447.0 H345.38730572306474 Q341.38730572306474 447.0 341.38730572306474 451.0 V457.0 Q341.38730572306474 461.0 345.38730572306474 461.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="458.0" text-anchor="start" font-size="11">ATL</text></g>
+<g class="hover"><title>Philadelphia Eagles (2-4): Elo 1459 (-46 vs avg)</title>
+              <rect x="0" y="464.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 467.0 H334.64117902997896 Q330.64117902997896 467.0 330.64117902997896 471.0 V477.0 Q330.64117902997896 481.0 334.64117902997896 481.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="478.0" text-anchor="start" font-size="11">PHI</text></g>
+<g class="hover"><title>New York Giants (3-2-1): Elo 1448 (-57 vs avg)</title>
+              <rect x="0" y="484.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 487.0 H319.0726400803078 Q315.0726400803078 487.0 315.0726400803078 491.0 V497.0 Q315.0726400803078 501.0 319.0726400803078 501.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="498.0" text-anchor="start" font-size="11">NYG</text></g>
+<g class="hover"><title>New Orleans Saints (2-4): Elo 1444 (-61 vs avg)</title>
+              <rect x="0" y="504.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 507.0 H313.08435493556044 Q309.08435493556044 507.0 309.08435493556044 511.0 V517.0 Q309.08435493556044 521.0 313.08435493556044 521.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="518.0" text-anchor="start" font-size="11">NO</text></g>
+<g class="hover"><title>Las Vegas Raiders (3-3): Elo 1437 (-68 vs avg)</title>
+              <rect x="0" y="524.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 527.0 H302.27466641268995 Q298.27466641268995 527.0 298.27466641268995 531.0 V537.0 Q298.27466641268995 541.0 302.27466641268995 541.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="538.0" text-anchor="start" font-size="11">LV</text></g>
+<g class="hover"><title>Indianapolis Colts (2-4): Elo 1434 (-71 vs avg)</title>
+              <rect x="0" y="544.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 547.0 H298.0970109601582 Q294.0970109601582 547.0 294.0970109601582 551.0 V557.0 Q294.0970109601582 561.0 298.0970109601582 561.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="558.0" text-anchor="start" font-size="11">IND</text></g>
+<g class="hover"><title>Dallas Cowboys (2-4): Elo 1431 (-74 vs avg)</title>
+              <rect x="0" y="564.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 567.0 H292.76998484807825 Q288.76998484807825 567.0 288.76998484807825 571.0 V577.0 Q288.76998484807825 581.0 292.76998484807825 581.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="578.0" text-anchor="start" font-size="11">DAL</text></g>
+<g class="hover"><title>Tampa Bay Buccaneers (1-5): Elo 1420 (-85 vs avg)</title>
+              <rect x="0" y="584.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 587.0 H276.2062644589588 Q272.2062644589588 587.0 272.2062644589588 591.0 V597.0 Q272.2062644589588 601.0 276.2062644589588 601.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="598.0" text-anchor="start" font-size="11">TB</text></g>
+<g class="hover"><title>Washington Commanders (1-3-1): Elo 1407 (-98 vs avg)</title>
+              <rect x="0" y="604.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 607.0 H257.54747960078055 Q253.54747960078055 607.0 253.54747960078055 611.0 V617.0 Q253.54747960078055 621.0 257.54747960078055 621.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="618.0" text-anchor="start" font-size="11">WSH</text></g>
+<g class="hover"><title>Los Angeles Chargers (0-6): Elo 1407 (-98 vs avg)</title>
+              <rect x="0" y="624.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 627.0 H257.2736778617085 Q253.2736778617085 627.0 253.2736778617085 631.0 V637.0 Q253.2736778617085 641.0 257.2736778617085 641.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="638.0" text-anchor="start" font-size="11">LAC</text></g>
+<g class="hover"><title>Arizona Cardinals (2-4): Elo 1399 (-106 vs avg)</title>
+              <rect x="0" y="644.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 647.0 H244.81514823681516 Q240.81514823681516 647.0 240.81514823681516 651.0 V657.0 Q240.81514823681516 661.0 244.81514823681516 661.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="658.0" text-anchor="start" font-size="11">ARI</text></g>
+<g class="hover"><title>New York Jets (2-4): Elo 1396 (-109 vs avg)</title>
+              <rect x="0" y="664.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 667.0 H240.7501194023141 Q236.7501194023141 667.0 236.7501194023141 671.0 V677.0 Q236.7501194023141 681.0 240.7501194023141 681.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="678.0" text-anchor="start" font-size="11">NYJ</text></g>
+<g class="hover"><title>Miami Dolphins (0-5): Elo 1373 (-132 vs avg)</title>
+              <rect x="0" y="684.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 687.0 H206.1254933006295 Q202.1254933006295 687.0 202.1254933006295 691.0 V697.0 Q202.1254933006295 701.0 206.1254933006295 701.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="698.0" text-anchor="start" font-size="11">MIA</text></g>
+<g class="hover"><title>Tennessee Titans (1-5): Elo 1350 (-155 vs avg)</title>
+              <rect x="0" y="704.0" width="760" height="20.0" fill="transparent"/><path d="M400.0 707.0 H171.83317682844097 Q167.83317682844097 707.0 167.83317682844097 711.0 V717.0 Q167.83317682844097 721.0 171.83317682844097 721.0 H400.0 Z" class="neg"/>
+              <text class="t2" x="408.0" y="718.0" text-anchor="start" font-size="11">TEN</text></g>
+</svg>
