@@ -5,11 +5,15 @@ import com.gridiron.superbowl.data.ScoreboardSource
 import com.gridiron.superbowl.engine.EloModel
 import com.gridiron.superbowl.engine.SeasonSimulator
 import com.gridiron.superbowl.engine.SimulationConfig
+import com.gridiron.superbowl.model.Game
 import com.gridiron.superbowl.report.MarkdownReport
 import com.gridiron.superbowl.report.OddsSnapshot
 import com.gridiron.superbowl.report.Reports
 import com.gridiron.superbowl.report.SimulationReport
 import com.gridiron.superbowl.report.SvgCharts
+import com.gridiron.superbowl.sync.PocketBaseClient
+import com.gridiron.superbowl.sync.PocketBaseSchema
+import com.gridiron.superbowl.sync.SyncSummary
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.nio.file.Files
@@ -26,25 +30,31 @@ data class PipelineOptions(
     val today: LocalDate = LocalDate.now(),
 )
 
+/** One refresh: the report plus every game it was built from (both seasons), for the PocketHost sync. */
+data class Refresh(val report: SimulationReport, val games: List<Game>)
+
 /** End-to-end refresh: fetch -> rate -> simulate -> write datasets, charts and README sections. */
 class Pipeline(private val source: ScoreboardSource, private val root: Path, private val elo: EloModel = EloModel()) {
     private val json = Json { prettyPrint = true; encodeDefaults = true }
 
-    fun run(options: PipelineOptions): Result<SimulationReport> = runCatching {
+    fun run(options: PipelineOptions): Result<Refresh> = runCatching {
         val client = EspnClient(source)
         val prior = client.season(options.season - 1, includePostseason = true).getOrThrow()
         val current = client.season(options.season, includePostseason = false).getOrThrow()
         val ratings = elo.rateSeasons(prior, current)
         val tallies = SeasonSimulator(elo, options.config).simulate(ratings, current)
-        Reports.build(options.today.toString(), options.season, current, ratings, tallies, options.config.seed)
-            .also { write(it, options.today) }
+        val report = Reports.build(options.today.toString(), options.season, current, ratings, tallies, options.config.seed)
+        write(report, options.today)
+        Refresh(report, prior + current)
     }
 
     private fun write(report: SimulationReport, today: LocalDate) {
         val output = root.resolve("output")
         val history = output.resolve("history")
         val charts = root.resolve("docs/charts")
-        listOf(history, charts).forEach(Files::createDirectories)
+        val schema = root.resolve("docs/schema")
+        listOf(history, charts, schema).forEach(Files::createDirectories)
+        Files.writeString(schema.resolve("pockethost_collections.json"), json.encodeToString(PocketBaseSchema.importJson()) + "\n")
 
         val encoded = json.encodeToString(report)
         Files.writeString(output.resolve("latest.json"), encoded)
@@ -71,6 +81,10 @@ class Pipeline(private val source: ScoreboardSource, private val root: Path, pri
             Files.writeString(readme, updated)
         }
     }
+
+    /** Pushes a finished report to PocketBase (schema bootstrap + idempotent upserts). */
+    fun publish(refresh: Refresh, client: PocketBaseClient, epochMs: Long = System.currentTimeMillis()): Result<SyncSummary> =
+        runCatching { client.sync(refresh.report, refresh.games, epochMs) }
 
     fun loadHistory(dir: Path): List<OddsSnapshot> =
         dir.listDirectoryEntries().filter { it.extension == "json" }.sorted().map { file ->

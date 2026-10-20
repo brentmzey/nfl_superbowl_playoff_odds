@@ -4,11 +4,17 @@ import com.gridiron.superbowl.data.CachingSource
 import com.gridiron.superbowl.data.EspnHttpSource
 import com.gridiron.superbowl.engine.SimulationConfig
 import com.gridiron.superbowl.report.SvgCharts.pct
+import com.gridiron.superbowl.sync.PocketBaseClient
+import com.gridiron.superbowl.sync.PocketHostConfig
 import java.nio.file.Path
 import java.time.LocalDate
 import kotlin.system.exitProcess
 
-/** CLI: `./gradlew run -PsimArgs="--season 2026 --iterations 20000 --seed 2026"`. */
+/**
+ * CLI: `./gradlew run -PsimArgs="--season 2026 --iterations 20000 --seed 2026 --db auto"`.
+ * PocketHost is required by default (`--db required`): the run fails fast if settings are missing, before any work.
+ * `--db off` skips the database for offline/local runs.
+ */
 fun main(args: Array<String>) {
     val flags = args.toList().chunked(2).filter { it.size == 2 }.associate { it[0].removePrefix("--") to it[1] }
     val today = LocalDate.now()
@@ -17,19 +23,33 @@ fun main(args: Array<String>) {
         iterations = flags["iterations"]?.toInt() ?: 20_000,
         seed = flags["seed"]?.toLong() ?: season.toLong(),
     )
+    val dbMode = flags["db"] ?: "required"
     val root = Path.of("").toAbsolutePath()
     val source = CachingSource(EspnHttpSource(), root.resolve(".cache/espn"), season)
+    val dbConfig = if (dbMode == "off") null
+    else PocketHostConfig.resolve(System.getenv(), listOf(root.resolve(".env"), Path.of(System.getProperty("user.home"), ".env")))
+        .getOrElse { fail("${it.message}. Use --db off for a local-only run.") }
 
-    Pipeline(source, root).run(PipelineOptions(season, config, today)).fold(
-        onSuccess = { report ->
-            println("Season ${report.season} through week ${report.throughWeek}: ${report.iterations} simulations")
-            report.byChampionOdds.take(10).forEach {
-                println("  %-24s %-6s playoffs %6s  SB %6s  win %6s".format(it.name, it.record, pct(it.pPlayoffs), pct(it.pSuperBowl), pct(it.pChampion)))
-            }
-        },
-        onFailure = { e ->
-            System.err.println("Refresh failed: ${e.message}")
-            exitProcess(1)
-        },
-    )
+    val pipeline = Pipeline(source, root)
+    val refresh = pipeline.run(PipelineOptions(season, config, today)).getOrElse { fail("Refresh failed: ${it.message}") }
+    val report = refresh.report
+    println("Season ${report.season} through week ${report.throughWeek}: ${report.iterations} simulations")
+    report.byChampionOdds.take(10).forEach {
+        println("  %-24s %-6s playoffs %6s  SB %6s  win %6s".format(it.name, it.record, pct(it.pPlayoffs), pct(it.pSuperBowl), pct(it.pChampion)))
+    }
+
+    dbConfig?.let { db ->
+        pipeline.publish(refresh, PocketBaseClient(db)).fold(
+            onSuccess = {
+                println("PocketHost sync -> ${db.baseUrl}: ${it.created} created, ${it.updated} updated, ${it.unchanged} unchanged, " +
+                    "${it.superseded} older runs superseded; new collections ${it.collectionsCreated}, fields added ${it.fieldsAdded}")
+            },
+            onFailure = { fail("PocketHost sync to ${db.baseUrl} failed (local outputs were written): ${it.message}") },
+        )
+    } ?: println("PocketHost sync: off")
+}
+
+private fun fail(message: String): Nothing {
+    System.err.println(message)
+    exitProcess(1)
 }

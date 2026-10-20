@@ -1,0 +1,482 @@
+[
+    {
+        "id": "i_nfl_teams",
+        "name": "i_nfl_teams",
+        "type": "base",
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "fields": [
+            {
+                "name": "str_team_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_team_name",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_conference",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_division",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "bool_is_active",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "str_status_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_created_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_updated_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_i_nfl_teams_key ON i_nfl_teams (str_team_code)"
+        ]
+    },
+    {
+        "id": "i_nfl_games",
+        "name": "i_nfl_games",
+        "type": "base",
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "fields": [
+            {
+                "name": "str_game_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_season_year",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "str_phase",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_week",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dt_kickoff_utc",
+                "type": "text",
+                "required": false
+            },
+            {
+                "name": "str_home_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_away_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "bool_neutral_site",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "bool_is_final",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "int_home_score",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_away_score",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "bool_is_active",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "str_status_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_created_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_updated_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "rel_home_team",
+                "type": "relation",
+                "collectionId": "i_nfl_teams",
+                "maxSelect": 1,
+                "cascadeDelete": false,
+                "required": false
+            },
+            {
+                "name": "rel_away_team",
+                "type": "relation",
+                "collectionId": "i_nfl_teams",
+                "maxSelect": 1,
+                "cascadeDelete": false,
+                "required": false
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_i_nfl_games_key ON i_nfl_games (str_game_id)",
+            "CREATE INDEX idx_i_nfl_games_season ON i_nfl_games (int_season_year, str_phase, int_week)"
+        ]
+    },
+    {
+        "id": "m_simulation_runs",
+        "name": "m_simulation_runs",
+        "type": "base",
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "fields": [
+            {
+                "name": "str_run_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "dt_run_date",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_season_year",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_through_week",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_games_played",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_games_remaining",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_total_iterations",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_random_seed",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "str_engine_version",
+                "type": "text",
+                "required": false
+            },
+            {
+                "name": "str_top_favorite_code",
+                "type": "text",
+                "required": false
+            },
+            {
+                "name": "dbl_top_favorite_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "bool_is_active",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "str_status_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_created_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_updated_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_m_simulation_runs_key ON m_simulation_runs (str_run_id)",
+            "CREATE INDEX idx_m_simulation_runs_season ON m_simulation_runs (int_season_year, dt_run_date)"
+        ]
+    },
+    {
+        "id": "o_team_outlooks",
+        "name": "o_team_outlooks",
+        "type": "base",
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "fields": [
+            {
+                "name": "str_run_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_team_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "dt_run_date",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_season_year",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_wins",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_losses",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_ties",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_elo_rating",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_projected_wins",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_division_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_top_seed_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_playoff_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_divisional_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_conference_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_superbowl_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_champion_prob",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_champion_rank",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "json_seed_odds",
+                "type": "json",
+                "required": false,
+                "maxSize": 0
+            },
+            {
+                "name": "bool_is_active",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "str_status_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_created_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_updated_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "rel_run",
+                "type": "relation",
+                "collectionId": "m_simulation_runs",
+                "maxSelect": 1,
+                "cascadeDelete": false,
+                "required": false
+            },
+            {
+                "name": "rel_team",
+                "type": "relation",
+                "collectionId": "i_nfl_teams",
+                "maxSelect": 1,
+                "cascadeDelete": false,
+                "required": false
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_o_team_outlooks_key ON o_team_outlooks (str_run_id, str_team_code)",
+            "CREATE INDEX idx_o_team_outlooks_team ON o_team_outlooks (str_team_code, dt_run_date)"
+        ]
+    },
+    {
+        "id": "o_superbowl_matchups",
+        "name": "o_superbowl_matchups",
+        "type": "base",
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "fields": [
+            {
+                "name": "str_run_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_afc_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_nfc_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_rank",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "dbl_probability",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "bool_is_active",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "str_status_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_created_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_updated_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "rel_run",
+                "type": "relation",
+                "collectionId": "m_simulation_runs",
+                "maxSelect": 1,
+                "cascadeDelete": false,
+                "required": false
+            },
+            {
+                "name": "rel_afc_team",
+                "type": "relation",
+                "collectionId": "i_nfl_teams",
+                "maxSelect": 1,
+                "cascadeDelete": false,
+                "required": false
+            },
+            {
+                "name": "rel_nfc_team",
+                "type": "relation",
+                "collectionId": "i_nfl_teams",
+                "maxSelect": 1,
+                "cascadeDelete": false,
+                "required": false
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX idx_o_superbowl_matchups_key ON o_superbowl_matchups (str_run_id, str_afc_code, str_nfc_code)"
+        ]
+    }
+]

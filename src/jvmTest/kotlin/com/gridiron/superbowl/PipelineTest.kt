@@ -27,7 +27,7 @@ class PipelineTest {
         val pipeline = Pipeline(source, root)
         val config = SimulationConfig(iterations = 200, seed = 1)
 
-        val first = pipeline.run(PipelineOptions(2026, config, LocalDate.of(2026, 10, 12))).getOrThrow()
+        val first = pipeline.run(PipelineOptions(2026, config, LocalDate.of(2026, 10, 12))).getOrThrow().report
         assertEquals(13, first.gamesPlayed)
         assertEquals(1.0, first.teams.sumOf { it.pChampion }, 1e-9)
         listOf("output/latest.json", "output/team_outlook.csv", "output/history/2026-10-12.json",

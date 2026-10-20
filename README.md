@@ -152,6 +152,7 @@ flowchart LR
     Agg --> Out["output/latest.json, CSV,<br/>history snapshot"]
     Agg --> Charts["docs/charts/*.svg"]
     Agg --> Readme["README sections"]
+    Agg --> PB[("PocketHost / PocketBase<br/>i_ inputs · m_ runs · o_ outputs")]
 ```
 
 ### Playoff format simulated
@@ -170,12 +171,57 @@ flowchart LR
 The higher seed hosts every game until the Super Bowl. See [docs/METHODOLOGY.md](docs/METHODOLOGY.md) for
 the equations, the tiebreakers, and the model's known limitations.
 
+## 🗄️ PocketHost database
+
+Every refresh is written to a PocketBase instance on [PocketHost](https://pockethost.io). The database is
+**required** by default: a run fails fast, before fetching anything, if settings are missing. It uses the same
+raw-REST, Hungarian-notation approach as the MLB and art-market repos.
+
+```mermaid
+erDiagram
+    i_nfl_teams ||--o{ i_nfl_games : "rel_home_team / rel_away_team"
+    i_nfl_teams ||--o{ o_team_outlooks : rel_team
+    m_simulation_runs ||--o{ o_team_outlooks : rel_run
+    m_simulation_runs ||--o{ o_superbowl_matchups : rel_run
+    i_nfl_teams ||--o{ o_superbowl_matchups : "rel_afc_team / rel_nfc_team"
+    i_nfl_teams { text str_team_code UK }
+    i_nfl_games { text str_game_id UK }
+    m_simulation_runs { text str_run_id UK }
+    o_team_outlooks { text str_run_id_str_team_code UK }
+    o_superbowl_matchups { text str_run_id_afc_nfc UK }
+```
+
+| Collection | Prefix | Rows per refresh | Upsert key |
+|---|---|---|---|
+| `i_nfl_teams` | input | 32 (unchanged after the first run) | `str_team_code` |
+| `i_nfl_games` | input | every 2025 + 2026 game; only changed scores are rewritten | `str_game_id` (ESPN id) |
+| `m_simulation_runs` | model run | 1 | `str_run_id` = `<date>_s<season>_w<week>_seed<seed>` |
+| `o_team_outlooks` | output | 32 | `str_run_id, str_team_code` |
+| `o_superbowl_matchups` | output | top 10 | `str_run_id, str_afc_code, str_nfc_code` |
+
+- **Setup:** create an instance on pockethost.io, then copy `.env.example` to `.env` (git-ignored) and fill in
+  `POCKETHOST_URL`, `POCKETHOST_USER`, and `POCKETHOST_PASSWORD`. The older `POCKETHOST_ADMIN_*` names also work.
+  Values are read from the environment first, then `./.env`, then `~/.env`. `just db-health` checks the instance.
+- **Schema:** applied automatically by idempotent, stepwise migrations. Step 1 creates the base collections (or
+  adds any missing columns). Step 2 adds the `rel_` relations. Nothing is ever dropped. The same schema is exported
+  to [`docs/schema/pockethost_collections.json`](docs/schema/pockethost_collections.json) for the dashboard's
+  *Settings → Import collections* screen.
+- **Writes are idempotent:** rows are matched on their natural key, so unchanged rows are skipped, changed rows
+  are PATCHed (keeping `int_created_epoch_ms_utc`), and new rows are POSTed. Rows are never deleted. When a new
+  run lands, earlier `ACTIVE` runs of the season become `SUPERSEDED`.
+- **Resilience:** superuser auth via `/api/collections/_superusers/auth-with-password` (PocketBase ≥ 0.23), with
+  the token kept in memory only. 429 / 5xx / network errors are retried with exponential back-off and jitter.
+- **Access:** collections are publicly readable (handy for a dashboard), and writes are superuser-only.
+- `just refresh-local` (`--db off`) runs without the database.
+
 ## 🚀 Run it
 
 ```bash
-just refresh                 # fetch live data, simulate, regenerate charts + README
+just refresh                 # fetch live data, simulate, regenerate charts + README, sync PocketHost
+just refresh-local           # same, without the database
+just db-health               # ping the configured PocketHost instance
 just test                    # tests + JaCoCo report + ≥90% line/branch coverage gate
-./gradlew run -PsimArgs="--season 2026 --iterations 50000 --seed 7"
+./gradlew run -PsimArgs="--season 2026 --iterations 50000 --seed 7 --db off"
 NFL_LIVE=1 ./gradlew jvmTest # also hit the real ESPN API
 ```
 
@@ -191,7 +237,10 @@ Each run also writes `output/history/<date>.json`, and those snapshots feed the 
 | `src/commonMain/.../data` | ESPN JSON parser (multiplatform) |
 | `src/commonMain/.../report` | Probabilities, Markdown fragments, dependency-free SVG charts |
 | `src/jvmMain/.../data` | HTTP client and on-disk cache |
+| `src/commonMain/.../sync` | PocketBase schema (collections, Hungarian columns) and record mapping |
+| `src/jvmMain/.../sync` | PocketBase REST client: auth, migrations, upserts, back-off |
 | `src/jvmMain/.../app` | `Pipeline` (end-to-end refresh) and `Main` CLI |
 | `output/` | `latest.json`, `team_outlook.csv`, `history/` snapshots |
+| `docs/schema/` | PocketBase import JSON (generated each run) |
 
 _Data: ESPN public scoreboard API (unofficial, not affiliated). This is a statistical model for fun, not betting advice._

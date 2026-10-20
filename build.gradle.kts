@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.gridiron.superbowl"
-version = "0.1.0-RC1"
+version = "0.1.0-RC2"
 
 repositories {
     mavenCentral()
