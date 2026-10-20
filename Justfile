@@ -5,7 +5,28 @@ default:
 
 # Fetch live ESPN data, simulate, refresh charts/datasets/README, and sync PocketHost (required)
 refresh iterations="20000":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ -z "${POCKETHOST_PASSWORD:-}" ] && ! grep -qE '^POCKETHOST_PASSWORD=.+' .env 2>/dev/null; then
+        echo "POCKETHOST_PASSWORD is not set. Run: just set-password   (or: just refresh-local)" >&2
+        exit 1
+    fi
     ./gradlew run -q -PsimArgs="--iterations {{iterations}}"
+
+# Prompt (hidden input) for the PocketHost superuser password and save it to the git-ignored .env
+set-password:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    touch .env && chmod 600 .env
+    user=$(grep -E '^POCKETHOST_USER=' .env | cut -d= -f2- || true)
+    read -rsp "PocketHost superuser password${user:+ for $user}: " pw; echo
+    [ -n "$pw" ] || { echo "Nothing entered; .env unchanged." >&2; exit 1; }
+    tmp=$(mktemp)
+    grep -v '^POCKETHOST_PASSWORD=' .env > "$tmp" || true
+    printf 'POCKETHOST_PASSWORD=%s\n' "$pw" >> "$tmp"
+    mv "$tmp" .env && chmod 600 .env
+    unset pw
+    echo "Saved to .env (git-ignored). Next: just refresh"
 
 # Same refresh without the PocketHost database
 refresh-local iterations="20000":
