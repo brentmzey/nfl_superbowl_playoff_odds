@@ -207,13 +207,19 @@ object SvgCharts {
             .joinToString("\n") { (i, s) ->
                 "<text class=\"m\" x=\"${xAt(i)}\" y=\"${top0 + plotH + 18}\" text-anchor=\"middle\">${esc(s.label)}</text>"
             }
+        // End labels: keep them in value order but at least 15px apart so close series stay readable.
+        val labelY = teams.mapIndexed { k, abbr -> k to yAt(history.last().odds[abbr] ?: 0.0) }
+            .sortedBy { it.second }
+            .fold(emptyList<Pair<Int, Double>>()) { acc, (k, y) -> acc + (k to maxOf(y, (acc.lastOrNull()?.second ?: Double.NEGATIVE_INFINITY) + 15.0)) }
+            .toMap()
         val lines = teams.mapIndexed { k, abbr ->
             val pts = history.mapIndexed { i, s -> xAt(i) to yAt(s.odds[abbr] ?: 0.0) }
             val path = pts.joinToString(" ") { (x, y) -> "${x.roundToInt()},${y.roundToInt()}" }
             val dots = history.mapIndexed { i, s ->
                 "<circle cx=\"${xAt(i)}\" cy=\"${yAt(s.odds[abbr] ?: 0.0)}\" r=\"4\" class=\"s${k + 1} ring\"><title>$abbr ${esc(s.label)}: ${pct(s.odds[abbr] ?: 0.0)}</title></circle>"
             }.joinToString("")
-            val (lx, ly) = pts.last()
+            val lx = pts.last().first
+            val ly = labelY.getValue(k)
             """<polyline points="$path" fill="none" class="l${k + 1}" stroke-width="2" stroke-linejoin="round"/>$dots
               <text class="t" x="${lx + 10}" y="${ly + 4}" font-weight="600">$abbr ${pct(history.last().odds[abbr] ?: 0.0)}</text>"""
         }.joinToString("\n")

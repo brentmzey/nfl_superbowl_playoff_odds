@@ -158,7 +158,7 @@ data class PbRecord(val collection: String, val data: JsonObject, val relations:
  * Numbers and booleans are never `required` because PocketBase treats 0 / false as blank.
  */
 object PocketBaseSchema {
-    const val ENGINE_VERSION = "0.1.0-RC5-elo-mc"
+    const val ENGINE_VERSION = "0.1.0-RC6-elo-mc"
     const val ACTIVE = "ACTIVE"
     const val SUPERSEDED = "SUPERSEDED"
     val auditColumns = setOf("bool_is_active", "str_status_code", "int_created_epoch_ms_utc", "int_updated_epoch_ms_utc")

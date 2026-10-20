@@ -1,6 +1,6 @@
 {
   "name": "@brentmzey/nfl-superbowl-predictions-client",
-  "version": "0.1.0-RC5",
+  "version": "0.1.0-RC6",
   "description": "Strictly typed, validated, retrying PocketBase client with JDBI-style query templates for the NFL Super Bowl predictions database.",
   "type": "module",
   "private": true,

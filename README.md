@@ -9,10 +9,10 @@ Sibling project to [`mlb_sabermetric_worldseries_kmp`](../mlb_sabermetric_worlds
 Kotlin Multiplatform layout, Gradle wrapper, and refresh-and-sync workflow.
 
 <!-- SUMMARY:START -->
-_Updated 2026-10-19 · 2026 season through week 6 (92 games played, 180 remaining) · 200 simulations._
+_Updated 2026-10-20 · 2026 season through week 6 (93 games played, 179 remaining) · 20000 simulations._
 
-**Favorites:** San Francisco 49ers 12% · Minnesota Vikings 11% · Buffalo Bills 9.0%
-**Most likely Super Bowl:** NE vs SF (6.0%)
+**Favorites:** San Francisco 49ers 16% · Buffalo Bills 10% · Minnesota Vikings 9.4%
+**Most likely Super Bowl:** BUF vs SF (5.8%)
 <!-- SUMMARY:END -->
 
 ## 🏆 Super Bowl win probability
@@ -30,38 +30,38 @@ Each cell is the probability a team reaches that round, so reading across a row 
 <!-- LEADERBOARD:START -->
 | # | Team | Record | Elo | Proj. W | Division | Playoffs | Divisional | Conf. game | Super Bowl | **Win SB** |
 |---:|---|:---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | San Francisco 49ers | 5-0 | 1660 | 13.3 | 83% | 96% | 76% | 47% | 27% | **12%** |
-| 2 | Minnesota Vikings | 5-0 | 1613 | 12.3 | 63% | 91% | 63% | 40% | 22% | **11%** |
-| 3 | Buffalo Bills | 5-1 | 1635 | 11.8 | 47% | 89% | 53% | 29% | 16% | **9.0%** |
-| 4 | New England Patriots | 4-2 | 1634 | 11.2 | 50% | 87% | 59% | 32% | 17% | **9.0%** |
-| 5 | Seattle Seahawks | 3-3 | 1655 | 10.2 | 16% | 70% | 44% | 24% | 14% | **8.5%** |
-| 6 | Jacksonville Jaguars | 4-2 | 1621 | 11.4 | 77% | 90% | 57% | 31% | 16% | **8.0%** |
-| 7 | Kansas City Chiefs | 5-0 | 1563 | 11.2 | 55% | 81% | 47% | 26% | 14% | **7.5%** |
-| 8 | Denver Broncos | 4-2 | 1603 | 10.7 | 41% | 74% | 49% | 25% | 12% | **5.0%** |
-| 9 | Detroit Lions | 3-2 | 1530 | 9.4 | 17% | 54% | 28% | 13% | 9.5% | **4.5%** |
-| 10 | Carolina Panthers | 3-2 | 1516 | 9.3 | 59% | 66% | 35% | 15% | 7.0% | **4.5%** |
-| 11 | Baltimore Ravens | 4-2 | 1543 | 9.7 | 27% | 54% | 31% | 16% | 6.5% | **3.5%** |
-| 12 | Pittsburgh Steelers | 4-2 | 1542 | 9.6 | 25% | 53% | 28% | 13% | 5.0% | **3.5%** |
-| 13 | Green Bay Packers | 4-2 | 1522 | 9.5 | 13% | 57% | 25% | 13% | 6.0% | **2.5%** |
-| 14 | Chicago Bears | 4-2 | 1560 | 9.8 | 8.5% | 60% | 30% | 14% | 6.0% | **2.0%** |
-| 15 | Cincinnati Bengals | 3-2 | 1515 | 9.6 | 27% | 56% | 28% | 8.5% | 6.0% | **1.5%** |
-| 16 | Houston Texans | 2-4 | 1545 | 8.3 | 17% | 35% | 17% | 8.5% | 3.0% | **1.5%** |
-| 17 | Las Vegas Raiders | 3-3 | 1437 | 7.6 | 4.5% | 16% | 6.0% | 3.0% | 2.0% | **1.5%** |
-| 18 | Cleveland Browns | 4-2 | 1476 | 9.4 | 21% | 50% | 19% | 6.0% | 1.5% | **1.0%** |
-| 19 | Atlanta Falcons | 2-4 | 1466 | 7.0 | 16% | 24% | 16% | 7.0% | 2.0% | **1.0%** |
-| 20 | New Orleans Saints | 2-4 | 1444 | 7.3 | 16% | 22% | 11% | 2.5% | 1.0% | **1.0%** |
-| 21 | New York Jets | 2-4 | 1396 | 6.2 | 3.5% | 7.0% | 3.0% | 1.0% | 0.5% | **0.5%** |
-| 22 | Indianapolis Colts | 2-4 | 1434 | 6.7 | 5.5% | 8.5% | 2.5% | 1.5% | 0.5% | **0.5%** |
-| 23 | New York Giants | 3-2-1 | 1448 | 8.0 | 41% | 44% | 23% | 7.5% | 2.0% | **0.5%** |
-| 24 | Washington Commanders | 1-3-1 | 1407 | 6.1 | 13% | 14% | 7.0% | 2.5% | 1.0% | **0.5%** |
-| 25 | Arizona Cardinals | 2-4 | 1399 | 6.4 | 0% | 4.0% | 2.0% | 1.0% | 0.5% | **0.5%** |
-| 26 | Miami Dolphins | 0-5 | 1373 | 4.0 | 0.5% | 1.5% | 0.5% | 0.5% | 0% | **0%** |
-| 27 | Tennessee Titans | 1-5 | 1350 | 4.5 | 1.5% | 2.0% | 0.5% | 0% | 0% | **0%** |
-| 28 | Los Angeles Chargers | 0-6 | 1407 | 4.0 | 0% | 0% | 0% | 0% | 0% | **0%** |
-| 29 | Dallas Cowboys | 2-4 | 1431 | 6.7 | 21% | 25% | 14% | 5.5% | 1.0% | **0%** |
-| 30 | Philadelphia Eagles | 2-4 | 1459 | 7.2 | 27% | 31% | 11% | 2.5% | 1.0% | **0%** |
-| 31 | Tampa Bay Buccaneers | 1-5 | 1420 | 5.4 | 9.5% | 12% | 6.0% | 3.5% | 1.0% | **0%** |
-| 32 | Los Angeles Rams | 2-4 | 1554 | 8.2 | 1.5% | 34% | 12% | 4.0% | 0% | **0%** |
+| 1 | San Francisco 49ers | 6-0 | 1666 | 13.5 | 84% | 98% | 80% | 50% | 30% | **16%** |
+| 2 | Buffalo Bills | 5-1 | 1635 | 12.0 | 56% | 90% | 61% | 34% | 19% | **10%** |
+| 3 | Minnesota Vikings | 5-0 | 1613 | 12.3 | 64% | 93% | 64% | 36% | 19% | **9.4%** |
+| 4 | New England Patriots | 4-2 | 1634 | 11.0 | 42% | 83% | 53% | 29% | 16% | **8.4%** |
+| 5 | Jacksonville Jaguars | 4-2 | 1621 | 11.3 | 77% | 86% | 56% | 30% | 15% | **7.8%** |
+| 6 | Seattle Seahawks | 3-3 | 1655 | 10.3 | 13% | 74% | 46% | 25% | 14% | **7.7%** |
+| 7 | Denver Broncos | 4-2 | 1603 | 10.8 | 39% | 76% | 45% | 23% | 12% | **6.0%** |
+| 8 | Kansas City Chiefs | 5-0 | 1563 | 11.3 | 57% | 84% | 51% | 25% | 12% | **5.9%** |
+| 9 | Chicago Bears | 4-2 | 1560 | 9.8 | 12% | 61% | 32% | 15% | 6.8% | **3.3%** |
+| 10 | Pittsburgh Steelers | 4-2 | 1542 | 9.9 | 28% | 57% | 30% | 14% | 6.2% | **3.0%** |
+| 11 | Baltimore Ravens | 4-2 | 1543 | 9.8 | 27% | 55% | 29% | 13% | 6.2% | **2.9%** |
+| 12 | Detroit Lions | 3-2 | 1530 | 9.3 | 14% | 54% | 27% | 12% | 5.7% | **2.7%** |
+| 13 | Carolina Panthers | 3-2 | 1516 | 9.1 | 58% | 63% | 32% | 14% | 5.9% | **2.6%** |
+| 14 | Green Bay Packers | 4-2 | 1522 | 9.3 | 9.7% | 53% | 25% | 11% | 4.5% | **2.1%** |
+| 15 | Cincinnati Bengals | 3-2 | 1515 | 9.5 | 23% | 51% | 25% | 10% | 4.4% | **2.0%** |
+| 16 | Los Angeles Rams | 2-4 | 1554 | 8.0 | 2.0% | 32% | 17% | 7.6% | 3.8% | **1.9%** |
+| 17 | Houston Texans | 2-4 | 1545 | 8.3 | 17% | 33% | 17% | 7.8% | 3.6% | **1.8%** |
+| 18 | Cleveland Browns | 4-2 | 1476 | 9.4 | 22% | 47% | 20% | 7.6% | 3.2% | **1.4%** |
+| 19 | New York Giants | 3-2-1 | 1448 | 8.1 | 43% | 46% | 21% | 7.4% | 2.8% | **1.1%** |
+| 20 | Philadelphia Eagles | 2-4 | 1459 | 7.2 | 27% | 30% | 13% | 5.1% | 2.1% | **0.9%** |
+| 21 | Atlanta Falcons | 2-4 | 1466 | 7.0 | 17% | 23% | 11% | 4.6% | 1.9% | **0.7%** |
+| 22 | New Orleans Saints | 2-4 | 1444 | 7.0 | 17% | 21% | 9.8% | 3.9% | 1.4% | **0.6%** |
+| 23 | Dallas Cowboys | 2-4 | 1431 | 6.8 | 19% | 21% | 9.2% | 3.4% | 1.1% | **0.4%** |
+| 24 | Las Vegas Raiders | 3-3 | 1437 | 7.5 | 4.3% | 16% | 6.3% | 2.4% | 1.0% | **0.4%** |
+| 25 | Tampa Bay Buccaneers | 1-5 | 1420 | 5.5 | 8.7% | 11% | 4.8% | 1.8% | 0.8% | **0.3%** |
+| 26 | Indianapolis Colts | 2-4 | 1434 | 6.7 | 5.6% | 9.9% | 4.2% | 1.5% | 0.7% | **0.3%** |
+| 27 | Washington Commanders | 1-4-1 | 1402 | 6.0 | 11% | 13% | 5.2% | 1.8% | 0.6% | **0.2%** |
+| 28 | New York Jets | 2-4 | 1396 | 6.1 | 1.3% | 7.7% | 2.8% | 1.0% | 0.4% | **0.2%** |
+| 29 | Arizona Cardinals | 2-4 | 1399 | 6.3 | 0.3% | 6.5% | 2.6% | 1.0% | 0.4% | **0.2%** |
+| 30 | Miami Dolphins | 0-5 | 1373 | 4.0 | 0.3% | 1.0% | 0.4% | 0.2% | <0.1% | **<0.1%** |
+| 31 | Tennessee Titans | 1-5 | 1350 | 4.6 | 1.0% | 1.9% | 0.7% | 0.2% | <0.1% | **<0.1%** |
+| 32 | Los Angeles Chargers | 0-6 | 1407 | 4.1 | 0.1% | 0.8% | 0.3% | 0.1% | <0.1% | **<0.1%** |
 <!-- LEADERBOARD:END -->
 
 _Columns: **Division** = win the division · **Playoffs** = earn one of 7 seeds · **Divisional** = reach the
@@ -78,27 +78,27 @@ chance of reaching the divisional round.
 flowchart LR
 subgraph AFC_WC["AFC"]
   direction TB
-  AFC1["(1) KC 5-0<br/>div. rd 47%"] -->|bye| AFC_DIV
-  AFC2["(2) JAX 4-2<br/>div. rd 57%"] --- AFC_G1(("2 v 7")) --- AFC7["(7) CLE 4-2<br/>div. rd 19%"]
-  AFC3["(3) NE 4-2<br/>div. rd 59%"] --- AFC_G2(("3 v 6")) --- AFC6["(6) CIN 3-2<br/>div. rd 28%"]
-  AFC4["(4) BAL 4-2<br/>div. rd 31%"] --- AFC_G3(("4 v 5")) --- AFC5["(5) BUF 5-1<br/>div. rd 53%"]
+  AFC1["(1) BUF 5-1<br/>div. rd 61%"] -->|bye| AFC_DIV
+  AFC2["(2) JAX 4-2<br/>div. rd 56%"] --- AFC_G1(("2 v 7")) --- AFC7["(7) BAL 4-2<br/>div. rd 29%"]
+  AFC3["(3) KC 5-0<br/>div. rd 51%"] --- AFC_G2(("3 v 6")) --- AFC6["(6) DEN 4-2<br/>div. rd 45%"]
+  AFC4["(4) PIT 4-2<br/>div. rd 30%"] --- AFC_G3(("4 v 5")) --- AFC5["(5) NE 4-2<br/>div. rd 53%"]
   AFC_G1 --> AFC_DIV
   AFC_G2 --> AFC_DIV
   AFC_G3 --> AFC_DIV
-  AFC_DIV{{"AFC Divisional"}} --> AFC_CCG{{"AFC Championship<br/>fav: NE 17%"}}
+  AFC_DIV{{"AFC Divisional"}} --> AFC_CCG{{"AFC Championship<br/>fav: BUF 19%"}}
 end
 subgraph NFC_WC["NFC"]
   direction TB
-  NFC1["(1) SF 5-0<br/>div. rd 76%"] -->|bye| NFC_DIV
-  NFC2["(2) MIN 5-0<br/>div. rd 63%"] --- NFC_G1(("2 v 7")) --- NFC7["(7) DET 3-2<br/>div. rd 28%"]
-  NFC3["(3) CAR 3-2<br/>div. rd 35%"] --- NFC_G2(("3 v 6")) --- NFC6["(6) GB 4-2<br/>div. rd 25%"]
-  NFC4["(4) NYG 3-2-1<br/>div. rd 23%"] --- NFC_G3(("4 v 5")) --- NFC5["(5) SEA 3-3<br/>div. rd 44%"]
+  NFC1["(1) SF 6-0<br/>div. rd 80%"] -->|bye| NFC_DIV
+  NFC2["(2) MIN 5-0<br/>div. rd 64%"] --- NFC_G1(("2 v 7")) --- NFC7["(7) GB 4-2<br/>div. rd 25%"]
+  NFC3["(3) CAR 3-2<br/>div. rd 32%"] --- NFC_G2(("3 v 6")) --- NFC6["(6) CHI 4-2<br/>div. rd 32%"]
+  NFC4["(4) NYG 3-2-1<br/>div. rd 21%"] --- NFC_G3(("4 v 5")) --- NFC5["(5) SEA 3-3<br/>div. rd 46%"]
   NFC_G1 --> NFC_DIV
   NFC_G2 --> NFC_DIV
   NFC_G3 --> NFC_DIV
-  NFC_DIV{{"NFC Divisional"}} --> NFC_CCG{{"NFC Championship<br/>fav: SF 27%"}}
+  NFC_DIV{{"NFC Divisional"}} --> NFC_CCG{{"NFC Championship<br/>fav: SF 30%"}}
 end
-AFC_CCG --> SB{{"Super Bowl 2027<br/>fav: SF 12%"}}
+AFC_CCG --> SB{{"Super Bowl 2027<br/>fav: SF 16%"}}
 NFC_CCG --> SB
 ```
 <!-- BRACKET:END -->
@@ -108,22 +108,22 @@ NFC_CCG --> SB
 <!-- MATCHUPS:START -->
 | AFC | NFC | Probability |
 |---|---|---:|
-| NE | SF | 6.0% |
-| BUF | MIN | 5.5% |
-| BUF | SF | 5.0% |
-| NE | MIN | 4.5% |
-| KC | SF | 4.0% |
-| CIN | SF | 3.5% |
-| JAX | SF | 3.0% |
-| BAL | MIN | 2.5% |
-| BAL | SEA | 2.5% |
-| KC | DET | 2.5% |
+| BUF | SF | 5.8% |
+| NE | SF | 4.6% |
+| JAX | SF | 4.4% |
+| KC | SF | 3.8% |
+| DEN | SF | 3.5% |
+| BUF | MIN | 3.3% |
+| BUF | SEA | 2.8% |
+| NE | MIN | 2.8% |
+| JAX | MIN | 2.7% |
+| KC | MIN | 2.6% |
 <!-- MATCHUPS:END -->
 
 ## 📈 Odds over the season
 
 <!-- TREND:START -->
-_The trend chart appears once a second weekly snapshot exists in `output/history/`._
+![Super Bowl odds over time](docs/charts/odds_trend.svg)
 <!-- TREND:END -->
 
 ## ⚡ Power ratings

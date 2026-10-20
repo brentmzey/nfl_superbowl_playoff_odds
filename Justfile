@@ -46,7 +46,7 @@ test:
 
 # Regenerate the TypeScript typings from PocketBaseSchema.kt (no network, no DB)
 schema-ts:
-    ./gradlew run -q -PsimArgs="--db off --iterations 200"
+    ./gradlew run -q -PsimArgs="--schema-only true"
 
 # TypeScript client: tests + coverage, strict typecheck, build
 ts-check:

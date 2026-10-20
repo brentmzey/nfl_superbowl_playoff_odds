@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 390" width="760" height="390" role="img" aria-label="Super Bowl odds over the season">
+<style>
+  .bg{fill:#fcfcfb} .t{fill:#0b0b0b} .t2{fill:#52514e} .m{fill:#898781}
+  .grid{stroke:#e1e0d9;stroke-width:1} .axis{stroke:#c3c2b7;stroke-width:1} .ring{stroke:#fcfcfb;stroke-width:2}
+  .pos{fill:#2a78d6} .neg{fill:#e34948} .on{fill:#ffffff} .s1{fill:#2a78d6} .l1{stroke:#2a78d6} .s2{fill:#eb6834} .l2{stroke:#eb6834} .s3{fill:#1baf7a} .l3{stroke:#1baf7a} .s4{fill:#eda100} .l4{stroke:#eda100} .s5{fill:#e87ba4} .l5{stroke:#e87ba4} .s6{fill:#008300} .l6{stroke:#008300}
+  @media (prefers-color-scheme: dark){
+    .bg{fill:#1a1a19} .t{fill:#ffffff} .t2{fill:#c3c2b7}
+    .grid{stroke:#2c2c2a} .axis{stroke:#383835} .ring{stroke:#1a1a19}
+    .pos{fill:#3987e5} .neg{fill:#e66767} .s1{fill:#3987e5} .l1{stroke:#3987e5} .s2{fill:#d95926} .l2{stroke:#d95926} .s3{fill:#199e70} .l3{stroke:#199e70} .s4{fill:#c98500} .l4{stroke:#c98500} .s5{fill:#d55181} .l5{stroke:#d55181} .s6{fill:#008300} .l6{stroke:#008300}
+  }
+  .title{font-size:16px;font-weight:600} .sub{font-size:12px}
+  text{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:12px}
+  .num{font-variant-numeric:tabular-nums}
+  .hover:hover{opacity:.82}
+</style>
+<rect class="bg" width="760" height="390" rx="8"/>
+<text class="t title" x="24" y="32">Super Bowl odds over the season</text>
+<text class="t2 sub" x="24" y="52">Current top 6 teams</text>
+<rect x="60.0" y="62" width="12" height="3" rx="1" class="s1"/><text class="t2" x="76.0" y="67">SF</text><rect x="140.0" y="62" width="12" height="3" rx="1" class="s2"/><text class="t2" x="156.0" y="67">BUF</text><rect x="220.0" y="62" width="12" height="3" rx="1" class="s3"/><text class="t2" x="236.0" y="67">MIN</text><rect x="300.0" y="62" width="12" height="3" rx="1" class="s4"/><text class="t2" x="316.0" y="67">NE</text><rect x="380.0" y="62" width="12" height="3" rx="1" class="s5"/><text class="t2" x="396.0" y="67">JAX</text><rect x="460.0" y="62" width="12" height="3" rx="1" class="s6"/><text class="t2" x="476.0" y="67">SEA</text>
+<line class="axis" x1="60.0" x2="670.0" y1="340.0" y2="340.0"/><text class="m num" x="52.0" y="344.0" text-anchor="end">0%</text>
+<line class="grid" x1="60.0" x2="670.0" y1="275.0" y2="275.0"/><text class="m num" x="52.0" y="279.0" text-anchor="end">5.0%</text>
+<line class="grid" x1="60.0" x2="670.0" y1="210.0" y2="210.0"/><text class="m num" x="52.0" y="214.0" text-anchor="end">10%</text>
+<line class="grid" x1="60.0" x2="670.0" y1="144.99999999999997" y2="144.99999999999997"/><text class="m num" x="52.0" y="148.99999999999997" text-anchor="end">15%</text>
+<line class="grid" x1="60.0" x2="670.0" y1="80.0" y2="80.0"/><text class="m num" x="52.0" y="84.0" text-anchor="end">20%</text>
+<text class="m" x="60.0" y="358.0" text-anchor="middle">Oct 19</text>
+<text class="m" x="670.0" y="358.0" text-anchor="middle">Oct 20</text>
+<polyline points="60,148 670,136" fill="none" class="l1" stroke-width="2" stroke-linejoin="round"/><circle cx="60.0" cy="147.925" r="4" class="s1 ring"><title>SF Oct 19: 15%</title></circle><circle cx="670.0" cy="135.77000000000004" r="4" class="s1 ring"><title>SF Oct 20: 16%</title></circle>
+              <text class="t" x="680.0" y="139.77000000000004" font-weight="600">SF 16%</text>
+<polyline points="60,213 670,209" fill="none" class="l2" stroke-width="2" stroke-linejoin="round"/><circle cx="60.0" cy="213.055" r="4" class="s2 ring"><title>BUF Oct 19: 9.8%</title></circle><circle cx="670.0" cy="208.57000000000002" r="4" class="s2 ring"><title>BUF Oct 20: 10%</title></circle>
+              <text class="t" x="680.0" y="212.57000000000002" font-weight="600">BUF 10%</text>
+<polyline points="60,219 670,218" fill="none" class="l3" stroke-width="2" stroke-linejoin="round"/><circle cx="60.0" cy="218.90500000000003" r="4" class="s3 ring"><title>MIN Oct 19: 9.3%</title></circle><circle cx="670.0" cy="218.25500000000002" r="4" class="s3 ring"><title>MIN Oct 20: 9.4%</title></circle>
+              <text class="t" x="680.0" y="227.57000000000002" font-weight="600">MIN 9.4%</text>
+<polyline points="60,231 670,231" fill="none" class="l4" stroke-width="2" stroke-linejoin="round"/><circle cx="60.0" cy="231.125" r="4" class="s4 ring"><title>NE Oct 19: 8.4%</title></circle><circle cx="670.0" cy="230.73499999999999" r="4" class="s4 ring"><title>NE Oct 20: 8.4%</title></circle>
+              <text class="t" x="680.0" y="242.57000000000002" font-weight="600">NE 8.4%</text>
+<polyline points="60,236 670,239" fill="none" class="l5" stroke-width="2" stroke-linejoin="round"/><circle cx="60.0" cy="235.73999999999998" r="4" class="s5 ring"><title>JAX Oct 19: 8.0%</title></circle><circle cx="670.0" cy="238.98999999999998" r="4" class="s5 ring"><title>JAX Oct 20: 7.8%</title></circle>
+              <text class="t" x="680.0" y="257.57000000000005" font-weight="600">JAX 7.8%</text>
+<polyline points="60,235 670,240" fill="none" class="l6" stroke-width="2" stroke-linejoin="round"/><circle cx="60.0" cy="235.22" r="4" class="s6 ring"><title>SEA Oct 19: 8.1%</title></circle><circle cx="670.0" cy="239.9" r="4" class="s6 ring"><title>SEA Oct 20: 7.7%</title></circle>
+              <text class="t" x="680.0" y="272.57000000000005" font-weight="600">SEA 7.7%</text>
+</svg>

@@ -15,330 +15,330 @@
 </style>
 <rect class="bg" width="764" height="656" rx="8"/>
 <text class="t title" x="24" y="32">Playoff survival: probability of reaching each round</text>
-<text class="t2 sub" x="24" y="52">Top 20 by title odds · darker = more likely · 200 simulations</text>
+<text class="t2 sub" x="24" y="52">Top 20 by title odds · darker = more likely · 20000 simulations</text>
 <text class="t2" x="209.0" y="84.0" text-anchor="middle">Make playoffs</text>
 <text class="t2" x="327.0" y="84.0" text-anchor="middle">Divisional</text>
 <text class="t2" x="445.0" y="84.0" text-anchor="middle">Conf. title game</text>
 <text class="t2" x="563.0" y="84.0" text-anchor="middle">Super Bowl</text>
 <text class="t2" x="681.0" y="84.0" text-anchor="middle">Win Super Bowl</text>
-<text class="t" x="24" y="113.0" font-weight="600">SF</text><text class="t2 num" x="68" y="113.0">5-0</text><g class="hover"><title>San Francisco 49ers: Make playoffs 96%</title>
-                  <rect x="151.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.97"/>
+<text class="t" x="24" y="113.0" font-weight="600">SF</text><text class="t2 num" x="68" y="113.0">6-0</text><g class="hover"><title>San Francisco 49ers: Make playoffs 98%</title>
+                  <rect x="151.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.99"/>
                   <rect x="151.0" y="97.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="113.0" text-anchor="middle">96%</text></g><g class="hover"><title>San Francisco 49ers: Divisional 76%</title>
-                  <rect x="269.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.85"/>
+                  <text class="on num" x="209.0" y="113.0" text-anchor="middle">98%</text></g><g class="hover"><title>San Francisco 49ers: Divisional 80%</title>
+                  <rect x="269.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.87"/>
                   <rect x="269.0" y="97.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="113.0" text-anchor="middle">76%</text></g><g class="hover"><title>San Francisco 49ers: Conf. title game 47%</title>
-                  <rect x="387.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.63"/>
+                  <text class="on num" x="327.0" y="113.0" text-anchor="middle">80%</text></g><g class="hover"><title>San Francisco 49ers: Conf. title game 50%</title>
+                  <rect x="387.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.66"/>
                   <rect x="387.0" y="97.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="445.0" y="113.0" text-anchor="middle">47%</text></g><g class="hover"><title>San Francisco 49ers: Super Bowl 27%</title>
-                  <rect x="505.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.46"/>
+                  <text class="on num" x="445.0" y="113.0" text-anchor="middle">50%</text></g><g class="hover"><title>San Francisco 49ers: Super Bowl 30%</title>
+                  <rect x="505.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.48"/>
                   <rect x="505.0" y="97.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="113.0" text-anchor="middle">27%</text></g><g class="hover"><title>San Francisco 49ers: Win Super Bowl 12%</title>
-                  <rect x="623.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.28"/>
+                  <text class="t num" x="563.0" y="113.0" text-anchor="middle">30%</text></g><g class="hover"><title>San Francisco 49ers: Win Super Bowl 16%</title>
+                  <rect x="623.0" y="97.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.33"/>
                   <rect x="623.0" y="97.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="113.0" text-anchor="middle">12%</text></g>
-<text class="t" x="24" y="139.0" font-weight="600">MIN</text><text class="t2 num" x="68" y="139.0">5-0</text><g class="hover"><title>Minnesota Vikings: Make playoffs 91%</title>
+                  <text class="t num" x="681.0" y="113.0" text-anchor="middle">16%</text></g>
+<text class="t" x="24" y="139.0" font-weight="600">BUF</text><text class="t2 num" x="68" y="139.0">5-1</text><g class="hover"><title>Buffalo Bills: Make playoffs 90%</title>
                   <rect x="151.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.94"/>
                   <rect x="151.0" y="123.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="139.0" text-anchor="middle">91%</text></g><g class="hover"><title>Minnesota Vikings: Divisional 63%</title>
-                  <rect x="269.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.75"/>
+                  <text class="on num" x="209.0" y="139.0" text-anchor="middle">90%</text></g><g class="hover"><title>Buffalo Bills: Divisional 61%</title>
+                  <rect x="269.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.74"/>
                   <rect x="269.0" y="123.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="139.0" text-anchor="middle">63%</text></g><g class="hover"><title>Minnesota Vikings: Conf. title game 40%</title>
-                  <rect x="387.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.57"/>
+                  <text class="on num" x="327.0" y="139.0" text-anchor="middle">61%</text></g><g class="hover"><title>Buffalo Bills: Conf. title game 34%</title>
+                  <rect x="387.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.53"/>
                   <rect x="387.0" y="123.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="445.0" y="139.0" text-anchor="middle">40%</text></g><g class="hover"><title>Minnesota Vikings: Super Bowl 22%</title>
-                  <rect x="505.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.4"/>
+                  <text class="t num" x="445.0" y="139.0" text-anchor="middle">34%</text></g><g class="hover"><title>Buffalo Bills: Super Bowl 19%</title>
+                  <rect x="505.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.37"/>
                   <rect x="505.0" y="123.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="139.0" text-anchor="middle">22%</text></g><g class="hover"><title>Minnesota Vikings: Win Super Bowl 11%</title>
-                  <rect x="623.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.26"/>
+                  <text class="t num" x="563.0" y="139.0" text-anchor="middle">19%</text></g><g class="hover"><title>Buffalo Bills: Win Super Bowl 10%</title>
+                  <rect x="623.0" y="123.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.25"/>
                   <rect x="623.0" y="123.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="139.0" text-anchor="middle">11%</text></g>
-<text class="t" x="24" y="165.0" font-weight="600">BUF</text><text class="t2 num" x="68" y="165.0">5-1</text><g class="hover"><title>Buffalo Bills: Make playoffs 89%</title>
-                  <rect x="151.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.93"/>
+                  <text class="t num" x="681.0" y="139.0" text-anchor="middle">10%</text></g>
+<text class="t" x="24" y="165.0" font-weight="600">MIN</text><text class="t2 num" x="68" y="165.0">5-0</text><g class="hover"><title>Minnesota Vikings: Make playoffs 93%</title>
+                  <rect x="151.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.96"/>
                   <rect x="151.0" y="149.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="165.0" text-anchor="middle">89%</text></g><g class="hover"><title>Buffalo Bills: Divisional 53%</title>
-                  <rect x="269.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.68"/>
+                  <text class="on num" x="209.0" y="165.0" text-anchor="middle">93%</text></g><g class="hover"><title>Minnesota Vikings: Divisional 64%</title>
+                  <rect x="269.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.77"/>
                   <rect x="269.0" y="149.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="165.0" text-anchor="middle">53%</text></g><g class="hover"><title>Buffalo Bills: Conf. title game 29%</title>
-                  <rect x="387.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.48"/>
+                  <text class="on num" x="327.0" y="165.0" text-anchor="middle">64%</text></g><g class="hover"><title>Minnesota Vikings: Conf. title game 36%</title>
+                  <rect x="387.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.54"/>
                   <rect x="387.0" y="149.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="165.0" text-anchor="middle">29%</text></g><g class="hover"><title>Buffalo Bills: Super Bowl 16%</title>
-                  <rect x="505.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.33"/>
+                  <text class="t num" x="445.0" y="165.0" text-anchor="middle">36%</text></g><g class="hover"><title>Minnesota Vikings: Super Bowl 19%</title>
+                  <rect x="505.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.36"/>
                   <rect x="505.0" y="149.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="165.0" text-anchor="middle">16%</text></g><g class="hover"><title>Buffalo Bills: Win Super Bowl 9.0%</title>
+                  <text class="t num" x="563.0" y="165.0" text-anchor="middle">19%</text></g><g class="hover"><title>Minnesota Vikings: Win Super Bowl 9.4%</title>
                   <rect x="623.0" y="149.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.24"/>
                   <rect x="623.0" y="149.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="165.0" text-anchor="middle">9.0%</text></g>
-<text class="t" x="24" y="191.0" font-weight="600">NE</text><text class="t2 num" x="68" y="191.0">4-2</text><g class="hover"><title>New England Patriots: Make playoffs 87%</title>
-                  <rect x="151.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.92"/>
+                  <text class="t num" x="681.0" y="165.0" text-anchor="middle">9.4%</text></g>
+<text class="t" x="24" y="191.0" font-weight="600">NE</text><text class="t2 num" x="68" y="191.0">4-2</text><g class="hover"><title>New England Patriots: Make playoffs 83%</title>
+                  <rect x="151.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.9"/>
                   <rect x="151.0" y="175.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="191.0" text-anchor="middle">87%</text></g><g class="hover"><title>New England Patriots: Divisional 59%</title>
-                  <rect x="269.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.72"/>
+                  <text class="on num" x="209.0" y="191.0" text-anchor="middle">83%</text></g><g class="hover"><title>New England Patriots: Divisional 53%</title>
+                  <rect x="269.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.68"/>
                   <rect x="269.0" y="175.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="191.0" text-anchor="middle">59%</text></g><g class="hover"><title>New England Patriots: Conf. title game 32%</title>
-                  <rect x="387.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.5"/>
+                  <text class="on num" x="327.0" y="191.0" text-anchor="middle">53%</text></g><g class="hover"><title>New England Patriots: Conf. title game 29%</title>
+                  <rect x="387.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.47"/>
                   <rect x="387.0" y="175.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="191.0" text-anchor="middle">32%</text></g><g class="hover"><title>New England Patriots: Super Bowl 17%</title>
-                  <rect x="505.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.35"/>
+                  <text class="t num" x="445.0" y="191.0" text-anchor="middle">29%</text></g><g class="hover"><title>New England Patriots: Super Bowl 16%</title>
+                  <rect x="505.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.33"/>
                   <rect x="505.0" y="175.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="191.0" text-anchor="middle">17%</text></g><g class="hover"><title>New England Patriots: Win Super Bowl 9.0%</title>
-                  <rect x="623.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.24"/>
+                  <text class="t num" x="563.0" y="191.0" text-anchor="middle">16%</text></g><g class="hover"><title>New England Patriots: Win Super Bowl 8.4%</title>
+                  <rect x="623.0" y="175.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.23"/>
                   <rect x="623.0" y="175.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="191.0" text-anchor="middle">9.0%</text></g>
-<text class="t" x="24" y="217.0" font-weight="600">SEA</text><text class="t2 num" x="68" y="217.0">3-3</text><g class="hover"><title>Seattle Seahawks: Make playoffs 70%</title>
-                  <rect x="151.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.81"/>
+                  <text class="t num" x="681.0" y="191.0" text-anchor="middle">8.4%</text></g>
+<text class="t" x="24" y="217.0" font-weight="600">JAX</text><text class="t2 num" x="68" y="217.0">4-2</text><g class="hover"><title>Jacksonville Jaguars: Make playoffs 86%</title>
+                  <rect x="151.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.91"/>
                   <rect x="151.0" y="201.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="217.0" text-anchor="middle">70%</text></g><g class="hover"><title>Seattle Seahawks: Divisional 44%</title>
-                  <rect x="269.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.61"/>
+                  <text class="on num" x="209.0" y="217.0" text-anchor="middle">86%</text></g><g class="hover"><title>Jacksonville Jaguars: Divisional 56%</title>
+                  <rect x="269.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.7"/>
                   <rect x="269.0" y="201.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="217.0" text-anchor="middle">44%</text></g><g class="hover"><title>Seattle Seahawks: Conf. title game 24%</title>
-                  <rect x="387.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.42"/>
+                  <text class="on num" x="327.0" y="217.0" text-anchor="middle">56%</text></g><g class="hover"><title>Jacksonville Jaguars: Conf. title game 30%</title>
+                  <rect x="387.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.48"/>
                   <rect x="387.0" y="201.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="217.0" text-anchor="middle">24%</text></g><g class="hover"><title>Seattle Seahawks: Super Bowl 14%</title>
-                  <rect x="505.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.3"/>
+                  <text class="t num" x="445.0" y="217.0" text-anchor="middle">30%</text></g><g class="hover"><title>Jacksonville Jaguars: Super Bowl 15%</title>
+                  <rect x="505.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.32"/>
                   <rect x="505.0" y="201.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="217.0" text-anchor="middle">14%</text></g><g class="hover"><title>Seattle Seahawks: Win Super Bowl 8.5%</title>
-                  <rect x="623.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.23"/>
+                  <text class="t num" x="563.0" y="217.0" text-anchor="middle">15%</text></g><g class="hover"><title>Jacksonville Jaguars: Win Super Bowl 7.8%</title>
+                  <rect x="623.0" y="201.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.22"/>
                   <rect x="623.0" y="201.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="217.0" text-anchor="middle">8.5%</text></g>
-<text class="t" x="24" y="243.0" font-weight="600">JAX</text><text class="t2 num" x="68" y="243.0">4-2</text><g class="hover"><title>Jacksonville Jaguars: Make playoffs 90%</title>
-                  <rect x="151.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.94"/>
+                  <text class="t num" x="681.0" y="217.0" text-anchor="middle">7.8%</text></g>
+<text class="t" x="24" y="243.0" font-weight="600">SEA</text><text class="t2 num" x="68" y="243.0">3-3</text><g class="hover"><title>Seattle Seahawks: Make playoffs 74%</title>
+                  <rect x="151.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.84"/>
                   <rect x="151.0" y="227.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="243.0" text-anchor="middle">90%</text></g><g class="hover"><title>Jacksonville Jaguars: Divisional 57%</title>
-                  <rect x="269.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.72"/>
+                  <text class="on num" x="209.0" y="243.0" text-anchor="middle">74%</text></g><g class="hover"><title>Seattle Seahawks: Divisional 46%</title>
+                  <rect x="269.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.63"/>
                   <rect x="269.0" y="227.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="243.0" text-anchor="middle">57%</text></g><g class="hover"><title>Jacksonville Jaguars: Conf. title game 31%</title>
-                  <rect x="387.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.5"/>
+                  <text class="on num" x="327.0" y="243.0" text-anchor="middle">46%</text></g><g class="hover"><title>Seattle Seahawks: Conf. title game 25%</title>
+                  <rect x="387.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.44"/>
                   <rect x="387.0" y="227.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="243.0" text-anchor="middle">31%</text></g><g class="hover"><title>Jacksonville Jaguars: Super Bowl 16%</title>
-                  <rect x="505.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.33"/>
+                  <text class="t num" x="445.0" y="243.0" text-anchor="middle">25%</text></g><g class="hover"><title>Seattle Seahawks: Super Bowl 14%</title>
+                  <rect x="505.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.31"/>
                   <rect x="505.0" y="227.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="243.0" text-anchor="middle">16%</text></g><g class="hover"><title>Jacksonville Jaguars: Win Super Bowl 8.0%</title>
-                  <rect x="623.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.22"/>
+                  <text class="t num" x="563.0" y="243.0" text-anchor="middle">14%</text></g><g class="hover"><title>Seattle Seahawks: Win Super Bowl 7.7%</title>
+                  <rect x="623.0" y="227.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.21"/>
                   <rect x="623.0" y="227.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="243.0" text-anchor="middle">8.0%</text></g>
-<text class="t" x="24" y="269.0" font-weight="600">KC</text><text class="t2 num" x="68" y="269.0">5-0</text><g class="hover"><title>Kansas City Chiefs: Make playoffs 81%</title>
-                  <rect x="151.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.88"/>
+                  <text class="t num" x="681.0" y="243.0" text-anchor="middle">7.7%</text></g>
+<text class="t" x="24" y="269.0" font-weight="600">DEN</text><text class="t2 num" x="68" y="269.0">4-2</text><g class="hover"><title>Denver Broncos: Make playoffs 76%</title>
+                  <rect x="151.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.85"/>
                   <rect x="151.0" y="253.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="269.0" text-anchor="middle">81%</text></g><g class="hover"><title>Kansas City Chiefs: Divisional 47%</title>
-                  <rect x="269.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.64"/>
+                  <text class="on num" x="209.0" y="269.0" text-anchor="middle">76%</text></g><g class="hover"><title>Denver Broncos: Divisional 45%</title>
+                  <rect x="269.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.62"/>
                   <rect x="269.0" y="253.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="269.0" text-anchor="middle">47%</text></g><g class="hover"><title>Kansas City Chiefs: Conf. title game 26%</title>
-                  <rect x="387.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.45"/>
+                  <text class="on num" x="327.0" y="269.0" text-anchor="middle">45%</text></g><g class="hover"><title>Denver Broncos: Conf. title game 23%</title>
+                  <rect x="387.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.42"/>
                   <rect x="387.0" y="253.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="269.0" text-anchor="middle">26%</text></g><g class="hover"><title>Kansas City Chiefs: Super Bowl 14%</title>
-                  <rect x="505.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.31"/>
+                  <text class="t num" x="445.0" y="269.0" text-anchor="middle">23%</text></g><g class="hover"><title>Denver Broncos: Super Bowl 12%</title>
+                  <rect x="505.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.28"/>
                   <rect x="505.0" y="253.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="269.0" text-anchor="middle">14%</text></g><g class="hover"><title>Kansas City Chiefs: Win Super Bowl 7.5%</title>
-                  <rect x="623.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.21"/>
+                  <text class="t num" x="563.0" y="269.0" text-anchor="middle">12%</text></g><g class="hover"><title>Denver Broncos: Win Super Bowl 6.0%</title>
+                  <rect x="623.0" y="253.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
                   <rect x="623.0" y="253.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="269.0" text-anchor="middle">7.5%</text></g>
-<text class="t" x="24" y="295.0" font-weight="600">DEN</text><text class="t2 num" x="68" y="295.0">4-2</text><g class="hover"><title>Denver Broncos: Make playoffs 74%</title>
-                  <rect x="151.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.83"/>
+                  <text class="t num" x="681.0" y="269.0" text-anchor="middle">6.0%</text></g>
+<text class="t" x="24" y="295.0" font-weight="600">KC</text><text class="t2 num" x="68" y="295.0">5-0</text><g class="hover"><title>Kansas City Chiefs: Make playoffs 84%</title>
+                  <rect x="151.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.9"/>
                   <rect x="151.0" y="279.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="295.0" text-anchor="middle">74%</text></g><g class="hover"><title>Denver Broncos: Divisional 49%</title>
-                  <rect x="269.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.65"/>
+                  <text class="on num" x="209.0" y="295.0" text-anchor="middle">84%</text></g><g class="hover"><title>Kansas City Chiefs: Divisional 51%</title>
+                  <rect x="269.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.66"/>
                   <rect x="269.0" y="279.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="327.0" y="295.0" text-anchor="middle">49%</text></g><g class="hover"><title>Denver Broncos: Conf. title game 25%</title>
-                  <rect x="387.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.43"/>
+                  <text class="on num" x="327.0" y="295.0" text-anchor="middle">51%</text></g><g class="hover"><title>Kansas City Chiefs: Conf. title game 25%</title>
+                  <rect x="387.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.44"/>
                   <rect x="387.0" y="279.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="295.0" text-anchor="middle">25%</text></g><g class="hover"><title>Denver Broncos: Super Bowl 12%</title>
-                  <rect x="505.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.28"/>
+                  <text class="t num" x="445.0" y="295.0" text-anchor="middle">25%</text></g><g class="hover"><title>Kansas City Chiefs: Super Bowl 12%</title>
+                  <rect x="505.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.29"/>
                   <rect x="505.0" y="279.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="295.0" text-anchor="middle">12%</text></g><g class="hover"><title>Denver Broncos: Win Super Bowl 5.0%</title>
-                  <rect x="623.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.17"/>
+                  <text class="t num" x="563.0" y="295.0" text-anchor="middle">12%</text></g><g class="hover"><title>Kansas City Chiefs: Win Super Bowl 5.9%</title>
+                  <rect x="623.0" y="279.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
                   <rect x="623.0" y="279.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="295.0" text-anchor="middle">5.0%</text></g>
-<text class="t" x="24" y="321.0" font-weight="600">DET</text><text class="t2 num" x="68" y="321.0">3-2</text><g class="hover"><title>Detroit Lions: Make playoffs 54%</title>
-                  <rect x="151.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.69"/>
+                  <text class="t num" x="681.0" y="295.0" text-anchor="middle">5.9%</text></g>
+<text class="t" x="24" y="321.0" font-weight="600">CHI</text><text class="t2 num" x="68" y="321.0">4-2</text><g class="hover"><title>Chicago Bears: Make playoffs 61%</title>
+                  <rect x="151.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.74"/>
                   <rect x="151.0" y="305.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="321.0" text-anchor="middle">54%</text></g><g class="hover"><title>Detroit Lions: Divisional 28%</title>
-                  <rect x="269.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.47"/>
+                  <text class="on num" x="209.0" y="321.0" text-anchor="middle">61%</text></g><g class="hover"><title>Chicago Bears: Divisional 32%</title>
+                  <rect x="269.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.5"/>
                   <rect x="269.0" y="305.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="321.0" text-anchor="middle">28%</text></g><g class="hover"><title>Detroit Lions: Conf. title game 13%</title>
-                  <rect x="387.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.29"/>
+                  <text class="t num" x="327.0" y="321.0" text-anchor="middle">32%</text></g><g class="hover"><title>Chicago Bears: Conf. title game 15%</title>
+                  <rect x="387.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.32"/>
                   <rect x="387.0" y="305.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="321.0" text-anchor="middle">13%</text></g><g class="hover"><title>Detroit Lions: Super Bowl 9.5%</title>
-                  <rect x="505.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.24"/>
+                  <text class="t num" x="445.0" y="321.0" text-anchor="middle">15%</text></g><g class="hover"><title>Chicago Bears: Super Bowl 6.8%</title>
+                  <rect x="505.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.2"/>
                   <rect x="505.0" y="305.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="321.0" text-anchor="middle">9.5%</text></g><g class="hover"><title>Detroit Lions: Win Super Bowl 4.5%</title>
-                  <rect x="623.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.16"/>
+                  <text class="t num" x="563.0" y="321.0" text-anchor="middle">6.8%</text></g><g class="hover"><title>Chicago Bears: Win Super Bowl 3.3%</title>
+                  <rect x="623.0" y="305.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.13"/>
                   <rect x="623.0" y="305.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="321.0" text-anchor="middle">4.5%</text></g>
-<text class="t" x="24" y="347.0" font-weight="600">CAR</text><text class="t2 num" x="68" y="347.0">3-2</text><g class="hover"><title>Carolina Panthers: Make playoffs 66%</title>
-                  <rect x="151.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.78"/>
+                  <text class="t num" x="681.0" y="321.0" text-anchor="middle">3.3%</text></g>
+<text class="t" x="24" y="347.0" font-weight="600">PIT</text><text class="t2 num" x="68" y="347.0">4-2</text><g class="hover"><title>Pittsburgh Steelers: Make playoffs 57%</title>
+                  <rect x="151.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.71"/>
                   <rect x="151.0" y="331.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="347.0" text-anchor="middle">66%</text></g><g class="hover"><title>Carolina Panthers: Divisional 35%</title>
-                  <rect x="269.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.53"/>
+                  <text class="on num" x="209.0" y="347.0" text-anchor="middle">57%</text></g><g class="hover"><title>Pittsburgh Steelers: Divisional 30%</title>
+                  <rect x="269.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.48"/>
                   <rect x="269.0" y="331.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="347.0" text-anchor="middle">35%</text></g><g class="hover"><title>Carolina Panthers: Conf. title game 15%</title>
-                  <rect x="387.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.32"/>
+                  <text class="t num" x="327.0" y="347.0" text-anchor="middle">30%</text></g><g class="hover"><title>Pittsburgh Steelers: Conf. title game 14%</title>
+                  <rect x="387.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.3"/>
                   <rect x="387.0" y="331.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="347.0" text-anchor="middle">15%</text></g><g class="hover"><title>Carolina Panthers: Super Bowl 7.0%</title>
-                  <rect x="505.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.2"/>
+                  <text class="t num" x="445.0" y="347.0" text-anchor="middle">14%</text></g><g class="hover"><title>Pittsburgh Steelers: Super Bowl 6.2%</title>
+                  <rect x="505.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.19"/>
                   <rect x="505.0" y="331.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="347.0" text-anchor="middle">7.0%</text></g><g class="hover"><title>Carolina Panthers: Win Super Bowl 4.5%</title>
-                  <rect x="623.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.16"/>
+                  <text class="t num" x="563.0" y="347.0" text-anchor="middle">6.2%</text></g><g class="hover"><title>Pittsburgh Steelers: Win Super Bowl 3.0%</title>
+                  <rect x="623.0" y="331.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.12"/>
                   <rect x="623.0" y="331.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="347.0" text-anchor="middle">4.5%</text></g>
-<text class="t" x="24" y="373.0" font-weight="600">BAL</text><text class="t2 num" x="68" y="373.0">4-2</text><g class="hover"><title>Baltimore Ravens: Make playoffs 54%</title>
-                  <rect x="151.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.69"/>
+                  <text class="t num" x="681.0" y="347.0" text-anchor="middle">3.0%</text></g>
+<text class="t" x="24" y="373.0" font-weight="600">BAL</text><text class="t2 num" x="68" y="373.0">4-2</text><g class="hover"><title>Baltimore Ravens: Make playoffs 55%</title>
+                  <rect x="151.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.7"/>
                   <rect x="151.0" y="357.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="373.0" text-anchor="middle">54%</text></g><g class="hover"><title>Baltimore Ravens: Divisional 31%</title>
-                  <rect x="269.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.49"/>
+                  <text class="on num" x="209.0" y="373.0" text-anchor="middle">55%</text></g><g class="hover"><title>Baltimore Ravens: Divisional 29%</title>
+                  <rect x="269.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.47"/>
                   <rect x="269.0" y="357.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="373.0" text-anchor="middle">31%</text></g><g class="hover"><title>Baltimore Ravens: Conf. title game 16%</title>
-                  <rect x="387.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.33"/>
+                  <text class="t num" x="327.0" y="373.0" text-anchor="middle">29%</text></g><g class="hover"><title>Baltimore Ravens: Conf. title game 13%</title>
+                  <rect x="387.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.3"/>
                   <rect x="387.0" y="357.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="373.0" text-anchor="middle">16%</text></g><g class="hover"><title>Baltimore Ravens: Super Bowl 6.5%</title>
+                  <text class="t num" x="445.0" y="373.0" text-anchor="middle">13%</text></g><g class="hover"><title>Baltimore Ravens: Super Bowl 6.2%</title>
                   <rect x="505.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.19"/>
                   <rect x="505.0" y="357.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="373.0" text-anchor="middle">6.5%</text></g><g class="hover"><title>Baltimore Ravens: Win Super Bowl 3.5%</title>
-                  <rect x="623.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.13"/>
+                  <text class="t num" x="563.0" y="373.0" text-anchor="middle">6.2%</text></g><g class="hover"><title>Baltimore Ravens: Win Super Bowl 2.9%</title>
+                  <rect x="623.0" y="357.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.12"/>
                   <rect x="623.0" y="357.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="373.0" text-anchor="middle">3.5%</text></g>
-<text class="t" x="24" y="399.0" font-weight="600">PIT</text><text class="t2 num" x="68" y="399.0">4-2</text><g class="hover"><title>Pittsburgh Steelers: Make playoffs 53%</title>
-                  <rect x="151.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.68"/>
+                  <text class="t num" x="681.0" y="373.0" text-anchor="middle">2.9%</text></g>
+<text class="t" x="24" y="399.0" font-weight="600">DET</text><text class="t2 num" x="68" y="399.0">3-2</text><g class="hover"><title>Detroit Lions: Make playoffs 54%</title>
+                  <rect x="151.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.69"/>
                   <rect x="151.0" y="383.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="399.0" text-anchor="middle">53%</text></g><g class="hover"><title>Pittsburgh Steelers: Divisional 28%</title>
-                  <rect x="269.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.47"/>
+                  <text class="on num" x="209.0" y="399.0" text-anchor="middle">54%</text></g><g class="hover"><title>Detroit Lions: Divisional 27%</title>
+                  <rect x="269.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.46"/>
                   <rect x="269.0" y="383.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="399.0" text-anchor="middle">28%</text></g><g class="hover"><title>Pittsburgh Steelers: Conf. title game 13%</title>
-                  <rect x="387.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.29"/>
+                  <text class="t num" x="327.0" y="399.0" text-anchor="middle">27%</text></g><g class="hover"><title>Detroit Lions: Conf. title game 12%</title>
+                  <rect x="387.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.28"/>
                   <rect x="387.0" y="383.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="399.0" text-anchor="middle">13%</text></g><g class="hover"><title>Pittsburgh Steelers: Super Bowl 5.0%</title>
-                  <rect x="505.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.17"/>
+                  <text class="t num" x="445.0" y="399.0" text-anchor="middle">12%</text></g><g class="hover"><title>Detroit Lions: Super Bowl 5.7%</title>
+                  <rect x="505.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
                   <rect x="505.0" y="383.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="399.0" text-anchor="middle">5.0%</text></g><g class="hover"><title>Pittsburgh Steelers: Win Super Bowl 3.5%</title>
-                  <rect x="623.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.13"/>
+                  <text class="t num" x="563.0" y="399.0" text-anchor="middle">5.7%</text></g><g class="hover"><title>Detroit Lions: Win Super Bowl 2.7%</title>
+                  <rect x="623.0" y="383.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.11"/>
                   <rect x="623.0" y="383.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="399.0" text-anchor="middle">3.5%</text></g>
-<text class="t" x="24" y="425.0" font-weight="600">GB</text><text class="t2 num" x="68" y="425.0">4-2</text><g class="hover"><title>Green Bay Packers: Make playoffs 57%</title>
-                  <rect x="151.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.71"/>
+                  <text class="t num" x="681.0" y="399.0" text-anchor="middle">2.7%</text></g>
+<text class="t" x="24" y="425.0" font-weight="600">CAR</text><text class="t2 num" x="68" y="425.0">3-2</text><g class="hover"><title>Carolina Panthers: Make playoffs 63%</title>
+                  <rect x="151.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.76"/>
                   <rect x="151.0" y="409.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="425.0" text-anchor="middle">57%</text></g><g class="hover"><title>Green Bay Packers: Divisional 25%</title>
-                  <rect x="269.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.43"/>
+                  <text class="on num" x="209.0" y="425.0" text-anchor="middle">63%</text></g><g class="hover"><title>Carolina Panthers: Divisional 32%</title>
+                  <rect x="269.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.51"/>
                   <rect x="269.0" y="409.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="425.0" text-anchor="middle">25%</text></g><g class="hover"><title>Green Bay Packers: Conf. title game 13%</title>
-                  <rect x="387.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.29"/>
+                  <text class="t num" x="327.0" y="425.0" text-anchor="middle">32%</text></g><g class="hover"><title>Carolina Panthers: Conf. title game 14%</title>
+                  <rect x="387.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.31"/>
                   <rect x="387.0" y="409.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="425.0" text-anchor="middle">13%</text></g><g class="hover"><title>Green Bay Packers: Super Bowl 6.0%</title>
+                  <text class="t num" x="445.0" y="425.0" text-anchor="middle">14%</text></g><g class="hover"><title>Carolina Panthers: Super Bowl 5.9%</title>
                   <rect x="505.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
                   <rect x="505.0" y="409.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="425.0" text-anchor="middle">6.0%</text></g><g class="hover"><title>Green Bay Packers: Win Super Bowl 2.5%</title>
+                  <text class="t num" x="563.0" y="425.0" text-anchor="middle">5.9%</text></g><g class="hover"><title>Carolina Panthers: Win Super Bowl 2.6%</title>
                   <rect x="623.0" y="409.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.11"/>
                   <rect x="623.0" y="409.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="425.0" text-anchor="middle">2.5%</text></g>
-<text class="t" x="24" y="451.0" font-weight="600">CHI</text><text class="t2 num" x="68" y="451.0">4-2</text><g class="hover"><title>Chicago Bears: Make playoffs 60%</title>
-                  <rect x="151.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.73"/>
+                  <text class="t num" x="681.0" y="425.0" text-anchor="middle">2.6%</text></g>
+<text class="t" x="24" y="451.0" font-weight="600">GB</text><text class="t2 num" x="68" y="451.0">4-2</text><g class="hover"><title>Green Bay Packers: Make playoffs 53%</title>
+                  <rect x="151.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.68"/>
                   <rect x="151.0" y="435.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="451.0" text-anchor="middle">60%</text></g><g class="hover"><title>Chicago Bears: Divisional 30%</title>
-                  <rect x="269.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.49"/>
+                  <text class="on num" x="209.0" y="451.0" text-anchor="middle">53%</text></g><g class="hover"><title>Green Bay Packers: Divisional 25%</title>
+                  <rect x="269.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.44"/>
                   <rect x="269.0" y="435.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="451.0" text-anchor="middle">30%</text></g><g class="hover"><title>Chicago Bears: Conf. title game 14%</title>
-                  <rect x="387.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.3"/>
+                  <text class="t num" x="327.0" y="451.0" text-anchor="middle">25%</text></g><g class="hover"><title>Green Bay Packers: Conf. title game 11%</title>
+                  <rect x="387.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.26"/>
                   <rect x="387.0" y="435.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="451.0" text-anchor="middle">14%</text></g><g class="hover"><title>Chicago Bears: Super Bowl 6.0%</title>
-                  <rect x="505.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
+                  <text class="t num" x="445.0" y="451.0" text-anchor="middle">11%</text></g><g class="hover"><title>Green Bay Packers: Super Bowl 4.5%</title>
+                  <rect x="505.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.16"/>
                   <rect x="505.0" y="435.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="451.0" text-anchor="middle">6.0%</text></g><g class="hover"><title>Chicago Bears: Win Super Bowl 2.0%</title>
+                  <text class="t num" x="563.0" y="451.0" text-anchor="middle">4.5%</text></g><g class="hover"><title>Green Bay Packers: Win Super Bowl 2.1%</title>
                   <rect x="623.0" y="435.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.1"/>
                   <rect x="623.0" y="435.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="451.0" text-anchor="middle">2.0%</text></g>
-<text class="t" x="24" y="477.0" font-weight="600">CIN</text><text class="t2 num" x="68" y="477.0">3-2</text><g class="hover"><title>Cincinnati Bengals: Make playoffs 56%</title>
-                  <rect x="151.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.71"/>
+                  <text class="t num" x="681.0" y="451.0" text-anchor="middle">2.1%</text></g>
+<text class="t" x="24" y="477.0" font-weight="600">CIN</text><text class="t2 num" x="68" y="477.0">3-2</text><g class="hover"><title>Cincinnati Bengals: Make playoffs 51%</title>
+                  <rect x="151.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.66"/>
                   <rect x="151.0" y="461.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="477.0" text-anchor="middle">56%</text></g><g class="hover"><title>Cincinnati Bengals: Divisional 28%</title>
-                  <rect x="269.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.47"/>
+                  <text class="on num" x="209.0" y="477.0" text-anchor="middle">51%</text></g><g class="hover"><title>Cincinnati Bengals: Divisional 25%</title>
+                  <rect x="269.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.43"/>
                   <rect x="269.0" y="461.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="477.0" text-anchor="middle">28%</text></g><g class="hover"><title>Cincinnati Bengals: Conf. title game 8.5%</title>
-                  <rect x="387.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.23"/>
+                  <text class="t num" x="327.0" y="477.0" text-anchor="middle">25%</text></g><g class="hover"><title>Cincinnati Bengals: Conf. title game 10%</title>
+                  <rect x="387.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.26"/>
                   <rect x="387.0" y="461.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="477.0" text-anchor="middle">8.5%</text></g><g class="hover"><title>Cincinnati Bengals: Super Bowl 6.0%</title>
-                  <rect x="505.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
+                  <text class="t num" x="445.0" y="477.0" text-anchor="middle">10%</text></g><g class="hover"><title>Cincinnati Bengals: Super Bowl 4.4%</title>
+                  <rect x="505.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.15"/>
                   <rect x="505.0" y="461.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="477.0" text-anchor="middle">6.0%</text></g><g class="hover"><title>Cincinnati Bengals: Win Super Bowl 1.5%</title>
-                  <rect x="623.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.08"/>
+                  <text class="t num" x="563.0" y="477.0" text-anchor="middle">4.4%</text></g><g class="hover"><title>Cincinnati Bengals: Win Super Bowl 2.0%</title>
+                  <rect x="623.0" y="461.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.1"/>
                   <rect x="623.0" y="461.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="477.0" text-anchor="middle">1.5%</text></g>
-<text class="t" x="24" y="503.0" font-weight="600">HOU</text><text class="t2 num" x="68" y="503.0">2-4</text><g class="hover"><title>Houston Texans: Make playoffs 35%</title>
-                  <rect x="151.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.53"/>
+                  <text class="t num" x="681.0" y="477.0" text-anchor="middle">2.0%</text></g>
+<text class="t" x="24" y="503.0" font-weight="600">LAR</text><text class="t2 num" x="68" y="503.0">2-4</text><g class="hover"><title>Los Angeles Rams: Make playoffs 32%</title>
+                  <rect x="151.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.5"/>
                   <rect x="151.0" y="487.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="209.0" y="503.0" text-anchor="middle">35%</text></g><g class="hover"><title>Houston Texans: Divisional 17%</title>
+                  <text class="t num" x="209.0" y="503.0" text-anchor="middle">32%</text></g><g class="hover"><title>Los Angeles Rams: Divisional 17%</title>
                   <rect x="269.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.34"/>
                   <rect x="269.0" y="487.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="503.0" text-anchor="middle">17%</text></g><g class="hover"><title>Houston Texans: Conf. title game 8.5%</title>
-                  <rect x="387.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.23"/>
+                  <text class="t num" x="327.0" y="503.0" text-anchor="middle">17%</text></g><g class="hover"><title>Los Angeles Rams: Conf. title game 7.6%</title>
+                  <rect x="387.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.21"/>
                   <rect x="387.0" y="487.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="503.0" text-anchor="middle">8.5%</text></g><g class="hover"><title>Houston Texans: Super Bowl 3.0%</title>
-                  <rect x="505.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.12"/>
+                  <text class="t num" x="445.0" y="503.0" text-anchor="middle">7.6%</text></g><g class="hover"><title>Los Angeles Rams: Super Bowl 3.8%</title>
+                  <rect x="505.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.14"/>
                   <rect x="505.0" y="487.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="503.0" text-anchor="middle">3.0%</text></g><g class="hover"><title>Houston Texans: Win Super Bowl 1.5%</title>
-                  <rect x="623.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.08"/>
+                  <text class="t num" x="563.0" y="503.0" text-anchor="middle">3.8%</text></g><g class="hover"><title>Los Angeles Rams: Win Super Bowl 1.9%</title>
+                  <rect x="623.0" y="487.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.09"/>
                   <rect x="623.0" y="487.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="503.0" text-anchor="middle">1.5%</text></g>
-<text class="t" x="24" y="529.0" font-weight="600">LV</text><text class="t2 num" x="68" y="529.0">3-3</text><g class="hover"><title>Las Vegas Raiders: Make playoffs 16%</title>
-                  <rect x="151.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.33"/>
+                  <text class="t num" x="681.0" y="503.0" text-anchor="middle">1.9%</text></g>
+<text class="t" x="24" y="529.0" font-weight="600">HOU</text><text class="t2 num" x="68" y="529.0">2-4</text><g class="hover"><title>Houston Texans: Make playoffs 33%</title>
+                  <rect x="151.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.52"/>
                   <rect x="151.0" y="513.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="209.0" y="529.0" text-anchor="middle">16%</text></g><g class="hover"><title>Las Vegas Raiders: Divisional 6.0%</title>
-                  <rect x="269.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
+                  <text class="t num" x="209.0" y="529.0" text-anchor="middle">33%</text></g><g class="hover"><title>Houston Texans: Divisional 17%</title>
+                  <rect x="269.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.35"/>
                   <rect x="269.0" y="513.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="529.0" text-anchor="middle">6.0%</text></g><g class="hover"><title>Las Vegas Raiders: Conf. title game 3.0%</title>
-                  <rect x="387.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.12"/>
+                  <text class="t num" x="327.0" y="529.0" text-anchor="middle">17%</text></g><g class="hover"><title>Houston Texans: Conf. title game 7.8%</title>
+                  <rect x="387.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.22"/>
                   <rect x="387.0" y="513.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="529.0" text-anchor="middle">3.0%</text></g><g class="hover"><title>Las Vegas Raiders: Super Bowl 2.0%</title>
-                  <rect x="505.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.1"/>
+                  <text class="t num" x="445.0" y="529.0" text-anchor="middle">7.8%</text></g><g class="hover"><title>Houston Texans: Super Bowl 3.6%</title>
+                  <rect x="505.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.14"/>
                   <rect x="505.0" y="513.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="529.0" text-anchor="middle">2.0%</text></g><g class="hover"><title>Las Vegas Raiders: Win Super Bowl 1.5%</title>
-                  <rect x="623.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.08"/>
+                  <text class="t num" x="563.0" y="529.0" text-anchor="middle">3.6%</text></g><g class="hover"><title>Houston Texans: Win Super Bowl 1.8%</title>
+                  <rect x="623.0" y="513.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.09"/>
                   <rect x="623.0" y="513.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="529.0" text-anchor="middle">1.5%</text></g>
-<text class="t" x="24" y="555.0" font-weight="600">CLE</text><text class="t2 num" x="68" y="555.0">4-2</text><g class="hover"><title>Cleveland Browns: Make playoffs 50%</title>
-                  <rect x="151.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.66"/>
+                  <text class="t num" x="681.0" y="529.0" text-anchor="middle">1.8%</text></g>
+<text class="t" x="24" y="555.0" font-weight="600">CLE</text><text class="t2 num" x="68" y="555.0">4-2</text><g class="hover"><title>Cleveland Browns: Make playoffs 47%</title>
+                  <rect x="151.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.64"/>
                   <rect x="151.0" y="539.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="on num" x="209.0" y="555.0" text-anchor="middle">50%</text></g><g class="hover"><title>Cleveland Browns: Divisional 19%</title>
-                  <rect x="269.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.37"/>
+                  <text class="on num" x="209.0" y="555.0" text-anchor="middle">47%</text></g><g class="hover"><title>Cleveland Browns: Divisional 20%</title>
+                  <rect x="269.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.38"/>
                   <rect x="269.0" y="539.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="555.0" text-anchor="middle">19%</text></g><g class="hover"><title>Cleveland Browns: Conf. title game 6.0%</title>
-                  <rect x="387.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.18"/>
+                  <text class="t num" x="327.0" y="555.0" text-anchor="middle">20%</text></g><g class="hover"><title>Cleveland Browns: Conf. title game 7.6%</title>
+                  <rect x="387.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.21"/>
                   <rect x="387.0" y="539.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="555.0" text-anchor="middle">6.0%</text></g><g class="hover"><title>Cleveland Browns: Super Bowl 1.5%</title>
-                  <rect x="505.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.08"/>
+                  <text class="t num" x="445.0" y="555.0" text-anchor="middle">7.6%</text></g><g class="hover"><title>Cleveland Browns: Super Bowl 3.2%</title>
+                  <rect x="505.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.13"/>
                   <rect x="505.0" y="539.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="555.0" text-anchor="middle">1.5%</text></g><g class="hover"><title>Cleveland Browns: Win Super Bowl 1.0%</title>
-                  <rect x="623.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.06"/>
+                  <text class="t num" x="563.0" y="555.0" text-anchor="middle">3.2%</text></g><g class="hover"><title>Cleveland Browns: Win Super Bowl 1.4%</title>
+                  <rect x="623.0" y="539.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.08"/>
                   <rect x="623.0" y="539.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="555.0" text-anchor="middle">1.0%</text></g>
-<text class="t" x="24" y="581.0" font-weight="600">ATL</text><text class="t2 num" x="68" y="581.0">2-4</text><g class="hover"><title>Atlanta Falcons: Make playoffs 24%</title>
-                  <rect x="151.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.42"/>
+                  <text class="t num" x="681.0" y="555.0" text-anchor="middle">1.4%</text></g>
+<text class="t" x="24" y="581.0" font-weight="600">NYG</text><text class="t2 num" x="68" y="581.0">3-2-1</text><g class="hover"><title>New York Giants: Make playoffs 46%</title>
+                  <rect x="151.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.63"/>
                   <rect x="151.0" y="565.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="209.0" y="581.0" text-anchor="middle">24%</text></g><g class="hover"><title>Atlanta Falcons: Divisional 16%</title>
-                  <rect x="269.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.33"/>
+                  <text class="on num" x="209.0" y="581.0" text-anchor="middle">46%</text></g><g class="hover"><title>New York Giants: Divisional 21%</title>
+                  <rect x="269.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.39"/>
                   <rect x="269.0" y="565.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="581.0" text-anchor="middle">16%</text></g><g class="hover"><title>Atlanta Falcons: Conf. title game 7.0%</title>
-                  <rect x="387.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.2"/>
+                  <text class="t num" x="327.0" y="581.0" text-anchor="middle">21%</text></g><g class="hover"><title>New York Giants: Conf. title game 7.4%</title>
+                  <rect x="387.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.21"/>
                   <rect x="387.0" y="565.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="581.0" text-anchor="middle">7.0%</text></g><g class="hover"><title>Atlanta Falcons: Super Bowl 2.0%</title>
-                  <rect x="505.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.1"/>
+                  <text class="t num" x="445.0" y="581.0" text-anchor="middle">7.4%</text></g><g class="hover"><title>New York Giants: Super Bowl 2.8%</title>
+                  <rect x="505.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.12"/>
                   <rect x="505.0" y="565.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="581.0" text-anchor="middle">2.0%</text></g><g class="hover"><title>Atlanta Falcons: Win Super Bowl 1.0%</title>
-                  <rect x="623.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.06"/>
+                  <text class="t num" x="563.0" y="581.0" text-anchor="middle">2.8%</text></g><g class="hover"><title>New York Giants: Win Super Bowl 1.1%</title>
+                  <rect x="623.0" y="565.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.07"/>
                   <rect x="623.0" y="565.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="581.0" text-anchor="middle">1.0%</text></g>
-<text class="t" x="24" y="607.0" font-weight="600">NO</text><text class="t2 num" x="68" y="607.0">2-4</text><g class="hover"><title>New Orleans Saints: Make playoffs 22%</title>
-                  <rect x="151.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.4"/>
+                  <text class="t num" x="681.0" y="581.0" text-anchor="middle">1.1%</text></g>
+<text class="t" x="24" y="607.0" font-weight="600">PHI</text><text class="t2 num" x="68" y="607.0">2-4</text><g class="hover"><title>Philadelphia Eagles: Make playoffs 30%</title>
+                  <rect x="151.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.48"/>
                   <rect x="151.0" y="591.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="209.0" y="607.0" text-anchor="middle">22%</text></g><g class="hover"><title>New Orleans Saints: Divisional 11%</title>
-                  <rect x="269.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.26"/>
+                  <text class="t num" x="209.0" y="607.0" text-anchor="middle">30%</text></g><g class="hover"><title>Philadelphia Eagles: Divisional 13%</title>
+                  <rect x="269.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.3"/>
                   <rect x="269.0" y="591.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="327.0" y="607.0" text-anchor="middle">11%</text></g><g class="hover"><title>New Orleans Saints: Conf. title game 2.5%</title>
-                  <rect x="387.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.11"/>
+                  <text class="t num" x="327.0" y="607.0" text-anchor="middle">13%</text></g><g class="hover"><title>Philadelphia Eagles: Conf. title game 5.1%</title>
+                  <rect x="387.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.17"/>
                   <rect x="387.0" y="591.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="445.0" y="607.0" text-anchor="middle">2.5%</text></g><g class="hover"><title>New Orleans Saints: Super Bowl 1.0%</title>
-                  <rect x="505.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.06"/>
+                  <text class="t num" x="445.0" y="607.0" text-anchor="middle">5.1%</text></g><g class="hover"><title>Philadelphia Eagles: Super Bowl 2.1%</title>
+                  <rect x="505.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.1"/>
                   <rect x="505.0" y="591.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="563.0" y="607.0" text-anchor="middle">1.0%</text></g><g class="hover"><title>New Orleans Saints: Win Super Bowl 1.0%</title>
+                  <text class="t num" x="563.0" y="607.0" text-anchor="middle">2.1%</text></g><g class="hover"><title>Philadelphia Eagles: Win Super Bowl 0.9%</title>
                   <rect x="623.0" y="591.0" width="116.0" height="24.0" rx="3" class="s1" fill-opacity="0.06"/>
                   <rect x="623.0" y="591.0" width="116.0" height="24.0" rx="3" fill="none" class="grid"/>
-                  <text class="t num" x="681.0" y="607.0" text-anchor="middle">1.0%</text></g>
+                  <text class="t num" x="681.0" y="607.0" text-anchor="middle">0.9%</text></g>
 </svg>

@@ -67,13 +67,8 @@ class Pipeline(private val source: ScoreboardSource, private val root: Path, pri
         val output = root.resolve("output")
         val history = output.resolve("history")
         val charts = root.resolve("docs/charts")
-        val schema = root.resolve("docs/schema")
-        listOf(history, charts, schema).forEach(Files::createDirectories)
-        Files.writeString(schema.resolve("pockethost_collections.json"), json.encodeToString(PocketBaseSchema.importJson()) + "\n")
-        root.resolve(TypeScriptSchema.PATH).takeIf { Files.isDirectory(it.parent.parent) }?.let { ts ->
-            Files.createDirectories(ts.parent)
-            Files.writeString(ts, TypeScriptSchema.generate())
-        }
+        listOf(history, charts).forEach(Files::createDirectories)
+        writeSchemaArtifacts()
 
         val encoded = json.encodeToString(report)
         Files.writeString(output.resolve("latest.json"), encoded)
@@ -98,6 +93,17 @@ class Pipeline(private val source: ScoreboardSource, private val root: Path, pri
                 else "_The trend chart appears once a second weekly snapshot exists in `output/history/`._",
             ).fold(Files.readString(readme)) { doc, (marker, content) -> MarkdownReport.inject(doc, marker, content) }
             Files.writeString(readme, updated)
+        }
+    }
+
+    /** Writes only the schema artifacts (PocketBase import JSON, TypeScript typings); touches no model outputs. */
+    fun writeSchemaArtifacts() {
+        val schema = root.resolve("docs/schema")
+        Files.createDirectories(schema)
+        Files.writeString(schema.resolve("pockethost_collections.json"), json.encodeToString(PocketBaseSchema.importJson()) + "\n")
+        root.resolve(TypeScriptSchema.PATH).takeIf { Files.isDirectory(it.parent.parent) }?.let { ts ->
+            Files.createDirectories(ts.parent)
+            Files.writeString(ts, TypeScriptSchema.generate())
         }
     }
 

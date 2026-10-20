@@ -30,6 +30,11 @@ fun main(args: Array<String>) {
     val root = Path.of("").toAbsolutePath()
     val dotEnvs = listOf(root.resolve(".env"), Path.of(System.getProperty("user.home"), ".env"))
     val source = CachingSource(EspnHttpSource(), root.resolve(".cache/espn"), season)
+    if (flags["schema-only"] == "true") {
+        Pipeline(source, root).writeSchemaArtifacts()
+        println("Schema artifacts written (docs/schema, clients/ts/src/generated)")
+        return
+    }
     val dbConfig = if (dbMode == "off") null
     else PocketHostConfig.resolve(System.getenv(), dotEnvs)
         .getOrElse { fail("${it.message}. Use --db off for a local-only run.") }

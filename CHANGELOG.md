@@ -2,6 +2,16 @@
 
 All notable changes to this project follow [Semantic Versioning](https://semver.org/) with `-RC#` release candidates.
 
+## [0.1.0-RC6] - 2026-10-20
+
+### Changed
+- Data refresh through week 6 including Monday night (SF 6-0). A second daily snapshot means the odds-over-time chart now renders.
+
+### Fixed
+- `just schema-ts` now uses `--schema-only` and writes only schema artifacts. It previously re-ran a 200-iteration simulation that overwrote the 2026-10-19 snapshot, which is now restored to the original 20,000-iteration run.
+- Odds-trend end labels no longer overlap when series are close.
+- `just refresh` checks for `POCKETHOST_PASSWORD` up front with a one-line message. Added `just set-password` (hidden input, writes the git-ignored `.env`).
+
 ## [0.1.0-RC5] - 2026-10-19
 
 ### Added
