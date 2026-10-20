@@ -22,6 +22,7 @@ import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.Types
 import java.time.Instant
+import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import kotlin.io.path.isDirectory
@@ -105,20 +106,37 @@ object JdbcReplica {
         }.onFailure { conn.rollback() }.getOrThrow()
     }
 
+    private enum class Kind { TIMESTAMP, JSON, BOOL, INT, DOUBLE, TEXT }
+
+    private fun kind(def: CollectionDef, column: String): Kind = when (def.fields.firstOrNull { it.name == column }?.type) {
+        FieldType.DATE -> Kind.TIMESTAMP
+        FieldType.JSON -> Kind.JSON
+        FieldType.BOOL -> Kind.BOOL
+        FieldType.NUMBER -> if (column.startsWith("int_")) Kind.INT else Kind.DOUBLE
+        FieldType.TEXT -> Kind.TEXT
+        null -> if (column in SqlDialect.SYSTEM_TIMESTAMPS) Kind.TIMESTAMP else Kind.TEXT // id, rel_*
+    }
+
     private fun bind(ps: PreparedStatement, dialect: SqlDialect, def: CollectionDef, row: JsonObject) {
-        val types = def.fields.associate { it.name to it }
-        dialect.columns(def).forEachIndexed { i, col ->
+        dialect.columns(def).forEachIndexed { i, column ->
             val idx = i + 1
-            val value = row[col]
-            val field = types[col]
-            val primitive = value as? JsonPrimitive
+            val value = row[column]?.takeUnless { it is JsonNull }
+            val text = (value as? JsonPrimitive)?.content
             when {
-                value == null || value is JsonNull -> ps.setNull(idx, if (field?.type == FieldType.NUMBER) Types.NUMERIC else Types.VARCHAR)
-                field?.type == FieldType.JSON -> ps.setString(idx, value.toString())
-                field?.type == FieldType.BOOL -> primitive!!.content.toBoolean().let { b -> if (dialect == SqlDialect.POSTGRES) ps.setBoolean(idx, b) else ps.setInt(idx, if (b) 1 else 0) }
-                field?.type == FieldType.NUMBER && col.startsWith("int_") -> ps.setLong(idx, primitive!!.content.toDouble().toLong())
-                field?.type == FieldType.NUMBER -> ps.setDouble(idx, primitive!!.content.toDouble())
-                else -> ps.setString(idx, primitive!!.content)
+                value == null -> ps.setNull(idx, Types.NULL)
+                else -> when (kind(def, column)) {
+                    // PocketBase stores an unset date as "" -> SQL NULL.
+                    Kind.TIMESTAMP -> when {
+                        text.isNullOrBlank() -> ps.setNull(idx, Types.NULL)
+                        dialect == SqlDialect.POSTGRES -> ps.setObject(idx, OffsetDateTime.ofInstant(Instant.parse(text.replace(' ', 'T')), ZoneOffset.UTC))
+                        else -> ps.setString(idx, text)
+                    }
+                    Kind.JSON -> ps.setString(idx, value.toString())
+                    Kind.BOOL -> text.toBoolean().let { b -> if (dialect == SqlDialect.POSTGRES) ps.setBoolean(idx, b) else ps.setInt(idx, if (b) 1 else 0) }
+                    Kind.INT -> ps.setLong(idx, text!!.toDouble().toLong())
+                    Kind.DOUBLE -> ps.setDouble(idx, text!!.toDouble())
+                    Kind.TEXT -> ps.setString(idx, text)
+                }
             }
         }
     }

@@ -11,6 +11,8 @@ import com.gridiron.superbowl.replica.SqliteReplica
 import com.gridiron.superbowl.sync.Backoff
 import com.gridiron.superbowl.sync.PocketBaseClient
 import com.gridiron.superbowl.sync.PocketHostConfig
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import java.net.Socket
 import java.nio.file.Files
 import java.nio.file.Path
@@ -129,5 +131,29 @@ class ReplicationTest {
         assertEquals("jdbc:postgresql://localhost:15432/postgres", d.url("postgres"))
         assertTrue(DbFactory.createStatement("nfl_x", "local_user").contains("TEMPLATE template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' CONNECTION LIMIT = -1"))
         assertFailsWith<IllegalArgumentException> { DbFactory.createStatement("x; DROP", "u") }
+    }
+
+    @Test
+    fun blankDatesBecomeNullAndFailedBuildsRollBack() {
+        val games = snapshot.rows.getValue("i_nfl_games")
+        val blank = JsonObject(games.first() + ("dt_kickoff_utc" to JsonPrimitive("")))
+        val edited = snapshot.copy(rows = snapshot.rows + ("i_nfl_games" to listOf(blank) + games.drop(1)))
+        val file = root.resolve("blank.sqlite")
+        SqliteReplica.rebuild(file, edited)
+        DriverManager.getConnection("jdbc:sqlite:$file").use { conn ->
+            val nulls = conn.createStatement().executeQuery("SELECT COUNT(*) FROM i_nfl_games WHERE dt_kickoff_utc IS NULL").use { it.next(); it.getInt(1) }
+            assertEquals(1, nulls)
+        }
+        if (pgUp) PostgresReplica.rebuild(pg.copy(schema = "nfl_blank"), edited)
+
+        // An orphaned FK makes the load fail; the whole transaction (DDL + rows) rolls back.
+        val orphan = JsonObject(snapshot.rows.getValue("o_team_outlooks").first() + ("rel_team" to JsonPrimitive("missing")))
+        val broken = snapshot.copy(rows = snapshot.rows + ("o_team_outlooks" to listOf(orphan)))
+        val brokenFile = root.resolve("broken.sqlite")
+        assertFailsWith<SQLException> { SqliteReplica.rebuild(brokenFile, broken) }
+        DriverManager.getConnection("jdbc:sqlite:$brokenFile").use { conn ->
+            val tables = conn.createStatement().executeQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table'").use { it.next(); it.getInt(1) }
+            assertEquals(0, tables)
+        }
     }
 }

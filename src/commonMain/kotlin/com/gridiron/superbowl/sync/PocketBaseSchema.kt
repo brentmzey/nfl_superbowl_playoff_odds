@@ -15,9 +15,10 @@ import kotlinx.serialization.json.put
 import kotlin.math.abs
 
 /** PocketBase field types used by this schema (PocketBase >= 0.23 `fields` format). */
-enum class FieldType(val wire: String) { TEXT("text"), NUMBER("number"), BOOL("bool"), JSON("json") }
+enum class FieldType(val wire: String) { TEXT("text"), NUMBER("number"), BOOL("bool"), JSON("json"), DATE("date") }
 
-data class FieldDef(val name: String, val type: FieldType, val required: Boolean = false)
+/** One column. [tsType] overrides the generated TypeScript type (e.g. a JSON column holding `number[]`). */
+data class FieldDef(val name: String, val type: FieldType, val required: Boolean = false, val tsType: String? = null)
 
 /**
  * A single-record relation (`rel_` column): PocketBase's foreign key. It is validated on every write, `required`
@@ -44,6 +45,8 @@ data class IndexDef(val columns: List<String>, val unique: Boolean = false, val 
  */
 data class CollectionDef(
     val name: String,
+    /** Semantic singular name for generated client types, e.g. `TeamOutlook`. */
+    val typeName: String,
     val fields: List<FieldDef>,
     val upsertKey: List<String>,
     val relations: List<RelationDef> = emptyList(),
@@ -76,6 +79,24 @@ data class CollectionDef(
         put("required", true)
     }
 
+    /**
+     * PocketBase system timestamps (`autodate`), maintained by the server. They power `sort: '-created'` in clients
+     * and complement the explicit `int_*_epoch_ms_utc` audit columns, which survive exports and replicas unchanged.
+     */
+    val systemFields: List<JsonObject>
+        get() = listOf("created" to false, "updated" to true).map { (n, onUpdate) ->
+            buildJsonObject {
+                put("name", n)
+                put("type", "autodate")
+                put("onCreate", true)
+                put("onUpdate", onUpdate)
+                put("system", false)
+                put("hidden", false)
+            }
+        }
+
+    fun baseFieldsJson(): List<JsonObject> = fields.map(::fieldJson) + systemFields
+
     private fun rules(): Map<String, JsonElement> = mapOf(
         // Public read (for dashboards); writes are superuser-only.
         "listRule" to JsonPrimitive(""), "viewRule" to JsonPrimitive(""),
@@ -85,20 +106,29 @@ data class CollectionDef(
     /** Step 001 payload: base columns only (no relations, no indexes). */
     fun baseJson(): JsonObject = JsonObject(
         mapOf("id" to JsonPrimitive(id), "name" to JsonPrimitive(name), "type" to JsonPrimitive("base")) + rules() +
-            mapOf("fields" to JsonArray(fields.map(::fieldJson)), "indexes" to JsonArray(emptyList())),
+            mapOf("fields" to JsonArray(baseFieldsJson()), "indexes" to JsonArray(emptyList())),
     )
 
     /** Final state after every step, for PocketBase's "Import collections" screen. */
     fun importJson(): JsonObject = JsonObject(
         baseJson() + mapOf(
-            "fields" to JsonArray(fields.map(::fieldJson) + relations.map { relationJson(it, it.target) }),
+            "fields" to JsonArray(baseFieldsJson() + relations.map { relationJson(it, it.target) }),
             "indexes" to JsonArray(indexSql().map(::JsonPrimitive)),
         ),
     )
 }
 
-/** A read-only PocketBase view collection (`s_` summary prefix), created in migration step 004. */
-data class ViewDef(val name: String, val query: String) {
+/** A view column: `alias.field`, typed by the source [field] so clients get exact types. */
+data class ViewColumn(val alias: String, val field: FieldDef)
+
+/**
+ * A read-only PocketBase view collection (`s_` summary prefix), created in migration step 004. The SQL is built
+ * from [columns], so the query and the generated client types cannot drift apart.
+ */
+data class ViewDef(val name: String, val typeName: String, val idAlias: String, val columns: List<ViewColumn>, val from: String) {
+    val query: String
+        get() = "SELECT $idAlias.id,\n       " + columns.joinToString(",\n       ") { "${it.alias}.${it.field.name}" } + "\n$from"
+
     fun json(): JsonObject = JsonObject(
         mapOf(
             "id" to JsonPrimitive(name), "name" to JsonPrimitive(name), "type" to JsonPrimitive("view"),
@@ -128,33 +158,34 @@ data class PbRecord(val collection: String, val data: JsonObject, val relations:
  * Numbers and booleans are never `required` because PocketBase treats 0 / false as blank.
  */
 object PocketBaseSchema {
-    const val ENGINE_VERSION = "0.1.0-RC4-elo-mc"
+    const val ENGINE_VERSION = "0.1.0-RC5-elo-mc"
     const val ACTIVE = "ACTIVE"
     const val SUPERSEDED = "SUPERSEDED"
     val auditColumns = setOf("bool_is_active", "str_status_code", "int_created_epoch_ms_utc", "int_updated_epoch_ms_utc")
 
     private val audit = listOf(
         FieldDef("bool_is_active", FieldType.BOOL),
-        FieldDef("str_status_code", FieldType.TEXT, required = true),
+        FieldDef("str_status_code", FieldType.TEXT, required = true, tsType = "StatusCode"),
         FieldDef("int_created_epoch_ms_utc", FieldType.NUMBER),
         FieldDef("int_updated_epoch_ms_utc", FieldType.NUMBER),
     )
 
     private fun text(n: String, required: Boolean = false) = FieldDef(n, FieldType.TEXT, required)
+    private fun date(n: String, required: Boolean = false) = FieldDef(n, FieldType.DATE, required)
     private fun num(n: String) = FieldDef(n, FieldType.NUMBER)
     private fun bool(n: String) = FieldDef(n, FieldType.BOOL)
 
     val teams = CollectionDef(
-        "i_nfl_teams",
-        listOf(text("str_team_code", true), text("str_team_name", true), text("str_conference", true), text("str_division", true)) + audit,
+        "i_nfl_teams", "NflTeam",
+        listOf(text("str_team_code", true), text("str_team_name", true), FieldDef("str_conference", FieldType.TEXT, true, tsType = "Conference"), text("str_division", true)) + audit,
         upsertKey = listOf("str_team_code"),
         extraIndexes = listOf(IndexDef(listOf("str_conference", "str_division"))),
     )
 
     val games = CollectionDef(
-        "i_nfl_games",
+        "i_nfl_games", "NflGame",
         listOf(
-            text("str_game_id", true), num("int_season_year"), text("str_phase", true), num("int_week"), text("dt_kickoff_utc"),
+            text("str_game_id", true), num("int_season_year"), FieldDef("str_phase", FieldType.TEXT, true, tsType = "SeasonPhase"), num("int_week"), date("dt_kickoff_utc"),
             text("str_home_code", true), text("str_away_code", true), bool("bool_neutral_site"), bool("bool_is_final"),
             num("int_home_score"), num("int_away_score"),
         ) + audit,
@@ -172,9 +203,9 @@ object PocketBaseSchema {
     )
 
     val runs = CollectionDef(
-        "m_simulation_runs",
+        "m_simulation_runs", "SimulationRun",
         listOf(
-            text("str_run_id", true), text("dt_run_date", true), num("int_season_year"), num("int_through_week"),
+            text("str_run_id", true), date("dt_run_date", true), num("int_season_year"), num("int_through_week"),
             num("int_games_played"), num("int_games_remaining"), num("int_total_iterations"), num("int_random_seed"),
             text("str_engine_version"), text("str_top_favorite_code"), num("dbl_top_favorite_prob"),
         ) + audit,
@@ -182,17 +213,19 @@ object PocketBaseSchema {
         extraIndexes = listOf(
             // "Latest ACTIVE run of a season" and the SUPERSEDED sweep.
             IndexDef(listOf("int_season_year", "str_status_code", "dt_run_date")),
+            // Newest runs first (`sort: '-created'`).
+            IndexDef(listOf("int_season_year", "created")),
         ),
     )
 
     val outlooks = CollectionDef(
-        "o_team_outlooks",
+        "o_team_outlooks", "TeamOutlook",
         listOf(
-            text("str_run_id", true), text("str_team_code", true), text("dt_run_date", true), num("int_season_year"),
+            text("str_run_id", true), text("str_team_code", true), date("dt_run_date", true), num("int_season_year"),
             num("int_wins"), num("int_losses"), num("int_ties"), num("dbl_elo_rating"), num("dbl_projected_wins"),
             num("dbl_division_prob"), num("dbl_top_seed_prob"), num("dbl_playoff_prob"), num("dbl_divisional_prob"),
             num("dbl_conference_prob"), num("dbl_superbowl_prob"), num("dbl_champion_prob"), num("int_champion_rank"),
-            FieldDef("json_seed_odds", FieldType.JSON),
+            FieldDef("json_seed_odds", FieldType.JSON, tsType = "number[]"),
         ) + audit,
         upsertKey = listOf("str_run_id", "str_team_code"),
         relations = listOf(RelationDef("rel_run", "m_simulation_runs"), RelationDef("rel_team", "i_nfl_teams")),
@@ -207,7 +240,7 @@ object PocketBaseSchema {
     )
 
     val matchups = CollectionDef(
-        "o_superbowl_matchups",
+        "o_superbowl_matchups", "SuperBowlMatchup",
         listOf(text("str_run_id", true), text("str_afc_code", true), text("str_nfc_code", true), num("int_rank"), num("dbl_probability")) + audit,
         upsertKey = listOf("str_run_id", "str_afc_code", "str_nfc_code"),
         relations = listOf(
@@ -220,28 +253,30 @@ object PocketBaseSchema {
 
     /** Ledger of applied migration steps (bootstrapped before step 001). */
     val migrationsLedger = CollectionDef(
-        "tbl_schema_migrations",
+        "tbl_schema_migrations", "SchemaMigration",
         listOf(text("str_migration_id", true), text("str_description"), text("str_fingerprint", true), num("int_applied_epoch_ms_utc")) + audit,
         upsertKey = listOf("str_migration_id"),
     )
 
     /** Current outlook for every team: rows of each season's ACTIVE run, joined to team metadata. */
-    val latestOutlooks = ViewDef(
-        "s_latest_team_outlooks",
-        """
-        SELECT o.id, o.str_team_code, t.str_team_name, t.str_conference, t.str_division,
-               r.str_run_id, r.dt_run_date, r.int_season_year, r.int_through_week,
-               o.int_wins, o.int_losses, o.int_ties, o.dbl_elo_rating, o.dbl_projected_wins,
-               o.dbl_playoff_prob, o.dbl_divisional_prob, o.dbl_conference_prob,
-               o.dbl_superbowl_prob, o.dbl_champion_prob, o.int_champion_rank
-        FROM o_team_outlooks o
-        JOIN m_simulation_runs r ON r.id = o.rel_run
-        JOIN i_nfl_teams t ON t.id = o.rel_team
-        WHERE r.str_status_code = 'ACTIVE'
-        """.trimIndent(),
-    )
+    val latestOutlooks: ViewDef by lazy {
+        fun o(n: String) = ViewColumn("o", outlooks.fields.first { it.name == n })
+        fun t(n: String) = ViewColumn("t", teams.fields.first { it.name == n })
+        fun r(n: String) = ViewColumn("r", runs.fields.first { it.name == n })
+        ViewDef(
+            "s_latest_team_outlooks", "LatestTeamOutlook", "o",
+            listOf(
+                o("str_team_code"), t("str_team_name"), t("str_conference"), t("str_division"),
+                r("str_run_id"), r("dt_run_date"), r("int_season_year"), r("int_through_week"),
+                o("int_wins"), o("int_losses"), o("int_ties"), o("dbl_elo_rating"), o("dbl_projected_wins"),
+                o("dbl_division_prob"), o("dbl_playoff_prob"), o("dbl_divisional_prob"), o("dbl_conference_prob"),
+                o("dbl_superbowl_prob"), o("dbl_champion_prob"), o("int_champion_rank"), o("json_seed_odds"),
+            ),
+            "FROM o_team_outlooks o\nJOIN m_simulation_runs r ON r.id = o.rel_run\nJOIN i_nfl_teams t ON t.id = o.rel_team\nWHERE r.str_status_code = 'ACTIVE'",
+        )
+    }
 
-    val views: List<ViewDef> = listOf(latestOutlooks)
+    val views: List<ViewDef> get() = listOf(latestOutlooks)
 
     /** Dependency order: relation targets come before the collections that point at them. */
     val collections: List<CollectionDef> = listOf(teams, games, runs, outlooks, matchups)
@@ -255,7 +290,7 @@ object PocketBaseSchema {
      * Stepwise migrations, applied in order and recorded in [migrationsLedger]. Every step reconciles toward its
      * definition and is safe to re-run. Steps only ever add things: columns, relations, indexes, views.
      */
-    val migrations: List<MigrationStep> = listOf(
+    val migrations: List<MigrationStep> by lazy { listOf(
         MigrationStep("001_base_tables", "Base collections and columns (no relations, no indexes)",
             collections.joinToString("\n") { it.baseJson().toString() }),
         MigrationStep("002_foreign_keys", "Required single-record rel_ relations, no cascades",
@@ -264,13 +299,26 @@ object PocketBaseSchema {
             collections.joinToString("\n") { it.indexSql().joinToString("\n") }),
         MigrationStep("004_summary_views", "Read-only s_ views over the latest ACTIVE run",
             views.joinToString("\n") { it.json().toString() }),
-    )
+    ) }
 
     fun importJson(): JsonArray =
         JsonArray((listOf(migrationsLedger) + collections).map { it.importJson() } + views.map { it.json() })
 
     fun naturalKey(def: CollectionDef, row: JsonObject): String =
         def.upsertKey.joinToString("|") { row.getValue(it).jsonPrimitive.content }
+
+    /**
+     * Normalises an ISO-8601 date or date-time (`2026-10-19`, `2026-10-18T17:00Z`, `...T17:00:05.5Z`) to the
+     * canonical UTC form PocketBase stores and returns for `date` fields: `2026-10-18 17:00:00.000Z`.
+     */
+    fun pbDate(iso: String): String {
+        val day = iso.take(10)
+        val time = iso.substringAfter('T', "").removeSuffix("Z").split(':')
+        val seconds = time.getOrElse(2) { "0" }.split('.')
+        val millis = seconds.getOrElse(1) { "0" }.padEnd(3, '0').take(3)
+        fun two(i: Int) = time.getOrElse(i) { "0" }.padStart(2, '0')
+        return "$day ${two(0)}:${two(1)}:${seconds[0].padStart(2, '0')}.${millis}Z"
+    }
 
     fun runId(report: SimulationReport): String = "${report.generatedAt}_s${report.season}_w${report.throughWeek}_seed${report.seed}"
 
@@ -300,7 +348,7 @@ object PocketBaseSchema {
         row(
             this.games, epochMs, mapOf("rel_home_team" to g.home, "rel_away_team" to g.away),
             "str_game_id" to g.id, "int_season_year" to g.season, "str_phase" to g.phase.name, "int_week" to g.week,
-            "dt_kickoff_utc" to g.date, "str_home_code" to g.home, "str_away_code" to g.away, "bool_neutral_site" to g.neutral,
+            "dt_kickoff_utc" to pbDate(g.date), "str_home_code" to g.home, "str_away_code" to g.away, "bool_neutral_site" to g.neutral,
             "bool_is_final" to g.isFinal, "int_home_score" to g.homeScore, "int_away_score" to g.awayScore,
         )
     }
@@ -311,7 +359,7 @@ object PocketBaseSchema {
         val top = ranked.first()
         val run = row(
             runs, epochMs, emptyMap(),
-            "str_run_id" to runId, "dt_run_date" to report.generatedAt, "int_season_year" to report.season,
+            "str_run_id" to runId, "dt_run_date" to pbDate(report.generatedAt), "int_season_year" to report.season,
             "int_through_week" to report.throughWeek, "int_games_played" to report.gamesPlayed,
             "int_games_remaining" to report.gamesRemaining, "int_total_iterations" to report.iterations,
             "int_random_seed" to report.seed, "str_engine_version" to ENGINE_VERSION,
@@ -320,7 +368,7 @@ object PocketBaseSchema {
         val outlookRows = ranked.mapIndexed { i, t ->
             row(
                 outlooks, epochMs, mapOf("rel_run" to runId, "rel_team" to t.abbr),
-                "str_run_id" to runId, "str_team_code" to t.abbr, "dt_run_date" to report.generatedAt,
+                "str_run_id" to runId, "str_team_code" to t.abbr, "dt_run_date" to pbDate(report.generatedAt),
                 "int_season_year" to report.season, "int_wins" to t.wins, "int_losses" to t.losses, "int_ties" to t.ties,
                 "dbl_elo_rating" to t.elo, "dbl_projected_wins" to t.projectedWins, "dbl_division_prob" to t.pDivision,
                 "dbl_top_seed_prob" to t.pTopSeed, "dbl_playoff_prob" to t.pPlayoffs, "dbl_divisional_prob" to t.pDivisional,

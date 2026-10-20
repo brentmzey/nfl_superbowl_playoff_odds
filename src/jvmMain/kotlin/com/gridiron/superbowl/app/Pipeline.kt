@@ -19,6 +19,7 @@ import com.gridiron.superbowl.replica.SqliteReplica
 import com.gridiron.superbowl.sync.PocketBaseClient
 import com.gridiron.superbowl.sync.PocketBaseSchema
 import com.gridiron.superbowl.sync.SyncSummary
+import com.gridiron.superbowl.sync.TypeScriptSchema
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.nio.file.Files
@@ -69,6 +70,10 @@ class Pipeline(private val source: ScoreboardSource, private val root: Path, pri
         val schema = root.resolve("docs/schema")
         listOf(history, charts, schema).forEach(Files::createDirectories)
         Files.writeString(schema.resolve("pockethost_collections.json"), json.encodeToString(PocketBaseSchema.importJson()) + "\n")
+        root.resolve(TypeScriptSchema.PATH).takeIf { Files.isDirectory(it.parent.parent) }?.let { ts ->
+            Files.createDirectories(ts.parent)
+            Files.writeString(ts, TypeScriptSchema.generate())
+        }
 
         val encoded = json.encodeToString(report)
         Files.writeString(output.resolve("latest.json"), encoded)

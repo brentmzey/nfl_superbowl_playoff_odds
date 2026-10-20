@@ -15,123 +15,125 @@
 </style>
 <rect class="bg" width="760" height="540" rx="8"/>
 <text class="t title" x="24" y="32">Super Bowl 2027 win probability</text>
-<text class="t2 sub" x="24" y="52">Top 16 teams · 20000 simulations · through week 6</text>
+<text class="t2 sub" x="24" y="52">Top 16 teams · 200 simulations · through week 6</text>
 <text class="m" x="140.0" y="72.0" text-anchor="end">Elo</text>
 <line class="grid" x1="150.0" x2="150.0" y1="76.0" y2="500.0"/><text class="m num" x="150.0" y="518.0" text-anchor="middle">0%</text>
-<line class="grid" x1="326.66666666666663" x2="326.66666666666663" y1="76.0" y2="500.0"/><text class="m num" x="326.66666666666663" y="518.0" text-anchor="middle">5.0%</text>
-<line class="grid" x1="503.33333333333326" x2="503.33333333333326" y1="76.0" y2="500.0"/><text class="m num" x="503.33333333333326" y="518.0" text-anchor="middle">10%</text>
-<line class="grid" x1="680.0" x2="680.0" y1="76.0" y2="500.0"/><text class="m num" x="680.0" y="518.0" text-anchor="middle">15%</text>
+<line class="grid" x1="256.0" x2="256.0" y1="76.0" y2="500.0"/><text class="m num" x="256.0" y="518.0" text-anchor="middle">2.5%</text>
+<line class="grid" x1="362.0" x2="362.0" y1="76.0" y2="500.0"/><text class="m num" x="362.0" y="518.0" text-anchor="middle">5.0%</text>
+<line class="grid" x1="468.00000000000006" x2="468.00000000000006" y1="76.0" y2="500.0"/><text class="m num" x="468.00000000000006" y="518.0" text-anchor="middle">7.5%</text>
+<line class="grid" x1="574.0" x2="574.0" y1="76.0" y2="500.0"/><text class="m num" x="574.0" y="518.0" text-anchor="middle">10%</text>
+<line class="grid" x1="680.0" x2="680.0" y1="76.0" y2="500.0"/><text class="m num" x="680.0" y="518.0" text-anchor="middle">13%</text>
 <line class="axis" x1="150.0" x2="150.0" y1="76.0" y2="500.0"/>
-<g class="hover"><title>San Francisco 49ers (5-0) - win Super Bowl 15%, reach 28%, make playoffs 97%</title>
+<g class="hover"><title>San Francisco 49ers (5-0) - win Super Bowl 12%, reach 27%, make playoffs 96%</title>
               <rect x="0" y="84.0" width="760" height="26.0" fill="transparent"/>
               <text class="t" x="24" y="101.0" font-weight="600">SF</text>
               <text class="t2 num" x="68" y="101.0">5-0</text>
               <text class="m num" x="140.0" y="101.0" text-anchor="end">1660</text>
-              <path d="M150.0 89.0 H668.0499999999998 Q672.0499999999998 89.0 672.0499999999998 93.0 V101.0 Q672.0499999999998 105.0 668.0499999999998 105.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="678.0499999999998" y="101.0">15%</text></g>
-<g class="hover"><title>Buffalo Bills (5-1) - win Super Bowl 9.8%, reach 19%, make playoffs 90%</title>
+              <path d="M150.0 89.0 H654.8 Q658.8 89.0 658.8 93.0 V101.0 Q658.8 105.0 654.8 105.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="664.8" y="101.0">12%</text></g>
+<g class="hover"><title>Minnesota Vikings (5-0) - win Super Bowl 11%, reach 22%, make playoffs 91%</title>
               <rect x="0" y="110.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="127.0" font-weight="600">BUF</text>
-              <text class="t2 num" x="68" y="127.0">5-1</text>
-              <text class="m num" x="140.0" y="127.0" text-anchor="end">1635</text>
-              <path d="M150.0 115.0 H491.03 Q495.03 115.0 495.03 119.0 V127.0 Q495.03 131.0 491.03 131.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="501.03" y="127.0">9.8%</text></g>
-<g class="hover"><title>Minnesota Vikings (5-0) - win Super Bowl 9.3%, reach 19%, make playoffs 93%</title>
+              <text class="t" x="24" y="127.0" font-weight="600">MIN</text>
+              <text class="t2 num" x="68" y="127.0">5-0</text>
+              <text class="m num" x="140.0" y="127.0" text-anchor="end">1613</text>
+              <path d="M150.0 115.0 H591.2 Q595.2 115.0 595.2 119.0 V127.0 Q595.2 131.0 591.2 131.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="601.2" y="127.0">11%</text></g>
+<g class="hover"><title>Buffalo Bills (5-1) - win Super Bowl 9.0%, reach 16%, make playoffs 89%</title>
               <rect x="0" y="136.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="153.0" font-weight="600">MIN</text>
-              <text class="t2 num" x="68" y="153.0">5-0</text>
-              <text class="m num" x="140.0" y="153.0" text-anchor="end">1613</text>
-              <path d="M150.0 141.0 H475.12999999999994 Q479.12999999999994 141.0 479.12999999999994 145.0 V153.0 Q479.12999999999994 157.0 475.12999999999994 157.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="485.12999999999994" y="153.0">9.3%</text></g>
-<g class="hover"><title>New England Patriots (4-2) - win Super Bowl 8.4%, reach 16%, make playoffs 83%</title>
+              <text class="t" x="24" y="153.0" font-weight="600">BUF</text>
+              <text class="t2 num" x="68" y="153.0">5-1</text>
+              <text class="m num" x="140.0" y="153.0" text-anchor="end">1635</text>
+              <path d="M150.0 141.0 H527.5999999999999 Q531.5999999999999 141.0 531.5999999999999 145.0 V153.0 Q531.5999999999999 157.0 527.5999999999999 157.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="537.5999999999999" y="153.0">9.0%</text></g>
+<g class="hover"><title>New England Patriots (4-2) - win Super Bowl 9.0%, reach 17%, make playoffs 87%</title>
               <rect x="0" y="162.0" width="760" height="26.0" fill="transparent"/>
               <text class="t" x="24" y="179.0" font-weight="600">NE</text>
               <text class="t2 num" x="68" y="179.0">4-2</text>
               <text class="m num" x="140.0" y="179.0" text-anchor="end">1634</text>
-              <path d="M150.0 167.0 H441.91666666666663 Q445.91666666666663 167.0 445.91666666666663 171.0 V179.0 Q445.91666666666663 183.0 441.91666666666663 183.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="451.91666666666663" y="179.0">8.4%</text></g>
-<g class="hover"><title>Seattle Seahawks (3-3) - win Super Bowl 8.1%, reach 15%, make playoffs 74%</title>
+              <path d="M150.0 167.0 H527.5999999999999 Q531.5999999999999 167.0 531.5999999999999 171.0 V179.0 Q531.5999999999999 183.0 527.5999999999999 183.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="537.5999999999999" y="179.0">9.0%</text></g>
+<g class="hover"><title>Seattle Seahawks (3-3) - win Super Bowl 8.5%, reach 14%, make playoffs 70%</title>
               <rect x="0" y="188.0" width="760" height="26.0" fill="transparent"/>
               <text class="t" x="24" y="205.0" font-weight="600">SEA</text>
               <text class="t2 num" x="68" y="205.0">3-3</text>
               <text class="m num" x="140.0" y="205.0" text-anchor="end">1655</text>
-              <path d="M150.0 193.0 H430.78666666666663 Q434.78666666666663 193.0 434.78666666666663 197.0 V205.0 Q434.78666666666663 209.0 430.78666666666663 209.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="440.78666666666663" y="205.0">8.1%</text></g>
-<g class="hover"><title>Jacksonville Jaguars (4-2) - win Super Bowl 8.0%, reach 15%, make playoffs 86%</title>
+              <path d="M150.0 193.0 H506.40000000000003 Q510.40000000000003 193.0 510.40000000000003 197.0 V205.0 Q510.40000000000003 209.0 506.40000000000003 209.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="516.4000000000001" y="205.0">8.5%</text></g>
+<g class="hover"><title>Jacksonville Jaguars (4-2) - win Super Bowl 8.0%, reach 16%, make playoffs 90%</title>
               <rect x="0" y="214.0" width="760" height="26.0" fill="transparent"/>
               <text class="t" x="24" y="231.0" font-weight="600">JAX</text>
               <text class="t2 num" x="68" y="231.0">4-2</text>
               <text class="m num" x="140.0" y="231.0" text-anchor="end">1621</text>
-              <path d="M150.0 219.0 H429.3733333333332 Q433.3733333333332 219.0 433.3733333333332 223.0 V231.0 Q433.3733333333332 235.0 429.3733333333332 235.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="439.3733333333332" y="231.0">8.0%</text></g>
-<g class="hover"><title>Denver Broncos (4-2) - win Super Bowl 6.1%, reach 12%, make playoffs 76%</title>
+              <path d="M150.0 219.0 H485.2 Q489.2 219.0 489.2 223.0 V231.0 Q489.2 235.0 485.2 235.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="495.2" y="231.0">8.0%</text></g>
+<g class="hover"><title>Kansas City Chiefs (5-0) - win Super Bowl 7.5%, reach 14%, make playoffs 81%</title>
               <rect x="0" y="240.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="257.0" font-weight="600">DEN</text>
-              <text class="t2 num" x="68" y="257.0">4-2</text>
-              <text class="m num" x="140.0" y="257.0" text-anchor="end">1603</text>
-              <path d="M150.0 245.0 H362.41666666666663 Q366.41666666666663 245.0 366.41666666666663 249.0 V257.0 Q366.41666666666663 261.0 362.41666666666663 261.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="372.41666666666663" y="257.0">6.1%</text></g>
-<g class="hover"><title>Kansas City Chiefs (5-0) - win Super Bowl 5.8%, reach 12%, make playoffs 84%</title>
+              <text class="t" x="24" y="257.0" font-weight="600">KC</text>
+              <text class="t2 num" x="68" y="257.0">5-0</text>
+              <text class="m num" x="140.0" y="257.0" text-anchor="end">1563</text>
+              <path d="M150.0 245.0 H464.0 Q468.0 245.0 468.0 249.0 V257.0 Q468.0 261.0 464.0 261.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="474.0" y="257.0">7.5%</text></g>
+<g class="hover"><title>Denver Broncos (4-2) - win Super Bowl 5.0%, reach 12%, make playoffs 74%</title>
               <rect x="0" y="266.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="283.0" font-weight="600">KC</text>
-              <text class="t2 num" x="68" y="283.0">5-0</text>
-              <text class="m num" x="140.0" y="283.0" text-anchor="end">1563</text>
-              <path d="M150.0 271.0 H350.58 Q354.58 271.0 354.58 275.0 V283.0 Q354.58 287.0 350.58 287.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="360.58" y="283.0">5.8%</text></g>
-<g class="hover"><title>Chicago Bears (4-2) - win Super Bowl 3.4%, reach 6.9%, make playoffs 61%</title>
+              <text class="t" x="24" y="283.0" font-weight="600">DEN</text>
+              <text class="t2 num" x="68" y="283.0">4-2</text>
+              <text class="m num" x="140.0" y="283.0" text-anchor="end">1603</text>
+              <path d="M150.0 271.0 H358.0 Q362.0 271.0 362.0 275.0 V283.0 Q362.0 287.0 358.0 287.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="368.0" y="283.0">5.0%</text></g>
+<g class="hover"><title>Detroit Lions (3-2) - win Super Bowl 4.5%, reach 9.5%, make playoffs 54%</title>
               <rect x="0" y="292.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="309.0" font-weight="600">CHI</text>
-              <text class="t2 num" x="68" y="309.0">4-2</text>
-              <text class="m num" x="140.0" y="309.0" text-anchor="end">1560</text>
-              <path d="M150.0 297.0 H266.4866666666667 Q270.4866666666667 297.0 270.4866666666667 301.0 V309.0 Q270.4866666666667 313.0 266.4866666666667 313.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="276.4866666666667" y="309.0">3.4%</text></g>
-<g class="hover"><title>Baltimore Ravens (4-2) - win Super Bowl 3.0%, reach 6.4%, make playoffs 55%</title>
+              <text class="t" x="24" y="309.0" font-weight="600">DET</text>
+              <text class="t2 num" x="68" y="309.0">3-2</text>
+              <text class="m num" x="140.0" y="309.0" text-anchor="end">1530</text>
+              <path d="M150.0 297.0 H336.79999999999995 Q340.79999999999995 297.0 340.79999999999995 301.0 V309.0 Q340.79999999999995 313.0 336.79999999999995 313.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="346.79999999999995" y="309.0">4.5%</text></g>
+<g class="hover"><title>Carolina Panthers (3-2) - win Super Bowl 4.5%, reach 7.0%, make playoffs 66%</title>
               <rect x="0" y="318.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="335.0" font-weight="600">BAL</text>
-              <text class="t2 num" x="68" y="335.0">4-2</text>
-              <text class="m num" x="140.0" y="335.0" text-anchor="end">1543</text>
-              <path d="M150.0 323.0 H251.82333333333332 Q255.82333333333332 323.0 255.82333333333332 327.0 V335.0 Q255.82333333333332 339.0 251.82333333333332 339.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="261.8233333333333" y="335.0">3.0%</text></g>
-<g class="hover"><title>Carolina Panthers (3-2) - win Super Bowl 2.7%, reach 5.9%, make playoffs 64%</title>
+              <text class="t" x="24" y="335.0" font-weight="600">CAR</text>
+              <text class="t2 num" x="68" y="335.0">3-2</text>
+              <text class="m num" x="140.0" y="335.0" text-anchor="end">1516</text>
+              <path d="M150.0 323.0 H336.79999999999995 Q340.79999999999995 323.0 340.79999999999995 327.0 V335.0 Q340.79999999999995 339.0 336.79999999999995 339.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="346.79999999999995" y="335.0">4.5%</text></g>
+<g class="hover"><title>Baltimore Ravens (4-2) - win Super Bowl 3.5%, reach 6.5%, make playoffs 54%</title>
               <rect x="0" y="344.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="361.0" font-weight="600">CAR</text>
-              <text class="t2 num" x="68" y="361.0">3-2</text>
-              <text class="m num" x="140.0" y="361.0" text-anchor="end">1516</text>
-              <path d="M150.0 349.0 H239.81 Q243.81 349.0 243.81 353.0 V361.0 Q243.81 365.0 239.81 365.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="249.81" y="361.0">2.7%</text></g>
-<g class="hover"><title>Pittsburgh Steelers (4-2) - win Super Bowl 2.6%, reach 5.7%, make playoffs 57%</title>
+              <text class="t" x="24" y="361.0" font-weight="600">BAL</text>
+              <text class="t2 num" x="68" y="361.0">4-2</text>
+              <text class="m num" x="140.0" y="361.0" text-anchor="end">1543</text>
+              <path d="M150.0 349.0 H294.4 Q298.4 349.0 298.4 353.0 V361.0 Q298.4 365.0 294.4 365.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="304.4" y="361.0">3.5%</text></g>
+<g class="hover"><title>Pittsburgh Steelers (4-2) - win Super Bowl 3.5%, reach 5.0%, make playoffs 53%</title>
               <rect x="0" y="370.0" width="760" height="26.0" fill="transparent"/>
               <text class="t" x="24" y="387.0" font-weight="600">PIT</text>
               <text class="t2 num" x="68" y="387.0">4-2</text>
               <text class="m num" x="140.0" y="387.0" text-anchor="end">1542</text>
-              <path d="M150.0 375.0 H238.57333333333332 Q242.57333333333332 375.0 242.57333333333332 379.0 V387.0 Q242.57333333333332 391.0 238.57333333333332 391.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="248.57333333333332" y="387.0">2.6%</text></g>
-<g class="hover"><title>Detroit Lions (3-2) - win Super Bowl 2.6%, reach 5.5%, make playoffs 54%</title>
+              <path d="M150.0 375.0 H294.4 Q298.4 375.0 298.4 379.0 V387.0 Q298.4 391.0 294.4 391.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="304.4" y="387.0">3.5%</text></g>
+<g class="hover"><title>Green Bay Packers (4-2) - win Super Bowl 2.5%, reach 6.0%, make playoffs 57%</title>
               <rect x="0" y="396.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="413.0" font-weight="600">DET</text>
-              <text class="t2 num" x="68" y="413.0">3-2</text>
-              <text class="m num" x="140.0" y="413.0" text-anchor="end">1530</text>
-              <path d="M150.0 401.0 H237.69 Q241.69 401.0 241.69 405.0 V413.0 Q241.69 417.0 237.69 417.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="247.69" y="413.0">2.6%</text></g>
-<g class="hover"><title>Green Bay Packers (4-2) - win Super Bowl 2.4%, reach 4.9%, make playoffs 53%</title>
+              <text class="t" x="24" y="413.0" font-weight="600">GB</text>
+              <text class="t2 num" x="68" y="413.0">4-2</text>
+              <text class="m num" x="140.0" y="413.0" text-anchor="end">1522</text>
+              <path d="M150.0 401.0 H252.0 Q256.0 401.0 256.0 405.0 V413.0 Q256.0 417.0 252.0 417.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="262.0" y="413.0">2.5%</text></g>
+<g class="hover"><title>Chicago Bears (4-2) - win Super Bowl 2.0%, reach 6.0%, make playoffs 60%</title>
               <rect x="0" y="422.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="439.0" font-weight="600">GB</text>
+              <text class="t" x="24" y="439.0" font-weight="600">CHI</text>
               <text class="t2 num" x="68" y="439.0">4-2</text>
-              <text class="m num" x="140.0" y="439.0" text-anchor="end">1522</text>
-              <path d="M150.0 427.0 H230.62333333333333 Q234.62333333333333 427.0 234.62333333333333 431.0 V439.0 Q234.62333333333333 443.0 230.62333333333333 443.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="240.62333333333333" y="439.0">2.4%</text></g>
-<g class="hover"><title>Cincinnati Bengals (3-2) - win Super Bowl 2.1%, reach 4.7%, make playoffs 50%</title>
+              <text class="m num" x="140.0" y="439.0" text-anchor="end">1560</text>
+              <path d="M150.0 427.0 H230.8 Q234.8 427.0 234.8 431.0 V439.0 Q234.8 443.0 230.8 443.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="240.8" y="439.0">2.0%</text></g>
+<g class="hover"><title>Cincinnati Bengals (3-2) - win Super Bowl 1.5%, reach 6.0%, make playoffs 56%</title>
               <rect x="0" y="448.0" width="760" height="26.0" fill="transparent"/>
               <text class="t" x="24" y="465.0" font-weight="600">CIN</text>
               <text class="t2 num" x="68" y="465.0">3-2</text>
               <text class="m num" x="140.0" y="465.0" text-anchor="end">1515</text>
-              <path d="M150.0 453.0 H219.67 Q223.67 453.0 223.67 457.0 V465.0 Q223.67 469.0 219.67 469.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="229.67" y="465.0">2.1%</text></g>
-<g class="hover"><title>Los Angeles Rams (2-4) - win Super Bowl 2.0%, reach 3.7%, make playoffs 32%</title>
+              <path d="M150.0 453.0 H209.6 Q213.6 453.0 213.6 457.0 V465.0 Q213.6 469.0 209.6 469.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="219.6" y="465.0">1.5%</text></g>
+<g class="hover"><title>Houston Texans (2-4) - win Super Bowl 1.5%, reach 3.0%, make playoffs 35%</title>
               <rect x="0" y="474.0" width="760" height="26.0" fill="transparent"/>
-              <text class="t" x="24" y="491.0" font-weight="600">LAR</text>
+              <text class="t" x="24" y="491.0" font-weight="600">HOU</text>
               <text class="t2 num" x="68" y="491.0">2-4</text>
-              <text class="m num" x="140.0" y="491.0" text-anchor="end">1554</text>
-              <path d="M150.0 479.0 H214.89999999999998 Q218.89999999999998 479.0 218.89999999999998 483.0 V491.0 Q218.89999999999998 495.0 214.89999999999998 495.0 H150.0 Z" class="s1"/>
-              <text class="t num" x="224.89999999999998" y="491.0">2.0%</text></g>
+              <text class="m num" x="140.0" y="491.0" text-anchor="end">1545</text>
+              <path d="M150.0 479.0 H209.6 Q213.6 479.0 213.6 483.0 V491.0 Q213.6 495.0 209.6 495.0 H150.0 Z" class="s1"/>
+              <text class="t num" x="219.6" y="491.0">1.5%</text></g>
 </svg>

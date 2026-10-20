@@ -33,6 +33,6 @@ class SqlDialectTest {
         assertTrue(ddl.contains("CREATE INDEX \"ix_i_nfl_games__season_year_kickoff_utc\" ON \"i_nfl_games\" (\"int_season_year\", \"dt_kickoff_utc\") WHERE bool_is_final = FALSE"))
         assertTrue(SqlDialect.POSTGRES.insert(PocketBaseSchema.outlooks).contains("CAST(? AS JSONB)"))
         assertTrue(!SqlDialect.SQLITE.insert(PocketBaseSchema.outlooks).contains("CAST"))
-        assertEquals(1 + PocketBaseSchema.outlooks.fields.size + 2, SqlDialect.SQLITE.columns(PocketBaseSchema.outlooks).size)
+        assertEquals(3 + PocketBaseSchema.outlooks.fields.size + 2, SqlDialect.SQLITE.columns(PocketBaseSchema.outlooks).size)
     }
 }

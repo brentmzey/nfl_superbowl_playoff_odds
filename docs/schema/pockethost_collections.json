@@ -48,6 +48,22 @@
                 "name": "int_updated_epoch_ms_utc",
                 "type": "number",
                 "required": false
+            },
+            {
+                "name": "created",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": false,
+                "system": false,
+                "hidden": false
+            },
+            {
+                "name": "updated",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": true,
+                "system": false,
+                "hidden": false
             }
         ],
         "indexes": [
@@ -103,6 +119,22 @@
                 "name": "int_updated_epoch_ms_utc",
                 "type": "number",
                 "required": false
+            },
+            {
+                "name": "created",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": false,
+                "system": false,
+                "hidden": false
+            },
+            {
+                "name": "updated",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": true,
+                "system": false,
+                "hidden": false
             }
         ],
         "indexes": [
@@ -142,7 +174,7 @@
             },
             {
                 "name": "dt_kickoff_utc",
-                "type": "text",
+                "type": "date",
                 "required": false
             },
             {
@@ -196,6 +228,22 @@
                 "required": false
             },
             {
+                "name": "created",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": false,
+                "system": false,
+                "hidden": false
+            },
+            {
+                "name": "updated",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": true,
+                "system": false,
+                "hidden": false
+            },
+            {
                 "name": "rel_home_team",
                 "type": "relation",
                 "collectionId": "i_nfl_teams",
@@ -239,7 +287,7 @@
             },
             {
                 "name": "dt_run_date",
-                "type": "text",
+                "type": "date",
                 "required": true
             },
             {
@@ -306,11 +354,28 @@
                 "name": "int_updated_epoch_ms_utc",
                 "type": "number",
                 "required": false
+            },
+            {
+                "name": "created",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": false,
+                "system": false,
+                "hidden": false
+            },
+            {
+                "name": "updated",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": true,
+                "system": false,
+                "hidden": false
             }
         ],
         "indexes": [
             "CREATE UNIQUE INDEX `uq_m_simulation_runs__run_id` ON `m_simulation_runs` (`str_run_id`)",
-            "CREATE INDEX `ix_m_simulation_runs__season_year_status_code_run_date` ON `m_simulation_runs` (`int_season_year`, `str_status_code`, `dt_run_date`)"
+            "CREATE INDEX `ix_m_simulation_runs__season_year_status_code_run_date` ON `m_simulation_runs` (`int_season_year`, `str_status_code`, `dt_run_date`)",
+            "CREATE INDEX `ix_m_simulation_runs__season_year_created` ON `m_simulation_runs` (`int_season_year`, `created`)"
         ]
     },
     {
@@ -335,7 +400,7 @@
             },
             {
                 "name": "dt_run_date",
-                "type": "text",
+                "type": "date",
                 "required": true
             },
             {
@@ -435,6 +500,22 @@
                 "required": false
             },
             {
+                "name": "created",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": false,
+                "system": false,
+                "hidden": false
+            },
+            {
+                "name": "updated",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": true,
+                "system": false,
+                "hidden": false
+            },
+            {
                 "name": "rel_run",
                 "type": "relation",
                 "collectionId": "m_simulation_runs",
@@ -516,6 +597,22 @@
                 "required": false
             },
             {
+                "name": "created",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": false,
+                "system": false,
+                "hidden": false
+            },
+            {
+                "name": "updated",
+                "type": "autodate",
+                "onCreate": true,
+                "onUpdate": true,
+                "system": false,
+                "hidden": false
+            },
+            {
                 "name": "rel_run",
                 "type": "relation",
                 "collectionId": "m_simulation_runs",
@@ -556,6 +653,6 @@
         "type": "view",
         "listRule": "",
         "viewRule": "",
-        "viewQuery": "SELECT o.id, o.str_team_code, t.str_team_name, t.str_conference, t.str_division,\n       r.str_run_id, r.dt_run_date, r.int_season_year, r.int_through_week,\n       o.int_wins, o.int_losses, o.int_ties, o.dbl_elo_rating, o.dbl_projected_wins,\n       o.dbl_playoff_prob, o.dbl_divisional_prob, o.dbl_conference_prob,\n       o.dbl_superbowl_prob, o.dbl_champion_prob, o.int_champion_rank\nFROM o_team_outlooks o\nJOIN m_simulation_runs r ON r.id = o.rel_run\nJOIN i_nfl_teams t ON t.id = o.rel_team\nWHERE r.str_status_code = 'ACTIVE'"
+        "viewQuery": "SELECT o.id,\n       o.str_team_code,\n       t.str_team_name,\n       t.str_conference,\n       t.str_division,\n       r.str_run_id,\n       r.dt_run_date,\n       r.int_season_year,\n       r.int_through_week,\n       o.int_wins,\n       o.int_losses,\n       o.int_ties,\n       o.dbl_elo_rating,\n       o.dbl_projected_wins,\n       o.dbl_division_prob,\n       o.dbl_playoff_prob,\n       o.dbl_divisional_prob,\n       o.dbl_conference_prob,\n       o.dbl_superbowl_prob,\n       o.dbl_champion_prob,\n       o.int_champion_rank,\n       o.json_seed_odds\nFROM o_team_outlooks o\nJOIN m_simulation_runs r ON r.id = o.rel_run\nJOIN i_nfl_teams t ON t.id = o.rel_team\nWHERE r.str_status_code = 'ACTIVE'"
     }
 ]

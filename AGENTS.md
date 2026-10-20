@@ -21,6 +21,12 @@ just test        # ./gradlew check jacocoTestReport (fails below 90% line/branch
 - PocketHost is the source of truth. The backups (`backups/`), SQLite (`output/db/`), and PostgreSQL replicas are rebuilt from it on every run. Never patch them by hand, and never write to them directly.
 - PostgreSQL provisioning follows DbFactory (`replica/Replication.kt`). Run `just db-up` before `just test` so the Postgres replica test runs instead of skipping.
 
+## TypeScript client (`clients/ts`)
+- Use bun only. Gate: `just ts-check` (`bun run test:coverage && bun run typecheck && bun run build`).
+- `src/generated/schema.ts` is generated from `PocketBaseSchema.kt` (`just schema-ts`). Never edit it by hand, because `TypeScriptSchemaTest` fails on drift.
+- Queries are `defineQuery` templates with `{:param}` placeholders, bound via PocketBase `filter()`. Never build filters by string concatenation. Keep `test/types.test.ts` compile-time checks in step with new templates.
+- Mirror every new TS query in `ReplicaQueries.kt` (JDBI) and test it against both SQLite and PostgreSQL.
+
 ## Architecture
 - `commonMain` stays pure Kotlin (no JVM APIs): model, engine, parser, report/SVG. IO lives only in `jvmMain`.
 - The simulator's inner loop uses mutable arrays (`SeasonTable`, `DoubleArray` ratings) for speed. Keep that mutation local and expose only immutable data (`Ratings`, `SimulationTallies`, `SimulationReport`).

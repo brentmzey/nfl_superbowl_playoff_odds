@@ -2,6 +2,19 @@
 
 All notable changes to this project follow [Semantic Versioning](https://semver.org/) with `-RC#` release candidates.
 
+## [0.1.0-RC5] - 2026-10-19
+
+### Added
+- Target instance `https://nfl-superbowl-predictions.pockethost.io` via `POCKETHOST_URL`. A local `.env` is git-ignored and `.env.example` documents every variable.
+- `clients/ts`: strictly typed PocketBase client (bun, TypeScript strict). It has generated schema types, JDBI-style `{:param}` query templates with compile-time parameter inference, injection-safe binding, runtime record validation, timeouts and retries, and `Result`/`Optional` returns. Ships with compile-time, unit, and opt-in live tests.
+- Kotlin generator plus golden test for the TypeScript typings (`TypeScriptSchema.kt`).
+- JDBI SqlObject query templates (`ReplicaQueries.kt`) over the SQLite and PostgreSQL replicas, tested on both.
+
+### Changed
+- `dt_` columns are PocketBase `date` fields holding normalised UTC values, `TIMESTAMPTZ` in PostgreSQL.
+- Every collection has server-managed `created` / `updated` autodate fields (for `sort: '-created'`), mirrored in the replicas. Added a `(int_season_year, created)` index on runs.
+- Collections and views carry semantic type names (`NflTeam`, `TeamOutlook`, …). The view SQL is built from typed column definitions.
+
 ## [0.1.0-RC4] - 2026-10-19
 
 ### Added

@@ -22,7 +22,9 @@ object Fixtures {
         season = season,
         phase = phase,
         week = week,
-        date = "$season-09-${(week + 9).toString().padStart(2, '0')}T17:00Z#${counter.toString().padStart(5, '0')}",
+        // Valid ISO-8601 kickoffs; the counter keeps them unique and in creation order.
+        date = "$season-09-${(week + 9).toString().padStart(2, '0')}T${(counter / 3600 % 24).toString().padStart(2, '0')}:" +
+            "${(counter / 60 % 60).toString().padStart(2, '0')}:${(counter % 60).toString().padStart(2, '0')}Z",
         home = home,
         away = away,
         neutral = neutral,

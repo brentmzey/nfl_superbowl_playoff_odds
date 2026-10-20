@@ -3,6 +3,7 @@ package com.gridiron.superbowl
 import com.gridiron.superbowl.sync.IndexDef
 import com.gridiron.superbowl.sync.MigrationStep
 import com.gridiron.superbowl.sync.PocketBaseSchema
+import com.gridiron.superbowl.sync.SqlDialect
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -86,7 +87,7 @@ class PocketBaseSchemaTest {
         assertEquals(all.size, all.map { (c, i) -> i.name(c.name) }.toSet().size, "index names must be unique")
         (listOf(PocketBaseSchema.migrationsLedger) + PocketBaseSchema.collections).forEach { c ->
             assertEquals(IndexDef(c.upsertKey, unique = true), c.indexes.first())
-            val columns = c.fields.map { it.name } + c.relations.map { it.name }
+            val columns = c.fields.map { it.name } + c.relations.map { it.name } + SqlDialect.SYSTEM_TIMESTAMPS
             c.indexes.forEach { i -> assertTrue(columns.containsAll(i.columns), "${c.name}: ${i.columns}") }
             // Every foreign key is the leading column of some index.
             c.relations.forEach { r -> assertTrue(c.indexes.any { it.columns.first() == r.name }, "${c.name}.${r.name} unindexed") }
@@ -121,5 +122,21 @@ class PocketBaseSchemaTest {
         val view = PocketBaseSchema.latestOutlooks
         assertTrue(view.query.startsWith("SELECT o.id") && view.query.contains("str_status_code = 'ACTIVE'"))
         assertEquals("view", view.json().getValue("type").jsonPrimitive.content)
+    }
+
+    @Test
+    fun datesAreNormalisedToPocketBaseUtcForm() {
+        assertEquals("2026-10-19 00:00:00.000Z", PocketBaseSchema.pbDate("2026-10-19"))
+        assertEquals("2026-10-18 17:00:00.000Z", PocketBaseSchema.pbDate("2026-10-18T17:00Z"))
+        assertEquals("2026-10-18 17:00:05.500Z", PocketBaseSchema.pbDate("2026-10-18T17:00:05.5Z"))
+        assertEquals("2026-10-18 07:03:09.123Z", PocketBaseSchema.pbDate("2026-10-18T7:3:9.1234Z"))
+        val runs = PocketBaseSchema.runs.baseJson().getValue("fields").jsonArray.map { it.jsonObject }
+        assertEquals("date", runs.first { it["name"]?.jsonPrimitive?.content == "dt_run_date" }.getValue("type").jsonPrimitive.content)
+        val created = runs.first { it["name"]?.jsonPrimitive?.content == "created" }
+        assertEquals("autodate", created.getValue("type").jsonPrimitive.content)
+        assertEquals("false", created.getValue("onUpdate").jsonPrimitive.content)
+        assertEquals("true", runs.first { it["name"]?.jsonPrimitive?.content == "updated" }.getValue("onUpdate").jsonPrimitive.content)
+        assertEquals("number[]", PocketBaseSchema.outlooks.fields.first { it.name == "json_seed_odds" }.tsType)
+        assertEquals(listOf("NflTeam", "NflGame", "SimulationRun", "TeamOutlook", "SuperBowlMatchup"), PocketBaseSchema.collections.map { it.typeName })
     }
 }

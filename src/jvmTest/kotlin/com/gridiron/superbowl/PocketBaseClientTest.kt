@@ -85,7 +85,7 @@ class PocketBaseClientTest {
         assertEquals(games.count { !it.isFinal }, next.updated)
         assertEquals(1, next.superseded)
         val runs = pb.rows("m_simulation_runs").associate { pb.value(it, "dt_run_date") to pb.value(it, "str_status_code") }
-        assertEquals(mapOf("2026-10-19" to "SUPERSEDED", "2026-10-26" to "ACTIVE"), runs)
+        assertEquals(mapOf("2026-10-19 00:00:00.000Z" to "SUPERSEDED", "2026-10-26 00:00:00.000Z" to "ACTIVE"), runs)
         val patched = pb.rows("i_nfl_games").first { pb.value(it, "int_home_score") == "24" }
         assertEquals("1000", pb.value(patched, "int_created_epoch_ms_utc"))
         assertEquals("3000", pb.value(patched, "int_updated_epoch_ms_utc"))

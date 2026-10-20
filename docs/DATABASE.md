@@ -169,6 +169,30 @@ flowchart LR
   `off` skips it. The backup and SQLite copies always run after a successful sync.
 - **Restores:** `BackupStore.read(dir)` turns any backup folder back into a snapshot, which can rebuild either replica offline.
 
+## Column types
+
+| Prefix | PocketBase | PostgreSQL | SQLite | TypeScript | Kotlin (JDBI rows) |
+|---|---|---|---|---|---|
+| `str_` | text | TEXT | TEXT | `string` (or a literal union) | `String` / enum |
+| `int_` | number | BIGINT | INTEGER | `number` | `Int` |
+| `dbl_` | number | DOUBLE PRECISION | REAL | `number` | `Double` |
+| `bool_` | bool | BOOLEAN | INTEGER 0/1 | `boolean` | `Boolean` |
+| `dt_` | **date** (UTC, `YYYY-MM-DD HH:MM:SS.sssZ`) | TIMESTAMPTZ | TEXT | `string` | `Instant` |
+| `json_` | json | JSONB | TEXT | typed (`number[]`) | `SeedOdds` |
+| `rel_` | relation (FK) | TEXT REFERENCES | TEXT REFERENCES | `string` | `String` |
+| `created` / `updated` | autodate (server-managed) | TIMESTAMPTZ | TEXT | `string` | `Instant` |
+
+## Query templates
+
+The same named queries exist on both sides:
+
+- **TypeScript:** `NflQueries` in `clients/ts/src/repository.ts`, for example
+  `filter: 'int_season_year = {:season} && str_phase = {:phase}'`. Parameter types are inferred from the columns
+  at compile time, and values are bound through PocketBase's escaping.
+- **Kotlin:** `ReplicaQueries` (JDBI SqlObject) over the SQLite and PostgreSQL replicas, for example
+  `@SqlQuery("... WHERE int_season_year = :season AND str_phase = :phase ...")`. Named parameters are bound by JDBI,
+  and rows map to typed data classes.
+
 ## Access rules
 
 All collections allow public `list` / `view` and leave `create` / `update` / `delete` at `null` (superuser only).

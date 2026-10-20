@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.gridiron.superbowl"
-version = "0.1.0-RC4"
+version = "0.1.0-RC5"
 
 repositories {
     mavenCentral()
@@ -29,6 +29,11 @@ kotlin {
         jvmMain.dependencies {
             implementation("org.xerial:sqlite-jdbc:3.45.1.0")
             implementation("org.postgresql:postgresql:42.7.4")
+            implementation("org.jdbi:jdbi3-core:3.47.0")
+            implementation("org.jdbi:jdbi3-kotlin:3.47.0")
+            implementation("org.jdbi:jdbi3-sqlobject:3.47.0")
+            implementation("org.jdbi:jdbi3-kotlin-sqlobject:3.47.0")
+            implementation(kotlin("reflect"))
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

@@ -14,6 +14,7 @@ enum class SqlDialect {
 
     fun columnType(f: FieldDef): String = when (f.type) {
         FieldType.TEXT -> "TEXT"
+        FieldType.DATE -> timestampType
         FieldType.BOOL -> if (this == POSTGRES) "BOOLEAN" else "INTEGER"
         FieldType.JSON -> if (this == POSTGRES) "JSONB" else "TEXT"
         FieldType.NUMBER -> when {
@@ -22,8 +23,12 @@ enum class SqlDialect {
         }
     }
 
+    /** UTC timestamps: native `TIMESTAMPTZ` in PostgreSQL, PocketBase's ISO text form in SQLite. */
+    val timestampType: String get() = if (this == POSTGRES) "TIMESTAMPTZ" else "TEXT"
+
     fun createTable(def: CollectionDef): String {
         val columns = listOf("${ident("id")} TEXT PRIMARY KEY") +
+            SYSTEM_TIMESTAMPS.map { "${ident(it)} $timestampType" } +
             def.fields.map { f -> "${ident(f.name)} ${columnType(f)}${if (f.required) " NOT NULL" else ""}" } +
             def.relations.map { r -> "${ident(r.name)} TEXT NOT NULL REFERENCES ${ident(r.target)} (${ident("id")})" }
         return "CREATE TABLE ${ident(def.name)} (\n  ${columns.joinToString(",\n  ")}\n)"
@@ -39,7 +44,12 @@ enum class SqlDialect {
     fun ddl(collections: List<CollectionDef>, views: List<ViewDef>): List<String> =
         collections.map(::createTable) + collections.flatMap { c -> c.indexes.map { createIndex(c, it) } } + views.map(::createView)
 
-    fun columns(def: CollectionDef): List<String> = listOf("id") + def.fields.map { it.name } + def.relations.map { it.name }
+    fun columns(def: CollectionDef): List<String> = listOf("id") + SYSTEM_TIMESTAMPS + def.fields.map { it.name } + def.relations.map { it.name }
+
+    companion object {
+        /** PocketBase `autodate` columns present on every collection. */
+        val SYSTEM_TIMESTAMPS = listOf("created", "updated")
+    }
 
     fun insert(def: CollectionDef): String {
         val cols = columns(def)

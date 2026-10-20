@@ -1,0 +1,35 @@
+{
+  "name": "@brentmzey/nfl-superbowl-predictions-client",
+  "version": "0.1.0-RC5",
+  "description": "Strictly typed, validated, retrying PocketBase client with JDBI-style query templates for the NFL Super Bowl predictions database.",
+  "type": "module",
+  "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "test:live": "NFL_LIVE=1 bun test test/live.test.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "rm -rf dist && bun build ./src/index.ts --outdir dist --target browser --external pocketbase && tsc -p tsconfig.build.json",
+    "example": "bun examples/latest-odds.ts",
+    "check": "bun run test:coverage && bun run typecheck && bun run build"
+  },
+  "dependencies": {
+    "pocketbase": "^0.28.1"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.3",
+    "typescript": "^7.0.2"
+  }
+}

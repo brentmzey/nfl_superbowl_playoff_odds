@@ -81,6 +81,16 @@ class FakePocketBase(private val user: String = "admin@example.com", private val
             }
         }
 
+    private var clock = 0
+
+    /** Mimics PocketBase `autodate` fields: `created` on insert, `updated` on every write. */
+    private fun autodates(c: JsonObject, created: Boolean): Map<String, JsonElement> {
+        val now = JsonPrimitive("2026-10-19 12:00:%02d.000Z".format(clock++ % 60))
+        return c.getValue("fields").jsonArray.map { it.jsonObject }.filter { it["type"]?.jsonPrimitive?.content == "autodate" }
+            .filter { created || it["onUpdate"]?.jsonPrimitive?.content == "true" }
+            .associate { it.getValue("name").jsonPrimitive.content to now }
+    }
+
     private fun fieldsOf(c: JsonObject) = c.getValue("fields").jsonArray.associate {
         it.jsonObject.getValue("name").jsonPrimitive.content to it.jsonObject.getValue("type").jsonPrimitive.content
     }
@@ -137,6 +147,7 @@ class FakePocketBase(private val user: String = "admin@example.com", private val
                 val types = fieldsOf(c)
                 fun normalize(data: JsonObject): JsonObject {
                     val unknown = data.keys - types.keys - "id"
+                    require(data.keys.none { types[it] == "autodate" }) { "autodate fields are server-managed" }
                     require(unknown.isEmpty()) { "unknown fields $unknown" }
                     return JsonObject(data.mapValues { (k, v) ->
                         if (v !is JsonNull) v else when (types[k]) { "number" -> JsonPrimitive(0); "bool" -> JsonPrimitive(false); else -> JsonPrimitive("") }
@@ -151,13 +162,13 @@ class FakePocketBase(private val user: String = "admin@example.com", private val
                         respond(ex, 200, """{"page":$page,"perPage":$per,"items":${JsonArray(items)}}""")
                     }
                     method == "POST" -> runCatching { normalize(body(ex)).also { d -> relationError(c, d, partial = false)?.let(::error) } }.fold(
-                        { data -> JsonObject(data + ("id" to JsonPrimitive(id("r")))).also { rows += it }.let { respond(ex, 200, it.toString()) } },
+                        { data -> JsonObject(data + ("id" to JsonPrimitive(id("r"))) + autodates(c, created = true)).also { rows += it }.let { respond(ex, 200, it.toString()) } },
                         { respond(ex, 400, """{"message":"${it.message}"}""") },
                     )
                     method == "PATCH" -> {
                         val idx = rows.indexOfFirst { it["id"]?.jsonPrimitive?.content == parts[2] }
                         runCatching { normalize(body(ex)).also { d -> relationError(c, d, partial = true)?.let(::error) } }.fold(
-                            { data -> rows[idx] = JsonObject(rows[idx] + data); respond(ex, 200, rows[idx].toString()) },
+                            { data -> rows[idx] = JsonObject(rows[idx] + data + autodates(c, created = false)); respond(ex, 200, rows[idx].toString()) },
                             { respond(ex, 400, """{"message":"${it.message}"}""") },
                         )
                     }

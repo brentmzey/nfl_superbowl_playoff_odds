@@ -163,7 +163,7 @@ class PocketBaseClient(
 
     /** Creates [def] with its base columns, or adds any base columns it is missing. Returns (json, created, added). */
     private fun ensureBase(def: CollectionDef): Triple<JsonObject, Boolean, Int> =
-        collection(def.name)?.let { Triple(it, false, addFields(it, def.fields.map(def::fieldJson))) }
+        collection(def.name)?.let { Triple(it, false, addFields(it, def.baseFieldsJson())) }
             ?: Triple(call("POST", "/api/collections", def.baseJson()), true, 0)
 
     private val indexName = Regex("""INDEX\s+[`"]?(\w+)""", RegexOption.IGNORE_CASE)
@@ -171,10 +171,10 @@ class PocketBaseClient(
     /** Adds or rebuilds this collection's declared indexes by name; indexes it does not declare are kept. */
     private fun ensureIndexes(def: CollectionDef): Int {
         val current = collection(def.name)!!
-        val existing = current["indexes"]?.jsonArray.orEmpty().map { it.jsonPrimitive.content }
+        val existing = current.getValue("indexes").jsonArray.map { it.jsonPrimitive.content }
         val desired = def.indexSql()
         val desiredNames = desired.map { indexName.find(it)!!.groupValues[1] }.toSet()
-        val merged = existing.filter { indexName.find(it)?.groupValues?.get(1) !in desiredNames } + desired
+        val merged = existing.filter { indexName.find(it)!!.groupValues[1] !in desiredNames } + desired
         val added = desired.count { it !in existing }
         if (added > 0) call("PATCH", "/api/collections/${idOf(current)}", buildJsonObject { put("indexes", JsonArray(merged.map(::JsonPrimitive))) })
         return added
@@ -183,7 +183,7 @@ class PocketBaseClient(
     private fun ensureView(view: ViewDef): Int =
         when (val current = collection(view.name)) {
             null -> call("POST", "/api/collections", view.json()).let { 1 }
-            else -> if (current["viewQuery"]?.jsonPrimitive?.content == view.query) 0
+            else -> if (current.getValue("viewQuery").jsonPrimitive.content == view.query) 0
             else call("PATCH", "/api/collections/${idOf(current)}", buildJsonObject { put("viewQuery", view.query) }).let { 1 }
         }
 
@@ -221,7 +221,7 @@ class PocketBaseClient(
             val existing = list(ledger.name, filterFor(listOf("str_migration_id" to JsonPrimitive(step.id)))).firstOrNull()
             when {
                 existing == null -> call("POST", "/api/collections/${ledger.name}/records", row.data).let { step.id }
-                existing["str_fingerprint"]?.jsonPrimitive?.content == step.fingerprint -> null
+                existing.getValue("str_fingerprint").jsonPrimitive.content == step.fingerprint -> null
                 else -> call("PATCH", "/api/collections/${ledger.name}/records/${idOf(existing)}",
                     JsonObject(row.data + existing.filterKeys { it == "int_created_epoch_ms_utc" })).let { step.id }
             }

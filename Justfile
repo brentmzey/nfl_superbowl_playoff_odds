@@ -23,6 +23,17 @@ db-health:
 test:
     ./gradlew check jacocoTestReport
 
+# Regenerate the TypeScript typings from PocketBaseSchema.kt (no network, no DB)
+schema-ts:
+    ./gradlew run -q -PsimArgs="--db off --iterations 200"
+
+# TypeScript client: tests + coverage, strict typecheck, build
+ts-check:
+    cd clients/ts && bun install --frozen-lockfile && bun run check
+
+# Kotlin + TypeScript gates
+check-all: test ts-check
+
 # Refresh, verify, and commit the new snapshot
 publish: refresh test
     git add README.md docs output
