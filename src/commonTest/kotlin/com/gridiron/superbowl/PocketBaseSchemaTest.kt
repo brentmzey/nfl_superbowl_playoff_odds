@@ -92,7 +92,7 @@ class PocketBaseSchemaTest {
             c.relations.forEach { r -> assertTrue(c.indexes.any { it.columns.first() == r.name }, "${c.name}.${r.name} unindexed") }
         }
         assertEquals(
-            "CREATE INDEX `ix_i_nfl_games__season_year_kickoff_utc` ON `i_nfl_games` (`int_season_year`, `dt_kickoff_utc`) WHERE bool_is_final = 0",
+            "CREATE INDEX `ix_i_nfl_games__season_year_kickoff_utc` ON `i_nfl_games` (`int_season_year`, `dt_kickoff_utc`) WHERE bool_is_final = FALSE",
             PocketBaseSchema.games.indexSql().last(),
         )
         assertTrue(PocketBaseSchema.outlooks.indexSql().contains("CREATE UNIQUE INDEX `uq_o_team_outlooks__run_team` ON `o_team_outlooks` (`rel_run`, `rel_team`)"))

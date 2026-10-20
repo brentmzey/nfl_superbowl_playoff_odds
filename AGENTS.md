@@ -18,6 +18,8 @@ just test        # ./gradlew check jacocoTestReport (fails below 90% line/branch
 - Schema changes go in `PocketBaseSchema.kt` only, then flow through the numbered steps (001 base, 002 FKs, 003 indexes, 004 views). Steps are additive and idempotent. Never drop or rename a live column; add a new one instead. Every `rel_` FK must lead an index. See `docs/DATABASE.md`.
 - Never delete rows. Change `str_status_code` (ACTIVE / INACTIVE / SUPERSEDED / ARCHIVED) instead.
 - Keep numbers and booleans non-`required` (PocketBase treats 0 / false as blank).
+- PocketHost is the source of truth. The backups (`backups/`), SQLite (`output/db/`), and PostgreSQL replicas are rebuilt from it on every run. Never patch them by hand, and never write to them directly.
+- PostgreSQL provisioning follows DbFactory (`replica/Replication.kt`). Run `just db-up` before `just test` so the Postgres replica test runs instead of skipping.
 
 ## Architecture
 - `commonMain` stays pure Kotlin (no JVM APIs): model, engine, parser, report/SVG. IO lives only in `jvmMain`.

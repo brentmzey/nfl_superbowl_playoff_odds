@@ -52,7 +52,7 @@ class PocketBaseClientTest {
         assertEquals("view", pb.value(pb.collections.getValue("s_latest_team_outlooks"), "type"))
         val gameIndexes = pb.collections.getValue("i_nfl_games").getValue("indexes").jsonArray.map { it.jsonPrimitive.content }
         assertTrue(gameIndexes.first().startsWith("CREATE UNIQUE INDEX `uq_i_nfl_games__game_id`"))
-        assertTrue(gameIndexes.any { it.endsWith("WHERE bool_is_final = 0") })
+        assertTrue(gameIndexes.any { it.endsWith("WHERE bool_is_final = FALSE") })
         assertEquals(32 + games.size + 1 + 32 + report.superBowlMatchups.size, s.created)
         assertEquals(0, s.updated + s.unchanged + s.superseded)
 

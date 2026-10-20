@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.gridiron.superbowl"
-version = "0.1.0-RC3"
+version = "0.1.0-RC4"
 
 repositories {
     mavenCentral()
@@ -25,6 +25,10 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+        }
+        jvmMain.dependencies {
+            implementation("org.xerial:sqlite-jdbc:3.45.1.0")
+            implementation("org.postgresql:postgresql:42.7.4")
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

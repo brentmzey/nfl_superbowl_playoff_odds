@@ -197,6 +197,9 @@ flowchart LR
   PATCHed (keeping their creation time), and new rows are POSTed. Rows are never deleted. Earlier runs become `SUPERSEDED`.
 - **Resilience:** `_superusers` auth (PocketBase ≥ 0.23) with the token kept in memory only, plus exponential
   back-off with jitter on 429 / 5xx / network errors.
+- **Replicas and backups:** after each sync, PocketHost (the source of truth) is pulled back into a timestamped
+  JSON backup (`backups/`), a fresh SQLite file (`output/db/`), and local PostgreSQL on `localhost:15432`, set up
+  per the DbFactory rule. Every store shares the same tables, foreign keys, indexes, and view.
 - `just refresh-local` (`--db off`) runs without the database.
 
 ## 🚀 Run it
@@ -205,6 +208,7 @@ flowchart LR
 just refresh                 # fetch live data, simulate, regenerate charts + README, sync PocketHost
 just refresh-local           # same, without the database
 just db-health               # ping the configured PocketHost instance
+just db-up                   # start local PostgreSQL (local-db-stack) for the replica
 just test                    # tests + JaCoCo report + ≥90% line/branch coverage gate
 ./gradlew run -PsimArgs="--season 2026 --iterations 50000 --seed 7 --db off"
 NFL_LIVE=1 ./gradlew jvmTest # also hit the real ESPN API
@@ -224,6 +228,7 @@ Each run also writes `output/history/<date>.json`, and those snapshots feed the 
 | `src/jvmMain/.../data` | HTTP client and on-disk cache |
 | `src/commonMain/.../sync` | PocketBase schema (collections, Hungarian columns) and record mapping |
 | `src/jvmMain/.../sync` | PocketBase REST client: auth, migrations, upserts, back-off |
+| `src/jvmMain/.../replica` | PocketHost snapshot, JSON backups, SQLite/PostgreSQL rebuilds, DbFactory |
 | `src/jvmMain/.../app` | `Pipeline` (end-to-end refresh) and `Main` CLI |
 | `output/` | `latest.json`, `team_outlook.csv`, `history/` snapshots |
 | `docs/schema/` | PocketBase import JSON (generated each run) |

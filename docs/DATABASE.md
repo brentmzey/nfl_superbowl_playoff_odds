@@ -124,7 +124,7 @@ SQLite does not index foreign keys automatically, so every `rel_` column leads a
 | `i_nfl_teams` | `(str_conference, str_division)` | standings / grouping |
 | `i_nfl_games` | `(int_season_year, str_phase, int_week)` | schedule and results by week |
 | | `(rel_home_team, int_season_year)`, `(rel_away_team, int_season_year)` | a team's games; also serve as FK indexes |
-| | `(int_season_year, dt_kickoff_utc) WHERE bool_is_final = 0` | partial index on the only rows a weekly refresh rewrites |
+| | `(int_season_year, dt_kickoff_utc) WHERE bool_is_final = FALSE` | partial index on the only rows a weekly refresh rewrites |
 | `m_simulation_runs` | `(int_season_year, str_status_code, dt_run_date)` | "latest ACTIVE run", the SUPERSEDED sweep, and the view's filter |
 | `o_team_outlooks` | `uq (rel_run, rel_team)` | one outlook per team per run, enforced on the FKs too |
 | | `(rel_run, int_champion_rank)` | a run's leaderboard, already in rank order |
@@ -140,6 +140,34 @@ which gives a ready-made, publicly readable leaderboard for a dashboard:
 ```text
 GET /api/collections/s_latest_team_outlooks/records?filter=(int_season_year=2026)&sort=int_champion_rank
 ```
+
+## Replication and backups
+
+PocketHost is the **single source of truth**. After every sync the whole database is pulled back out and copied
+to three local places, each rebuilt from scratch and never patched:
+
+```mermaid
+flowchart LR
+    PH[("PocketHost<br/>source of truth")] -->|"pull every collection"| SNAP[snapshot]
+    SNAP --> BK["backups/pockethost/&lt;UTC stamp&gt;/<br/>one JSON per collection + manifest<br/>(newest 30 kept)"]
+    SNAP --> SQ["output/db/nfl_superbowl_playoff_odds.sqlite<br/>deleted + recreated"]
+    SNAP --> PG[("PostgreSQL localhost:15432<br/>db nfl_superbowl_playoff_odds<br/>schema nfl dropped + recreated")]
+```
+
+- **Same schema everywhere.** The SQLite and Postgres DDL is generated from `PocketBaseSchema` by `SqlDialect`, so
+  every store has the same tables, `id` primary keys, real `REFERENCES` foreign keys on every `rel_` column, the
+  unique, FK, query, and partial indexes, and the `s_latest_team_outlooks` view. The types are `BIGINT` /
+  `DOUBLE PRECISION` / `BOOLEAN` / `JSONB` in Postgres, and `INTEGER` / `REAL` / `TEXT` in SQLite. SQLite runs with
+  `PRAGMA foreign_keys = ON`.
+- **DbFactory** (`~/.gemini/config/rules/db_factory.md`): the client connects to the `postgres` maintenance DB,
+  checks `pg_database`, creates the database `WITH OWNER … TEMPLATE template0 ENCODING 'UTF8' LC_COLLATE/LC_CTYPE
+  'en_US.UTF-8' CONNECTION LIMIT -1` if it is missing, then `GRANT ALL PRIVILEGES`.
+- **Postgres settings:** `LOCAL_PG_HOST`, `LOCAL_PG_PORT`, `LOCAL_PG_USER`, `LOCAL_PG_PASSWORD`, `NFL_PG_DB`, and
+  `NFL_PG_SCHEMA`. The defaults match `~/personal/local-db-stack` (`localhost:15432`, `local_user`). Start it with
+  `just db-up`.
+- **CLI:** `--postgres auto` (the default) tries Postgres and warns if it is down, `required` fails instead, and
+  `off` skips it. The backup and SQLite copies always run after a successful sync.
+- **Restores:** `BackupStore.read(dir)` turns any backup folder back into a snapshot, which can rebuild either replica offline.
 
 ## Access rules
 

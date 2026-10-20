@@ -2,6 +2,14 @@
 
 All notable changes to this project follow [Semantic Versioning](https://semver.org/) with `-RC#` release candidates.
 
+## [0.1.0-RC4] - 2026-10-19
+
+### Added
+- Replication from PocketHost (source of truth) after every sync: timestamped JSON backups with a manifest (newest 30 kept, restorable), a SQLite file rebuilt from scratch, and a local PostgreSQL schema rebuilt from scratch.
+- `SqlDialect` generates SQLite/PostgreSQL DDL from the shared schema, so every store has the same primary keys, `REFERENCES` foreign keys, unique/FK/query/partial indexes, and the summary view.
+- DbFactory PostgreSQL provisioning (maintenance DB check, `template0`, UTF8, `en_US.UTF-8`, owner grant), with defaults matching local-db-stack.
+- `--postgres auto|required|off` and `just db-up`.
+
 ## [0.1.0-RC3] - 2026-10-19
 
 ### Added

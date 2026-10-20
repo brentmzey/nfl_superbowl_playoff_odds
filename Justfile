@@ -11,6 +11,10 @@ refresh iterations="20000":
 refresh-local iterations="20000":
     ./gradlew run -q -PsimArgs="--iterations {{iterations}} --db off"
 
+# Start local PostgreSQL from ~/personal/local-db-stack (localhost:15432) for the replica and its tests
+db-up:
+    docker compose -f ~/.local-db-stack/docker-compose.yml up -d postgres
+
 # Check that the configured PocketHost instance is reachable
 db-health:
     @set -a; [ -f .env ] && . ./.env; set +a; curl -fsS "$POCKETHOST_URL/api/health" && echo

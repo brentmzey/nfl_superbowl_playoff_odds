@@ -128,7 +128,7 @@ data class PbRecord(val collection: String, val data: JsonObject, val relations:
  * Numbers and booleans are never `required` because PocketBase treats 0 / false as blank.
  */
 object PocketBaseSchema {
-    const val ENGINE_VERSION = "0.1.0-RC3-elo-mc"
+    const val ENGINE_VERSION = "0.1.0-RC4-elo-mc"
     const val ACTIVE = "ACTIVE"
     const val SUPERSEDED = "SUPERSEDED"
     val auditColumns = setOf("bool_is_active", "str_status_code", "int_created_epoch_ms_utc", "int_updated_epoch_ms_utc")
@@ -167,7 +167,7 @@ object PocketBaseSchema {
             IndexDef(listOf("rel_home_team", "int_season_year")),
             IndexDef(listOf("rel_away_team", "int_season_year")),
             // Unplayed games: the only rows a weekly refresh rewrites.
-            IndexDef(listOf("int_season_year", "dt_kickoff_utc"), where = "bool_is_final = 0"),
+            IndexDef(listOf("int_season_year", "dt_kickoff_utc"), where = "bool_is_final = FALSE"),
         ),
     )
 

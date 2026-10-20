@@ -3,6 +3,7 @@ package com.gridiron.superbowl.app
 import com.gridiron.superbowl.data.CachingSource
 import com.gridiron.superbowl.data.EspnHttpSource
 import com.gridiron.superbowl.engine.SimulationConfig
+import com.gridiron.superbowl.replica.PostgresConfig
 import com.gridiron.superbowl.report.SvgCharts.pct
 import com.gridiron.superbowl.sync.PocketBaseClient
 import com.gridiron.superbowl.sync.PocketHostConfig
@@ -13,7 +14,8 @@ import kotlin.system.exitProcess
 /**
  * CLI: `./gradlew run -PsimArgs="--season 2026 --iterations 20000 --seed 2026 --db auto"`.
  * PocketHost is required by default (`--db required`): the run fails fast if settings are missing, before any work.
- * `--db off` skips the database for offline/local runs.
+ * `--db off` skips the database for offline/local runs. After a sync, PocketHost is pulled back into a timestamped
+ * JSON backup, a SQLite file, and local PostgreSQL (`--postgres auto` tries and warns, `required` fails, `off` skips).
  */
 fun main(args: Array<String>) {
     val flags = args.toList().chunked(2).filter { it.size == 2 }.associate { it[0].removePrefix("--") to it[1] }
@@ -24,10 +26,12 @@ fun main(args: Array<String>) {
         seed = flags["seed"]?.toLong() ?: season.toLong(),
     )
     val dbMode = flags["db"] ?: "required"
+    val pgMode = flags["postgres"] ?: "auto"
     val root = Path.of("").toAbsolutePath()
+    val dotEnvs = listOf(root.resolve(".env"), Path.of(System.getProperty("user.home"), ".env"))
     val source = CachingSource(EspnHttpSource(), root.resolve(".cache/espn"), season)
     val dbConfig = if (dbMode == "off") null
-    else PocketHostConfig.resolve(System.getenv(), listOf(root.resolve(".env"), Path.of(System.getProperty("user.home"), ".env")))
+    else PocketHostConfig.resolve(System.getenv(), dotEnvs)
         .getOrElse { fail("${it.message}. Use --db off for a local-only run.") }
 
     val pipeline = Pipeline(source, root)
@@ -47,6 +51,17 @@ fun main(args: Array<String>) {
             },
             onFailure = { fail("PocketHost sync to ${db.baseUrl} failed (local outputs were written): ${it.message}") },
         )
+        val client = PocketBaseClient(db).authenticate()
+        val pg = if (pgMode == "off") null else PostgresConfig.resolve(System.getenv(), dotEnvs)
+        val rep = pipeline.replicate(client, db.baseUrl, pg).getOrElse { fail("Replication from PocketHost failed: ${it.message}") }
+        println("Backup: ${root.relativize(rep.backup)} · SQLite: ${root.relativize(rep.sqlite)} (${rep.sqliteCounts.values.sum()} rows)")
+        rep.postgres?.fold(
+            onSuccess = { println("PostgreSQL ${pg}: ${it.counts.values.sum()} rows${if (it.created) " (database created via DbFactory)" else ""}") },
+            onFailure = { e ->
+                val msg = "PostgreSQL replica skipped (${pg}): ${e.message}"
+                if (pgMode == "required") fail(msg) else System.err.println("WARN $msg")
+            },
+        ) ?: println("PostgreSQL replica: off")
     } ?: println("PocketHost sync: off")
 }
 

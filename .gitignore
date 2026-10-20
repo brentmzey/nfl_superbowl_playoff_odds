@@ -7,3 +7,5 @@ build/
 .cache/
 .env
 *.env
+backups/
+output/db/
