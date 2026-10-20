@@ -18,8 +18,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * In-memory stand-in for a PocketBase >= 0.23 instance: superuser auth, collections CRUD, and record
- * list/create/update with the filter subset this project uses. Like PocketBase, it rejects unknown columns and
- * stores blank numbers/booleans as 0/false.
+ * list/create/update with the filter subset this project uses. Like PocketBase, it rejects unknown columns,
+ * stores blank numbers/booleans as 0/false, enforces relations (required + target row must exist), relation targets
+ * on schema changes, and that every index only names existing columns.
  */
 class FakePocketBase(private val user: String = "admin@example.com", private val password: String = "s3cret") : AutoCloseable {
     val collections = linkedMapOf<String, JsonObject>()
@@ -55,6 +56,31 @@ class FakePocketBase(private val user: String = "admin@example.com", private val
 
     private fun find(idOrName: String) = collections.values.firstOrNull { it["id"]?.jsonPrimitive?.content == idOrName || it["name"]?.jsonPrimitive?.content == idOrName }
 
+    private val indexColumns = Regex("""\(([^)]*)\)""")
+
+    private fun schemaError(c: JsonObject): String? {
+        val fieldNames = c.getValue("fields").jsonArray.map { it.jsonObject.getValue("name").jsonPrimitive.content }.toSet() + "id"
+        val badIndex = c["indexes"]?.jsonArray.orEmpty().map { it.jsonPrimitive.content }.firstOrNull { sql ->
+            indexColumns.find(sql)!!.groupValues[1].split(",").map { it.trim().trim('`') }.any { it !in fieldNames }
+        }
+        val badRelation = c.getValue("fields").jsonArray.map { it.jsonObject }
+            .firstOrNull { it["type"]?.jsonPrimitive?.content == "relation" && find(it.getValue("collectionId").jsonPrimitive.content) == null }
+        return badIndex?.let { "index references unknown column: $it" } ?: badRelation?.let { "relation to unknown collection" }
+    }
+
+    private fun relationError(c: JsonObject, data: JsonObject, partial: Boolean): String? =
+        c.getValue("fields").jsonArray.map { it.jsonObject }.filter { it["type"]?.jsonPrimitive?.content == "relation" }.firstNotNullOfOrNull { f ->
+            val name = f.getValue("name").jsonPrimitive.content
+            val value = (data[name] as? JsonPrimitive)?.content.orEmpty()
+            val target = find(f.getValue("collectionId").jsonPrimitive.content)!!.getValue("name").jsonPrimitive.content
+            when {
+                value.isEmpty() && (partial && name !in data) -> null
+                value.isEmpty() -> if (f["required"]?.jsonPrimitive?.content == "true") "$name is required" else null
+                records[target].orEmpty().none { it["id"]?.jsonPrimitive?.content == value } -> "$name points at missing $target row $value"
+                else -> null
+            }
+        }
+
     private fun fieldsOf(c: JsonObject) = c.getValue("fields").jsonArray.associate {
         it.jsonObject.getValue("name").jsonPrimitive.content to it.jsonObject.getValue("type").jsonPrimitive.content
     }
@@ -89,7 +115,8 @@ class FakePocketBase(private val user: String = "admin@example.com", private val
             parts.isEmpty() && method == "POST" -> {
                 val b = body(ex)
                 val name = b.getValue("name").jsonPrimitive.content
-                val stored = JsonObject(b + ("id" to (b["id"] ?: JsonPrimitive(id("pbc_")))) + ("fields" to withFieldIds(b.getValue("fields").jsonArray)))
+                val stored = JsonObject(b + ("id" to (b["id"] ?: JsonPrimitive(id("pbc_")))) + ("fields" to withFieldIds(b["fields"]?.jsonArray ?: JsonArray(emptyList()))))
+                schemaError(stored)?.let { return respond(ex, 400, """{"message":"$it"}""") }
                 collections[name] = stored
                 records[name] = mutableListOf()
                 respond(ex, 200, stored.toString())
@@ -97,7 +124,9 @@ class FakePocketBase(private val user: String = "admin@example.com", private val
             parts.size == 1 && method == "GET" -> find(parts[0])?.let { respond(ex, 200, it.toString()) } ?: respond(ex, 404, """{"message":"missing"}""")
             parts.size == 1 && method == "PATCH" -> {
                 val c = find(parts[0]) ?: return respond(ex, 404, "{}")
-                val updated = JsonObject(c + ("fields" to withFieldIds(body(ex).getValue("fields").jsonArray)))
+                val b = body(ex)
+                val updated = JsonObject(c + b + (b["fields"]?.let { mapOf("fields" to withFieldIds(it.jsonArray)) } ?: emptyMap()))
+                schemaError(updated)?.let { return respond(ex, 400, """{"message":"$it"}""") }
                 collections[c.getValue("name").jsonPrimitive.content] = updated
                 respond(ex, 200, updated.toString())
             }
@@ -121,13 +150,13 @@ class FakePocketBase(private val user: String = "admin@example.com", private val
                         val items = all.drop((page - 1) * per).take(per)
                         respond(ex, 200, """{"page":$page,"perPage":$per,"items":${JsonArray(items)}}""")
                     }
-                    method == "POST" -> runCatching { normalize(body(ex)) }.fold(
+                    method == "POST" -> runCatching { normalize(body(ex)).also { d -> relationError(c, d, partial = false)?.let(::error) } }.fold(
                         { data -> JsonObject(data + ("id" to JsonPrimitive(id("r")))).also { rows += it }.let { respond(ex, 200, it.toString()) } },
                         { respond(ex, 400, """{"message":"${it.message}"}""") },
                     )
                     method == "PATCH" -> {
                         val idx = rows.indexOfFirst { it["id"]?.jsonPrimitive?.content == parts[2] }
-                        runCatching { normalize(body(ex)) }.fold(
+                        runCatching { normalize(body(ex)).also { d -> relationError(c, d, partial = true)?.let(::error) } }.fold(
                             { data -> rows[idx] = JsonObject(rows[idx] + data); respond(ex, 200, rows[idx].toString()) },
                             { respond(ex, 400, """{"message":"${it.message}"}""") },
                         )

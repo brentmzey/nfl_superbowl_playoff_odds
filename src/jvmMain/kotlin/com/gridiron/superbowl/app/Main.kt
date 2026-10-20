@@ -42,7 +42,8 @@ fun main(args: Array<String>) {
         pipeline.publish(refresh, PocketBaseClient(db)).fold(
             onSuccess = {
                 println("PocketHost sync -> ${db.baseUrl}: ${it.created} created, ${it.updated} updated, ${it.unchanged} unchanged, " +
-                    "${it.superseded} older runs superseded; new collections ${it.collectionsCreated}, fields added ${it.fieldsAdded}")
+                    "${it.superseded} older runs superseded; new collections ${it.collectionsCreated}, " +
+                    "fields +${it.fieldsAdded}, indexes +${it.indexesAdded}, views ~${it.viewsChanged}, migrations recorded ${it.migrationsRecorded}")
             },
             onFailure = { fail("PocketHost sync to ${db.baseUrl} failed (local outputs were written): ${it.message}") },
         )

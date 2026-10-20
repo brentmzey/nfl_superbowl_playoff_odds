@@ -15,7 +15,7 @@ just test        # ./gradlew check jacocoTestReport (fails below 90% line/branch
 - The database is required: `just refresh` fails fast without `POCKETHOST_URL` / `POCKETHOST_USER` / `POCKETHOST_PASSWORD` (env, `./.env`, or `~/.env`). Use `just refresh-local` for offline work.
 - Real values live only in the git-ignored `.env`. Never commit them, echo them, or put them in `.env.example`, logs, or test fixtures.
 - Naming: `i_` input, `m_` model runs, `o_` model output (also `s_` summary, `f_` final if added later). Columns are Hungarian snake_case (`str_`, `int_`, `dbl_`, `bool_`, `json_`, `dt_`, `rel_`), and every row carries the audit columns.
-- Schema changes go in `PocketBaseSchema.kt` only. Migrations are additive and stepwise (base columns, then relations). Never drop or rename a live column; add a new one instead.
+- Schema changes go in `PocketBaseSchema.kt` only, then flow through the numbered steps (001 base, 002 FKs, 003 indexes, 004 views). Steps are additive and idempotent. Never drop or rename a live column; add a new one instead. Every `rel_` FK must lead an index. See `docs/DATABASE.md`.
 - Never delete rows. Change `str_status_code` (ACTIVE / INACTIVE / SUPERSEDED / ARCHIVED) instead.
 - Keep numbers and booleans non-`required` (PocketBase treats 0 / false as blank).
 

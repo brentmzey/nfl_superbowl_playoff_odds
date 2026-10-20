@@ -1,5 +1,7 @@
 package com.gridiron.superbowl
 
+import com.gridiron.superbowl.sync.IndexDef
+import com.gridiron.superbowl.sync.MigrationStep
 import com.gridiron.superbowl.sync.PocketBaseSchema
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonNull
@@ -32,11 +34,12 @@ class PocketBaseSchemaTest {
         val outlooks = PocketBaseSchema.importJson().map { it.jsonObject }.first { it["name"]?.jsonPrimitive?.content == "o_team_outlooks" }
         val rel = outlooks.getValue("fields").jsonArray.map { it.jsonObject }.first { it["name"]?.jsonPrimitive?.content == "rel_run" }
         assertEquals("m_simulation_runs", rel.getValue("collectionId").jsonPrimitive.content)
-        assertEquals("CREATE UNIQUE INDEX idx_o_team_outlooks_key ON o_team_outlooks (str_run_id, str_team_code)", outlooks.getValue("indexes").jsonArray[0].jsonPrimitive.content)
+        assertEquals("CREATE UNIQUE INDEX `uq_o_team_outlooks__run_id_team_code` ON `o_team_outlooks` (`str_run_id`, `str_team_code`)", outlooks.getValue("indexes").jsonArray[0].jsonPrimitive.content)
         assertEquals("", outlooks.getValue("listRule").jsonPrimitive.content)
         assertEquals(JsonNull, outlooks.getValue("createRule"))
-        val base = PocketBaseSchema.outlooks.baseJson().getValue("fields").jsonArray
-        assertFalse(base.any { it.jsonObject["type"]?.jsonPrimitive?.content == "relation" })
+        val base = PocketBaseSchema.outlooks.baseJson()
+        assertFalse(base.getValue("fields").jsonArray.any { it.jsonObject["type"]?.jsonPrimitive?.content == "relation" })
+        assertEquals(0, base.getValue("indexes").jsonArray.size)
     }
 
     @Test
@@ -75,5 +78,48 @@ class PocketBaseSchemaTest {
         assertFalse(PocketBaseSchema.sameContent(JsonObject(mapOf("t" to JsonPrimitive(true))), JsonObject(mapOf("t" to JsonPrimitive(false)))))
         assertFalse(PocketBaseSchema.sameContent(JsonObject(mapOf("j" to JsonPrimitive("x"))), JsonObject(mapOf("j" to JsonObject(emptyMap())))))
         assertTrue(PocketBaseSchema.sameContent(JsonObject(mapOf("o" to JsonObject(emptyMap()))), JsonObject(mapOf("o" to JsonObject(emptyMap())))))
+    }
+
+    @Test
+    fun indexesCoverKeysForeignKeysAndQueries() {
+        val all = (listOf(PocketBaseSchema.migrationsLedger) + PocketBaseSchema.collections).flatMap { c -> c.indexes.map { c to it } }
+        assertEquals(all.size, all.map { (c, i) -> i.name(c.name) }.toSet().size, "index names must be unique")
+        (listOf(PocketBaseSchema.migrationsLedger) + PocketBaseSchema.collections).forEach { c ->
+            assertEquals(IndexDef(c.upsertKey, unique = true), c.indexes.first())
+            val columns = c.fields.map { it.name } + c.relations.map { it.name }
+            c.indexes.forEach { i -> assertTrue(columns.containsAll(i.columns), "${c.name}: ${i.columns}") }
+            // Every foreign key is the leading column of some index.
+            c.relations.forEach { r -> assertTrue(c.indexes.any { it.columns.first() == r.name }, "${c.name}.${r.name} unindexed") }
+        }
+        assertEquals(
+            "CREATE INDEX `ix_i_nfl_games__season_year_kickoff_utc` ON `i_nfl_games` (`int_season_year`, `dt_kickoff_utc`) WHERE bool_is_final = 0",
+            PocketBaseSchema.games.indexSql().last(),
+        )
+        assertTrue(PocketBaseSchema.outlooks.indexSql().contains("CREATE UNIQUE INDEX `uq_o_team_outlooks__run_team` ON `o_team_outlooks` (`rel_run`, `rel_team`)"))
+        // Plain FK indexes are skipped when an extra index already leads with that column.
+        assertEquals(1, PocketBaseSchema.games.indexes.count { it.columns.first() == "rel_home_team" })
+    }
+
+    @Test
+    fun relationsAreRequiredNonCascadingForeignKeys() {
+        val rel = PocketBaseSchema.outlooks.relationJson(PocketBaseSchema.outlooks.relations.first(), "abc")
+        assertEquals("abc", rel.getValue("collectionId").jsonPrimitive.content)
+        assertEquals("true", rel.getValue("required").jsonPrimitive.content)
+        assertEquals("false", rel.getValue("cascadeDelete").jsonPrimitive.content)
+        assertEquals("1", rel.getValue("maxSelect").jsonPrimitive.content)
+    }
+
+    @Test
+    fun migrationsAreOrderedAndFingerprinted() {
+        val steps = PocketBaseSchema.migrations
+        assertEquals(listOf("001_base_tables", "002_foreign_keys", "003_indexes", "004_summary_views"), steps.map { it.id })
+        assertTrue(steps.all { it.fingerprint.length == 8 })
+        assertEquals(steps.size, steps.map { it.fingerprint }.toSet().size)
+        assertEquals(MigrationStep("x", "", "a").fingerprint, MigrationStep("y", "other", "a").fingerprint)
+        val export = PocketBaseSchema.importJson().map { it.jsonObject.getValue("name").jsonPrimitive.content }
+        assertEquals(listOf("tbl_schema_migrations", "i_nfl_teams", "i_nfl_games", "m_simulation_runs", "o_team_outlooks", "o_superbowl_matchups", "s_latest_team_outlooks"), export)
+        val view = PocketBaseSchema.latestOutlooks
+        assertTrue(view.query.startsWith("SELECT o.id") && view.query.contains("str_status_code = 'ACTIVE'"))
+        assertEquals("view", view.json().getValue("type").jsonPrimitive.content)
     }
 }

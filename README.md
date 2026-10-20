@@ -174,44 +174,29 @@ the equations, the tiebreakers, and the model's known limitations.
 ## 🗄️ PocketHost database
 
 Every refresh is written to a PocketBase instance on [PocketHost](https://pockethost.io). The database is
-**required** by default: a run fails fast, before fetching anything, if settings are missing. It uses the same
-raw-REST, Hungarian-notation approach as the MLB and art-market repos.
+**required** by default: a run fails fast, before fetching anything, if settings are missing. Full design,
+including the ER diagram, migrations, foreign keys, and index rationale, is in **[docs/DATABASE.md](docs/DATABASE.md)**.
 
 ```mermaid
-erDiagram
-    i_nfl_teams ||--o{ i_nfl_games : "rel_home_team / rel_away_team"
-    i_nfl_teams ||--o{ o_team_outlooks : rel_team
-    m_simulation_runs ||--o{ o_team_outlooks : rel_run
-    m_simulation_runs ||--o{ o_superbowl_matchups : rel_run
-    i_nfl_teams ||--o{ o_superbowl_matchups : "rel_afc_team / rel_nfc_team"
-    i_nfl_teams { text str_team_code UK }
-    i_nfl_games { text str_game_id UK }
-    m_simulation_runs { text str_run_id UK }
-    o_team_outlooks { text str_run_id_str_team_code UK }
-    o_superbowl_matchups { text str_run_id_afc_nfc UK }
+flowchart LR
+    T[i_nfl_teams] -->|rel_home/away_team| G[i_nfl_games]
+    T -->|rel_team| O[o_team_outlooks]
+    R[m_simulation_runs] -->|rel_run| O
+    R -->|rel_run| M[o_superbowl_matchups]
+    T -->|rel_afc/nfc_team| M
+    O -.->|ACTIVE runs| V[[s_latest_team_outlooks view]]
 ```
-
-| Collection | Prefix | Rows per refresh | Upsert key |
-|---|---|---|---|
-| `i_nfl_teams` | input | 32 (unchanged after the first run) | `str_team_code` |
-| `i_nfl_games` | input | every 2025 + 2026 game; only changed scores are rewritten | `str_game_id` (ESPN id) |
-| `m_simulation_runs` | model run | 1 | `str_run_id` = `<date>_s<season>_w<week>_seed<seed>` |
-| `o_team_outlooks` | output | 32 | `str_run_id, str_team_code` |
-| `o_superbowl_matchups` | output | top 10 | `str_run_id, str_afc_code, str_nfc_code` |
 
 - **Setup:** create an instance on pockethost.io, then copy `.env.example` to `.env` (git-ignored) and fill in
   `POCKETHOST_URL`, `POCKETHOST_USER`, and `POCKETHOST_PASSWORD`. The older `POCKETHOST_ADMIN_*` names also work.
   Values are read from the environment first, then `./.env`, then `~/.env`. `just db-health` checks the instance.
-- **Schema:** applied automatically by idempotent, stepwise migrations. Step 1 creates the base collections (or
-  adds any missing columns). Step 2 adds the `rel_` relations. Nothing is ever dropped. The same schema is exported
-  to [`docs/schema/pockethost_collections.json`](docs/schema/pockethost_collections.json) for the dashboard's
-  *Settings → Import collections* screen.
-- **Writes are idempotent:** rows are matched on their natural key, so unchanged rows are skipped, changed rows
-  are PATCHed (keeping `int_created_epoch_ms_utc`), and new rows are POSTed. Rows are never deleted. When a new
-  run lands, earlier `ACTIVE` runs of the season become `SUPERSEDED`.
-- **Resilience:** superuser auth via `/api/collections/_superusers/auth-with-password` (PocketBase ≥ 0.23), with
-  the token kept in memory only. 429 / 5xx / network errors are retried with exponential back-off and jitter.
-- **Access:** collections are publicly readable (handy for a dashboard), and writes are superuser-only.
+- **Stepwise migrations**, recorded in `tbl_schema_migrations`: `001_base_tables`, then `002_foreign_keys` (required,
+  non-cascading `rel_` relations), then `003_indexes` (unique natural keys, an index on every FK, query and partial
+  indexes), then `004_summary_views`. Each step is idempotent, additive only, and repairs drift.
+- **Idempotent writes:** rows are upserted on their natural key, so unchanged rows are skipped, changed rows are
+  PATCHed (keeping their creation time), and new rows are POSTed. Rows are never deleted. Earlier runs become `SUPERSEDED`.
+- **Resilience:** `_superusers` auth (PocketBase ≥ 0.23) with the token kept in memory only, plus exponential
+  back-off with jitter on 429 / 5xx / network errors.
 - `just refresh-local` (`--db off`) runs without the database.
 
 ## 🚀 Run it

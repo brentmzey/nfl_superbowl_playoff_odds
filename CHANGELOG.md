@@ -2,6 +2,18 @@
 
 All notable changes to this project follow [Semantic Versioning](https://semver.org/) with `-RC#` release candidates.
 
+## [0.1.0-RC3] - 2026-10-19
+
+### Added
+- Numbered stepwise migrations (`001_base_tables`, `002_foreign_keys`, `003_indexes`, `004_summary_views`) recorded with fingerprints in a `tbl_schema_migrations` ledger.
+- Foreign keys: every `rel_` relation is now required and non-cascading, and validated by the server on write.
+- Indexes: unique natural keys, an index leading on every FK, query indexes (weekly schedule, latest active run, leaderboard rank, team trends), a unique `(rel_run, rel_team)` constraint, and a partial index on unplayed games.
+- `s_latest_team_outlooks` view joining each season's ACTIVE run to team metadata.
+- `docs/DATABASE.md` with an ER diagram, the migration flow, and the reasoning behind each index.
+
+### Changed
+- Indexes moved out of collection creation into step 003, so they can cover relation columns. Migrations now also repair drift (missing columns, indexes, changed views) and never drop anything.
+
 ## [0.1.0-RC2] - 2026-10-19
 
 ### Added

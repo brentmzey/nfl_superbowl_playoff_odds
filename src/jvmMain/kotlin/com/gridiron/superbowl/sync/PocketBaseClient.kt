@@ -66,6 +66,9 @@ data class PocketHostConfig(val baseUrl: String, val user: String, val password:
 data class SyncSummary(
     val collectionsCreated: List<String>,
     val fieldsAdded: Int,
+    val indexesAdded: Int,
+    val viewsChanged: Int,
+    val migrationsRecorded: List<String>,
     val created: Int,
     val updated: Int,
     val unchanged: Int,
@@ -100,7 +103,8 @@ data class Backoff(
 
 /**
  * Raw-REST PocketBase client (PocketBase >= 0.23, `_superusers` auth; token held in memory only), in the same
- * shape as the MLB and art-market repos: stepwise idempotent migrations, upsert-by-natural-key, exponential back-off.
+ * shape as the MLB and art-market repos: stepwise idempotent migrations with a ledger, upsert-by-natural-key,
+ * exponential back-off.
  */
 class PocketBaseClient(
     private val config: PocketHostConfig,
@@ -146,22 +150,84 @@ class PocketBaseClient(
         return missing.size
     }
 
-    data class SchemaResult(val collectionIds: Map<String, String>, val created: List<String>, val fieldsAdded: Int)
+    data class SchemaResult(
+        val collectionIds: Map<String, String>,
+        val created: List<String>,
+        val fieldsAdded: Int,
+        val indexesAdded: Int,
+        val viewsChanged: Int,
+        val stepsRecorded: List<String>,
+    )
+
+    private fun idOf(json: JsonObject): String = json.getValue("id").jsonPrimitive.content
+
+    /** Creates [def] with its base columns, or adds any base columns it is missing. Returns (json, created, added). */
+    private fun ensureBase(def: CollectionDef): Triple<JsonObject, Boolean, Int> =
+        collection(def.name)?.let { Triple(it, false, addFields(it, def.fields.map(def::fieldJson))) }
+            ?: Triple(call("POST", "/api/collections", def.baseJson()), true, 0)
+
+    private val indexName = Regex("""INDEX\s+[`"]?(\w+)""", RegexOption.IGNORE_CASE)
+
+    /** Adds or rebuilds this collection's declared indexes by name; indexes it does not declare are kept. */
+    private fun ensureIndexes(def: CollectionDef): Int {
+        val current = collection(def.name)!!
+        val existing = current["indexes"]?.jsonArray.orEmpty().map { it.jsonPrimitive.content }
+        val desired = def.indexSql()
+        val desiredNames = desired.map { indexName.find(it)!!.groupValues[1] }.toSet()
+        val merged = existing.filter { indexName.find(it)?.groupValues?.get(1) !in desiredNames } + desired
+        val added = desired.count { it !in existing }
+        if (added > 0) call("PATCH", "/api/collections/${idOf(current)}", buildJsonObject { put("indexes", JsonArray(merged.map(::JsonPrimitive))) })
+        return added
+    }
+
+    private fun ensureView(view: ViewDef): Int =
+        when (val current = collection(view.name)) {
+            null -> call("POST", "/api/collections", view.json()).let { 1 }
+            else -> if (current["viewQuery"]?.jsonPrimitive?.content == view.query) 0
+            else call("PATCH", "/api/collections/${idOf(current)}", buildJsonObject { put("viewQuery", view.query) }).let { 1 }
+        }
 
     /**
-     * Idempotent, stepwise migration. Step 1 creates missing base collections, or adds any base columns that are
-     * missing. Step 2 adds `rel_` relation columns once every target collection exists. Nothing is ever dropped.
+     * Stepwise, idempotent migrations (see [PocketBaseSchema.migrations]):
+     * 000 bootstrap the `tbl_schema_migrations` ledger, 001 base tables, 002 foreign keys (`rel_` relations),
+     * 003 indexes, 004 summary views. Each step reconciles toward its definition and is then recorded in the
+     * ledger with its fingerprint. Nothing is ever dropped.
      */
-    fun ensureSchema(collections: List<CollectionDef> = PocketBaseSchema.collections): SchemaResult {
-        val step1 = collections.map { def ->
-            collection(def.name)?.let { existing -> Triple(def, existing, addFields(existing, def.fields.map(def::fieldJson))) }
-                ?: Triple(def, call("POST", "/api/collections", def.baseJson()), -1)
-        }
-        val ids = step1.associate { (def, json, _) -> def.name to json.getValue("id").jsonPrimitive.content }
-        val relationsAdded = collections.filter { it.relations.isNotEmpty() }.sumOf { def ->
+    fun migrate(epochMs: Long = System.currentTimeMillis()): SchemaResult {
+        val ledger = PocketBaseSchema.migrationsLedger
+        val (_, ledgerCreated, _) = ensureBase(ledger)
+        val ledgerIndexes = ensureIndexes(ledger)
+        val defs = PocketBaseSchema.collections
+
+        val step1 = defs.map { it to ensureBase(it) }
+        val ids = step1.associate { (def, r) -> def.name to idOf(r.first) }
+        val relationsAdded = defs.filter { it.relations.isNotEmpty() }.sumOf { def ->
             addFields(collection(def.name)!!, def.relations.map { def.relationJson(it, ids.getValue(it.target)) })
         }
-        return SchemaResult(ids, step1.filter { it.third < 0 }.map { it.first.name }, step1.sumOf { maxOf(it.third, 0) } + relationsAdded)
+        val indexesAdded = ledgerIndexes + defs.sumOf(::ensureIndexes)
+        val viewsChanged = PocketBaseSchema.views.sumOf(::ensureView)
+
+        val recorded = PocketBaseSchema.migrations.mapNotNull { step ->
+            val row = PbRecord(ledger.name, JsonObject(mapOf(
+                "str_migration_id" to JsonPrimitive(step.id),
+                "str_description" to JsonPrimitive(step.description),
+                "str_fingerprint" to JsonPrimitive(step.fingerprint),
+                "int_applied_epoch_ms_utc" to JsonPrimitive(epochMs),
+                "bool_is_active" to JsonPrimitive(true),
+                "str_status_code" to JsonPrimitive(PocketBaseSchema.ACTIVE),
+                "int_created_epoch_ms_utc" to JsonPrimitive(epochMs),
+                "int_updated_epoch_ms_utc" to JsonPrimitive(epochMs),
+            )))
+            val existing = list(ledger.name, filterFor(listOf("str_migration_id" to JsonPrimitive(step.id)))).firstOrNull()
+            when {
+                existing == null -> call("POST", "/api/collections/${ledger.name}/records", row.data).let { step.id }
+                existing["str_fingerprint"]?.jsonPrimitive?.content == step.fingerprint -> null
+                else -> call("PATCH", "/api/collections/${ledger.name}/records/${idOf(existing)}",
+                    JsonObject(row.data + existing.filterKeys { it == "int_created_epoch_ms_utc" })).let { step.id }
+            }
+        }
+        val created = (if (ledgerCreated) listOf(ledger.name) else emptyList()) + step1.filter { it.second.second }.map { it.first.name }
+        return SchemaResult(ids, created, step1.sumOf { it.second.third } + relationsAdded, indexesAdded, viewsChanged, recorded)
     }
 
     private fun filterFor(clauses: List<Pair<String, JsonElement>>, op: String = "="): String =
@@ -230,7 +296,7 @@ class PocketBaseClient(
     /** Full refresh write: auth, migrate, then idempotently upsert teams, games, the run, and its outputs. */
     fun sync(report: SimulationReport, games: List<Game>, epochMs: Long): SyncSummary {
         authenticate()
-        val schema = ensureSchema()
+        val schema = migrate(epochMs)
         val tally = Tally()
         val batches = listOf(
             PocketBaseSchema.teams to PocketBaseSchema.teamRecords(epochMs),
@@ -240,7 +306,8 @@ class PocketBaseClient(
             ids + (def.name to upsertAll(def, rows, ids, tally))
         }
         val superseded = supersede(PocketBaseSchema.runId(report), report.season, epochMs)
-        return SyncSummary(schema.created, schema.fieldsAdded, tally.created, tally.updated, tally.unchanged, superseded)
+        return SyncSummary(schema.created, schema.fieldsAdded, schema.indexesAdded, schema.viewsChanged, schema.stepsRecorded,
+            tally.created, tally.updated, tally.unchanged, superseded)
     }
 
     fun health(): Boolean = runCatching { call("GET", "/api/health", auth = false)["code"] == JsonPrimitive(200) }.getOrDefault(false)

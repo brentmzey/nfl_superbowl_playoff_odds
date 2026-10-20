@@ -1,5 +1,60 @@
 [
     {
+        "id": "tbl_schema_migrations",
+        "name": "tbl_schema_migrations",
+        "type": "base",
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "fields": [
+            {
+                "name": "str_migration_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "str_description",
+                "type": "text",
+                "required": false
+            },
+            {
+                "name": "str_fingerprint",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_applied_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "bool_is_active",
+                "type": "bool",
+                "required": false
+            },
+            {
+                "name": "str_status_code",
+                "type": "text",
+                "required": true
+            },
+            {
+                "name": "int_created_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            },
+            {
+                "name": "int_updated_epoch_ms_utc",
+                "type": "number",
+                "required": false
+            }
+        ],
+        "indexes": [
+            "CREATE UNIQUE INDEX `uq_tbl_schema_migrations__migration_id` ON `tbl_schema_migrations` (`str_migration_id`)"
+        ]
+    },
+    {
         "id": "i_nfl_teams",
         "name": "i_nfl_teams",
         "type": "base",
@@ -51,7 +106,8 @@
             }
         ],
         "indexes": [
-            "CREATE UNIQUE INDEX idx_i_nfl_teams_key ON i_nfl_teams (str_team_code)"
+            "CREATE UNIQUE INDEX `uq_i_nfl_teams__team_code` ON `i_nfl_teams` (`str_team_code`)",
+            "CREATE INDEX `ix_i_nfl_teams__conference_division` ON `i_nfl_teams` (`str_conference`, `str_division`)"
         ]
     },
     {
@@ -144,21 +200,26 @@
                 "type": "relation",
                 "collectionId": "i_nfl_teams",
                 "maxSelect": 1,
+                "minSelect": 0,
                 "cascadeDelete": false,
-                "required": false
+                "required": true
             },
             {
                 "name": "rel_away_team",
                 "type": "relation",
                 "collectionId": "i_nfl_teams",
                 "maxSelect": 1,
+                "minSelect": 0,
                 "cascadeDelete": false,
-                "required": false
+                "required": true
             }
         ],
         "indexes": [
-            "CREATE UNIQUE INDEX idx_i_nfl_games_key ON i_nfl_games (str_game_id)",
-            "CREATE INDEX idx_i_nfl_games_season ON i_nfl_games (int_season_year, str_phase, int_week)"
+            "CREATE UNIQUE INDEX `uq_i_nfl_games__game_id` ON `i_nfl_games` (`str_game_id`)",
+            "CREATE INDEX `ix_i_nfl_games__season_year_phase_week` ON `i_nfl_games` (`int_season_year`, `str_phase`, `int_week`)",
+            "CREATE INDEX `ix_i_nfl_games__home_team_season_year` ON `i_nfl_games` (`rel_home_team`, `int_season_year`)",
+            "CREATE INDEX `ix_i_nfl_games__away_team_season_year` ON `i_nfl_games` (`rel_away_team`, `int_season_year`)",
+            "CREATE INDEX `ix_i_nfl_games__season_year_kickoff_utc` ON `i_nfl_games` (`int_season_year`, `dt_kickoff_utc`) WHERE bool_is_final = 0"
         ]
     },
     {
@@ -248,8 +309,8 @@
             }
         ],
         "indexes": [
-            "CREATE UNIQUE INDEX idx_m_simulation_runs_key ON m_simulation_runs (str_run_id)",
-            "CREATE INDEX idx_m_simulation_runs_season ON m_simulation_runs (int_season_year, dt_run_date)"
+            "CREATE UNIQUE INDEX `uq_m_simulation_runs__run_id` ON `m_simulation_runs` (`str_run_id`)",
+            "CREATE INDEX `ix_m_simulation_runs__season_year_status_code_run_date` ON `m_simulation_runs` (`int_season_year`, `str_status_code`, `dt_run_date`)"
         ]
     },
     {
@@ -378,21 +439,25 @@
                 "type": "relation",
                 "collectionId": "m_simulation_runs",
                 "maxSelect": 1,
+                "minSelect": 0,
                 "cascadeDelete": false,
-                "required": false
+                "required": true
             },
             {
                 "name": "rel_team",
                 "type": "relation",
                 "collectionId": "i_nfl_teams",
                 "maxSelect": 1,
+                "minSelect": 0,
                 "cascadeDelete": false,
-                "required": false
+                "required": true
             }
         ],
         "indexes": [
-            "CREATE UNIQUE INDEX idx_o_team_outlooks_key ON o_team_outlooks (str_run_id, str_team_code)",
-            "CREATE INDEX idx_o_team_outlooks_team ON o_team_outlooks (str_team_code, dt_run_date)"
+            "CREATE UNIQUE INDEX `uq_o_team_outlooks__run_id_team_code` ON `o_team_outlooks` (`str_run_id`, `str_team_code`)",
+            "CREATE UNIQUE INDEX `uq_o_team_outlooks__run_team` ON `o_team_outlooks` (`rel_run`, `rel_team`)",
+            "CREATE INDEX `ix_o_team_outlooks__run_champion_rank` ON `o_team_outlooks` (`rel_run`, `int_champion_rank`)",
+            "CREATE INDEX `ix_o_team_outlooks__team_run_date` ON `o_team_outlooks` (`rel_team`, `dt_run_date`)"
         ]
     },
     {
@@ -455,28 +520,42 @@
                 "type": "relation",
                 "collectionId": "m_simulation_runs",
                 "maxSelect": 1,
+                "minSelect": 0,
                 "cascadeDelete": false,
-                "required": false
+                "required": true
             },
             {
                 "name": "rel_afc_team",
                 "type": "relation",
                 "collectionId": "i_nfl_teams",
                 "maxSelect": 1,
+                "minSelect": 0,
                 "cascadeDelete": false,
-                "required": false
+                "required": true
             },
             {
                 "name": "rel_nfc_team",
                 "type": "relation",
                 "collectionId": "i_nfl_teams",
                 "maxSelect": 1,
+                "minSelect": 0,
                 "cascadeDelete": false,
-                "required": false
+                "required": true
             }
         ],
         "indexes": [
-            "CREATE UNIQUE INDEX idx_o_superbowl_matchups_key ON o_superbowl_matchups (str_run_id, str_afc_code, str_nfc_code)"
+            "CREATE UNIQUE INDEX `uq_o_superbowl_matchups__run_id_afc_code_nfc_code` ON `o_superbowl_matchups` (`str_run_id`, `str_afc_code`, `str_nfc_code`)",
+            "CREATE INDEX `ix_o_superbowl_matchups__afc_team` ON `o_superbowl_matchups` (`rel_afc_team`)",
+            "CREATE INDEX `ix_o_superbowl_matchups__nfc_team` ON `o_superbowl_matchups` (`rel_nfc_team`)",
+            "CREATE INDEX `ix_o_superbowl_matchups__run_rank` ON `o_superbowl_matchups` (`rel_run`, `int_rank`)"
         ]
+    },
+    {
+        "id": "s_latest_team_outlooks",
+        "name": "s_latest_team_outlooks",
+        "type": "view",
+        "listRule": "",
+        "viewRule": "",
+        "viewQuery": "SELECT o.id, o.str_team_code, t.str_team_name, t.str_conference, t.str_division,\n       r.str_run_id, r.dt_run_date, r.int_season_year, r.int_through_week,\n       o.int_wins, o.int_losses, o.int_ties, o.dbl_elo_rating, o.dbl_projected_wins,\n       o.dbl_playoff_prob, o.dbl_divisional_prob, o.dbl_conference_prob,\n       o.dbl_superbowl_prob, o.dbl_champion_prob, o.int_champion_rank\nFROM o_team_outlooks o\nJOIN m_simulation_runs r ON r.id = o.rel_run\nJOIN i_nfl_teams t ON t.id = o.rel_team\nWHERE r.str_status_code = 'ACTIVE'"
     }
 ]

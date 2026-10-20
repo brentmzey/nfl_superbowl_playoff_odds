@@ -19,11 +19,26 @@ enum class FieldType(val wire: String) { TEXT("text"), NUMBER("number"), BOOL("b
 
 data class FieldDef(val name: String, val type: FieldType, val required: Boolean = false)
 
-/** A single-record relation (`rel_` column) to another collection, added in migration step 2. */
+/**
+ * A single-record relation (`rel_` column): PocketBase's foreign key. It is validated on every write, `required`
+ * so no row can be orphaned, and never cascades because rows are never deleted. Added in migration step 002.
+ */
 data class RelationDef(val name: String, val target: String)
 
 /**
- * One PocketBase collection. [upsertKey] columns identify a row (backed by a unique index), so re-running a
+ * A SQLite index on a collection, added in migration step 003 (after the relations exist, so `rel_` columns can be
+ * indexed). Names follow `uq_<table>__<cols>` for unique and `ix_<table>__<cols>` for plain indexes.
+ */
+data class IndexDef(val columns: List<String>, val unique: Boolean = false, val where: String? = null) {
+    fun name(table: String): String = (if (unique) "uq_" else "ix_") + table + "__" + columns.joinToString("_") { it.substringAfter('_') }
+
+    fun sql(table: String): String =
+        "CREATE ${if (unique) "UNIQUE " else ""}INDEX `${name(table)}` ON `$table` (${columns.joinToString(", ") { "`$it`" }})" +
+            where?.let { " WHERE $it" }.orEmpty()
+}
+
+/**
+ * One PocketBase base collection. [upsertKey] columns identify a row (backed by a unique index), so re-running a
  * refresh updates rows rather than duplicating them. The collection [id] defaults to its name so the exported
  * import JSON can reference relation targets deterministically.
  */
@@ -32,9 +47,17 @@ data class CollectionDef(
     val fields: List<FieldDef>,
     val upsertKey: List<String>,
     val relations: List<RelationDef> = emptyList(),
-    val indexes: List<String> = emptyList(),
+    val extraIndexes: List<IndexDef> = emptyList(),
 ) {
     val id: String get() = name
+
+    /** Natural-key unique index first, then a plain index on every `rel_` column (SQLite does not index FKs), then extras. */
+    val indexes: List<IndexDef>
+        get() = listOf(IndexDef(upsertKey, unique = true)) +
+            relations.map { IndexDef(listOf(it.name)) }.filter { fk -> extraIndexes.none { it.columns.first() == fk.columns.first() } } +
+            extraIndexes
+
+    fun indexSql(): List<String> = indexes.map { it.sql(name) }
 
     fun fieldJson(f: FieldDef): JsonObject = buildJsonObject {
         put("name", f.name)
@@ -48,32 +71,45 @@ data class CollectionDef(
         put("type", "relation")
         put("collectionId", targetId)
         put("maxSelect", 1)
+        put("minSelect", 0)
         put("cascadeDelete", false)
-        put("required", false)
+        put("required", true)
     }
 
-    /** Step 1 payload: base columns + unique key, no relations. */
-    fun baseJson(): JsonObject = buildJsonObject {
-        put("id", id)
-        put("name", name)
-        put("type", "base")
+    private fun rules(): Map<String, JsonElement> = mapOf(
         // Public read (for dashboards); writes are superuser-only.
-        put("listRule", "")
-        put("viewRule", "")
-        put("createRule", JsonNull)
-        put("updateRule", JsonNull)
-        put("deleteRule", JsonNull)
-        put("fields", JsonArray(fields.map(::fieldJson)))
-        put("indexes", buildJsonArray {
-            add(JsonPrimitive("CREATE UNIQUE INDEX idx_${name}_key ON $name (${upsertKey.joinToString(", ")})"))
-            indexes.forEach { add(JsonPrimitive(it)) }
-        })
-    }
-
-    /** Full definition (both steps) for PocketBase's "Import collections" screen. */
-    fun importJson(): JsonObject = JsonObject(
-        baseJson() + ("fields" to JsonArray(fields.map(::fieldJson) + relations.map { relationJson(it, it.target) })),
+        "listRule" to JsonPrimitive(""), "viewRule" to JsonPrimitive(""),
+        "createRule" to JsonNull, "updateRule" to JsonNull, "deleteRule" to JsonNull,
     )
+
+    /** Step 001 payload: base columns only (no relations, no indexes). */
+    fun baseJson(): JsonObject = JsonObject(
+        mapOf("id" to JsonPrimitive(id), "name" to JsonPrimitive(name), "type" to JsonPrimitive("base")) + rules() +
+            mapOf("fields" to JsonArray(fields.map(::fieldJson)), "indexes" to JsonArray(emptyList())),
+    )
+
+    /** Final state after every step, for PocketBase's "Import collections" screen. */
+    fun importJson(): JsonObject = JsonObject(
+        baseJson() + mapOf(
+            "fields" to JsonArray(fields.map(::fieldJson) + relations.map { relationJson(it, it.target) }),
+            "indexes" to JsonArray(indexSql().map(::JsonPrimitive)),
+        ),
+    )
+}
+
+/** A read-only PocketBase view collection (`s_` summary prefix), created in migration step 004. */
+data class ViewDef(val name: String, val query: String) {
+    fun json(): JsonObject = JsonObject(
+        mapOf(
+            "id" to JsonPrimitive(name), "name" to JsonPrimitive(name), "type" to JsonPrimitive("view"),
+            "listRule" to JsonPrimitive(""), "viewRule" to JsonPrimitive(""), "viewQuery" to JsonPrimitive(query),
+        ),
+    )
+}
+
+/** One numbered, idempotent migration step. [fingerprint] changes whenever the step's definition changes. */
+data class MigrationStep(val id: String, val description: String, val definition: String) {
+    val fingerprint: String get() = definition.hashCode().toUInt().toString(16).padStart(8, '0')
 }
 
 /**
@@ -92,7 +128,7 @@ data class PbRecord(val collection: String, val data: JsonObject, val relations:
  * Numbers and booleans are never `required` because PocketBase treats 0 / false as blank.
  */
 object PocketBaseSchema {
-    const val ENGINE_VERSION = "0.1.0-RC2-elo-mc"
+    const val ENGINE_VERSION = "0.1.0-RC3-elo-mc"
     const val ACTIVE = "ACTIVE"
     const val SUPERSEDED = "SUPERSEDED"
     val auditColumns = setOf("bool_is_active", "str_status_code", "int_created_epoch_ms_utc", "int_updated_epoch_ms_utc")
@@ -112,6 +148,7 @@ object PocketBaseSchema {
         "i_nfl_teams",
         listOf(text("str_team_code", true), text("str_team_name", true), text("str_conference", true), text("str_division", true)) + audit,
         upsertKey = listOf("str_team_code"),
+        extraIndexes = listOf(IndexDef(listOf("str_conference", "str_division"))),
     )
 
     val games = CollectionDef(
@@ -123,7 +160,15 @@ object PocketBaseSchema {
         ) + audit,
         upsertKey = listOf("str_game_id"),
         relations = listOf(RelationDef("rel_home_team", "i_nfl_teams"), RelationDef("rel_away_team", "i_nfl_teams")),
-        indexes = listOf("CREATE INDEX idx_i_nfl_games_season ON i_nfl_games (int_season_year, str_phase, int_week)"),
+        extraIndexes = listOf(
+            // Schedule / results by season and week.
+            IndexDef(listOf("int_season_year", "str_phase", "int_week")),
+            // A team's games in a season (FK first, so it also serves plain FK lookups).
+            IndexDef(listOf("rel_home_team", "int_season_year")),
+            IndexDef(listOf("rel_away_team", "int_season_year")),
+            // Unplayed games: the only rows a weekly refresh rewrites.
+            IndexDef(listOf("int_season_year", "dt_kickoff_utc"), where = "bool_is_final = 0"),
+        ),
     )
 
     val runs = CollectionDef(
@@ -134,7 +179,10 @@ object PocketBaseSchema {
             text("str_engine_version"), text("str_top_favorite_code"), num("dbl_top_favorite_prob"),
         ) + audit,
         upsertKey = listOf("str_run_id"),
-        indexes = listOf("CREATE INDEX idx_m_simulation_runs_season ON m_simulation_runs (int_season_year, dt_run_date)"),
+        extraIndexes = listOf(
+            // "Latest ACTIVE run of a season" and the SUPERSEDED sweep.
+            IndexDef(listOf("int_season_year", "str_status_code", "dt_run_date")),
+        ),
     )
 
     val outlooks = CollectionDef(
@@ -148,7 +196,14 @@ object PocketBaseSchema {
         ) + audit,
         upsertKey = listOf("str_run_id", "str_team_code"),
         relations = listOf(RelationDef("rel_run", "m_simulation_runs"), RelationDef("rel_team", "i_nfl_teams")),
-        indexes = listOf("CREATE INDEX idx_o_team_outlooks_team ON o_team_outlooks (str_team_code, dt_run_date)"),
+        extraIndexes = listOf(
+            // One outlook per (run, team), also enforced on the foreign keys.
+            IndexDef(listOf("rel_run", "rel_team"), unique = true),
+            // Leaderboard for a run, already in rank order.
+            IndexDef(listOf("rel_run", "int_champion_rank")),
+            // A team's odds over time (trend charts).
+            IndexDef(listOf("rel_team", "dt_run_date")),
+        ),
     )
 
     val matchups = CollectionDef(
@@ -160,7 +215,33 @@ object PocketBaseSchema {
             RelationDef("rel_afc_team", "i_nfl_teams"),
             RelationDef("rel_nfc_team", "i_nfl_teams"),
         ),
+        extraIndexes = listOf(IndexDef(listOf("rel_run", "int_rank"))),
     )
+
+    /** Ledger of applied migration steps (bootstrapped before step 001). */
+    val migrationsLedger = CollectionDef(
+        "tbl_schema_migrations",
+        listOf(text("str_migration_id", true), text("str_description"), text("str_fingerprint", true), num("int_applied_epoch_ms_utc")) + audit,
+        upsertKey = listOf("str_migration_id"),
+    )
+
+    /** Current outlook for every team: rows of each season's ACTIVE run, joined to team metadata. */
+    val latestOutlooks = ViewDef(
+        "s_latest_team_outlooks",
+        """
+        SELECT o.id, o.str_team_code, t.str_team_name, t.str_conference, t.str_division,
+               r.str_run_id, r.dt_run_date, r.int_season_year, r.int_through_week,
+               o.int_wins, o.int_losses, o.int_ties, o.dbl_elo_rating, o.dbl_projected_wins,
+               o.dbl_playoff_prob, o.dbl_divisional_prob, o.dbl_conference_prob,
+               o.dbl_superbowl_prob, o.dbl_champion_prob, o.int_champion_rank
+        FROM o_team_outlooks o
+        JOIN m_simulation_runs r ON r.id = o.rel_run
+        JOIN i_nfl_teams t ON t.id = o.rel_team
+        WHERE r.str_status_code = 'ACTIVE'
+        """.trimIndent(),
+    )
+
+    val views: List<ViewDef> = listOf(latestOutlooks)
 
     /** Dependency order: relation targets come before the collections that point at them. */
     val collections: List<CollectionDef> = listOf(teams, games, runs, outlooks, matchups)
@@ -170,7 +251,23 @@ object PocketBaseSchema {
 
     fun byName(name: String): CollectionDef = collections.first { it.name == name }
 
-    fun importJson(): JsonArray = JsonArray(collections.map { it.importJson() })
+    /**
+     * Stepwise migrations, applied in order and recorded in [migrationsLedger]. Every step reconciles toward its
+     * definition and is safe to re-run. Steps only ever add things: columns, relations, indexes, views.
+     */
+    val migrations: List<MigrationStep> = listOf(
+        MigrationStep("001_base_tables", "Base collections and columns (no relations, no indexes)",
+            collections.joinToString("\n") { it.baseJson().toString() }),
+        MigrationStep("002_foreign_keys", "Required single-record rel_ relations, no cascades",
+            collections.joinToString("\n") { c -> c.relations.joinToString { "${c.name}.${it.name}->${it.target}" } }),
+        MigrationStep("003_indexes", "Unique natural keys, FK indexes, query indexes",
+            collections.joinToString("\n") { it.indexSql().joinToString("\n") }),
+        MigrationStep("004_summary_views", "Read-only s_ views over the latest ACTIVE run",
+            views.joinToString("\n") { it.json().toString() }),
+    )
+
+    fun importJson(): JsonArray =
+        JsonArray((listOf(migrationsLedger) + collections).map { it.importJson() } + views.map { it.json() })
 
     fun naturalKey(def: CollectionDef, row: JsonObject): String =
         def.upsertKey.joinToString("|") { row.getValue(it).jsonPrimitive.content }

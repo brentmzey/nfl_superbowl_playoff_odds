@@ -15,6 +15,10 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.IOException
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.nio.file.Files
 import kotlin.test.AfterTest
 import kotlin.test.Test
@@ -39,8 +43,16 @@ class PocketBaseClientTest {
     @Test
     fun firstSyncMigratesAndInsertsEverythingWithResolvedRelations() {
         val s = client().sync(report, games, epochMs = 1_000)
-        assertEquals(PocketBaseSchema.collections.map { it.name }, s.collectionsCreated)
-        assertEquals(7, s.fieldsAdded) // the rel_ columns added in step 2
+        assertEquals(listOf("tbl_schema_migrations") + PocketBaseSchema.collections.map { it.name }, s.collectionsCreated)
+        assertEquals(7, s.fieldsAdded) // the rel_ columns added in step 002
+        assertEquals((listOf(PocketBaseSchema.migrationsLedger) + PocketBaseSchema.collections).sumOf { it.indexes.size }, s.indexesAdded)
+        assertEquals(1, s.viewsChanged)
+        assertEquals(PocketBaseSchema.migrations.map { it.id }, s.migrationsRecorded)
+        assertEquals(PocketBaseSchema.migrations.map { it.id }, pb.rows("tbl_schema_migrations").map { pb.value(it, "str_migration_id") })
+        assertEquals("view", pb.value(pb.collections.getValue("s_latest_team_outlooks"), "type"))
+        val gameIndexes = pb.collections.getValue("i_nfl_games").getValue("indexes").jsonArray.map { it.jsonPrimitive.content }
+        assertTrue(gameIndexes.first().startsWith("CREATE UNIQUE INDEX `uq_i_nfl_games__game_id`"))
+        assertTrue(gameIndexes.any { it.endsWith("WHERE bool_is_final = 0") })
         assertEquals(32 + games.size + 1 + 32 + report.superBowlMatchups.size, s.created)
         assertEquals(0, s.updated + s.unchanged + s.superseded)
 
@@ -62,7 +74,8 @@ class PocketBaseClientTest {
     fun rerunIsIdempotentAndANewRunSupersedesTheOldOne() {
         client().sync(report, games, epochMs = 1_000)
         val again = client().sync(report, games, epochMs = 2_000)
-        assertEquals(listOf(0, 0, 0, 0), listOf(again.collectionsCreated.size, again.fieldsAdded, again.created, again.updated))
+        assertEquals(listOf(0, 0, 0, 0, 0, 0, 0), listOf(again.collectionsCreated.size, again.fieldsAdded, again.indexesAdded,
+            again.viewsChanged, again.migrationsRecorded.size, again.created, again.updated))
         assertEquals(32 + games.size + 1 + 32 + report.superBowlMatchups.size, again.unchanged)
         assertEquals("1000", pb.value(pb.rows("i_nfl_teams").first(), "int_created_epoch_ms_utc"))
 
@@ -79,21 +92,65 @@ class PocketBaseClientTest {
     }
 
     @Test
-    fun migrationAddsMissingColumnsToExistingCollections() {
+    fun migrationsReconcileDriftAndKeepForeignIndexes() {
         val c = client().authenticate()
-        c.ensureSchema()
+        c.migrate(1)
+        // Drift: a column was dropped, one declared index is gone, someone added their own index, the view changed.
         val teams = pb.collections.getValue("i_nfl_teams")
-        pb.collections["i_nfl_teams"] = JsonObject(teams + ("fields" to JsonArray(teams.getValue("fields").jsonArray.drop(1))))
-        val result = c.ensureSchema()
+        pb.collections["i_nfl_teams"] = JsonObject(teams + mapOf(
+            "fields" to JsonArray(teams.getValue("fields").jsonArray.filterNot { it.jsonObject["name"]?.jsonPrimitive?.content == "str_division" }),
+            "indexes" to JsonArray(listOf(JsonPrimitive("CREATE INDEX `ix_custom` ON `i_nfl_teams` (`str_team_name`)"))),
+        ))
+        val view = pb.collections.getValue("s_latest_team_outlooks")
+        pb.collections["s_latest_team_outlooks"] = JsonObject(view + ("viewQuery" to JsonPrimitive("SELECT 1")))
+
+        val result = c.migrate(2)
         assertEquals(emptyList(), result.created)
         assertEquals(1, result.fieldsAdded)
-        assertEquals("i_nfl_teams", result.collectionIds["i_nfl_teams"])
+        assertEquals(PocketBaseSchema.teams.indexes.size, result.indexesAdded)
+        assertEquals(1, result.viewsChanged)
+        assertEquals(emptyList(), result.stepsRecorded) // definitions unchanged, so the ledger is untouched
+        val indexes = pb.collections.getValue("i_nfl_teams").getValue("indexes").jsonArray.map { it.jsonPrimitive.content }
+        assertEquals(PocketBaseSchema.teams.indexes.size + 1, indexes.size)
+        assertTrue(indexes.first().contains("ix_custom"))
+        assertEquals(PocketBaseSchema.latestOutlooks.query, pb.value(pb.collections.getValue("s_latest_team_outlooks"), "viewQuery"))
     }
+
+    @Test
+    fun ledgerReRecordsAStepWhoseDefinitionChanged() {
+        val c = client().authenticate()
+        c.migrate(1)
+        val row = pb.rows("tbl_schema_migrations").first()
+        pb.records.getValue("tbl_schema_migrations")[0] = JsonObject(row + ("str_fingerprint" to JsonPrimitive("old")))
+        assertEquals(listOf(PocketBaseSchema.migrations.first().id), c.migrate(2).stepsRecorded)
+        val updated = pb.rows("tbl_schema_migrations").first()
+        assertEquals("1", pb.value(updated, "int_created_epoch_ms_utc"))
+        assertEquals("2", pb.value(updated, "int_applied_epoch_ms_utc"))
+    }
+
+    @Test
+    fun foreignKeysAreEnforcedByTheServer() {
+        client().sync(report, games, 1)
+        val outlook = PocketBaseSchema.runRecords(report, 1)[1].data
+        // No rel_ ids at all -> required relation violated.
+        assertEquals(400, postRaw("o_team_outlooks", outlook))
+        // rel_ ids pointing at rows that do not exist -> FK violated.
+        val dangling = JsonObject(outlook + mapOf("str_run_id" to JsonPrimitive("other"), "rel_run" to JsonPrimitive("nope"), "rel_team" to JsonPrimitive("nope")))
+        assertEquals(400, postRaw("o_team_outlooks", dangling))
+    }
+
+    private fun postRaw(collection: String, data: JsonObject): Int =
+        HttpClient.newHttpClient().send(
+            HttpRequest.newBuilder(URI.create("${pb.url}/api/collections/$collection/records"))
+                .header("Authorization", "Bearer tok").header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(data.toString())).build(),
+            HttpResponse.BodyHandlers.discarding(),
+        ).statusCode()
 
     @Test
     fun listPagesPastFiveHundredRows() {
         val c = client().authenticate()
-        c.ensureSchema()
+        c.migrate(0)
         val many = (1..1001).map { Fixtures.game("KC", "DEN", 1, 0) }
         pb.records.getValue("i_nfl_games").addAll(PocketBaseSchema.gameRecords(many, 0).mapIndexed { i, r -> JsonObject(r.data + ("id" to JsonPrimitive("x$i"))) })
         assertEquals(1001, c.list("i_nfl_games").size)
@@ -118,7 +175,7 @@ class PocketBaseClientTest {
 
     @Test
     fun unauthenticatedWritesAreRejected() {
-        val e = assertFailsWith<PocketBaseException> { client().ensureSchema() }
+        val e = assertFailsWith<PocketBaseException> { client().migrate() }
         assertEquals(401, e.status)
     }
 
@@ -155,7 +212,7 @@ class PocketBaseClientTest {
         val c = client().authenticate()
         pb.failNext.set(1)
         pb.failStatus = 403
-        assertEquals(403, assertFailsWith<PocketBaseException> { c.ensureSchema() }.status)
+        assertEquals(403, assertFailsWith<PocketBaseException> { c.migrate() }.status)
     }
 
     @Test
