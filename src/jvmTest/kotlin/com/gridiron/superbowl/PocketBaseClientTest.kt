@@ -67,7 +67,7 @@ class PocketBaseClientTest {
         assertEquals("0", pb.value(game, "int_home_score")) // PocketBase stores null numbers as 0
         assertEquals(teamIds[pb.value(game, "str_home_code")], pb.value(game, "rel_home_team"))
         val outlookFields = pb.collections.getValue("o_team_outlooks").getValue("fields").jsonArray
-        assertTrue(outlookFields.any { it.jsonObject["name"]?.jsonPrimitive?.content == "rel_team" && it.jsonObject["collectionId"]?.jsonPrimitive?.content == "i_nfl_teams" })
+        assertTrue(outlookFields.any { it.jsonObject["name"]?.jsonPrimitive?.content == "rel_team" && it.jsonObject["collectionId"]?.jsonPrimitive?.content == PocketBaseSchema.teams.id })
     }
 
     @Test

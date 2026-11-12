@@ -2,6 +2,18 @@
 
 All notable changes to this project follow [Semantic Versioning](https://semver.org/) with `-RC#` release candidates.
 
+## [0.1.0-RC7] - 2026-11-12
+
+### Added
+- `.env` bash parameter substitution (`${VAR:-default}`, `${VAR?error}`, `${VAR}`) in `PocketHostConfig.parseDotEnv` and `Justfile`, plus direct `PB_ADMIN_EMAIL` / `PB_ADMIN_PASSWORD` environment variable support so credentials live strictly in global shell configuration without ever touching the repo.
+
+### Changed
+- Data refresh through week 9 (136 games played, 136 remaining; 20,000 simulations), regenerating all SVG charts (`superbowl_odds`, `playoff_survival`, `elo_ratings`, `odds_trend`), README leaderboard/bracket/matchups, history snapshots (`2026-11-10`, `2026-11-11`, `2026-11-12`), PocketHost database, JSON backups, and SQLite/PostgreSQL replicas.
+
+### Fixed
+- Prefix deterministic PocketBase collection IDs with `pbc_` (`pbc_<table>`) so `PATCH /api/collections/:id` schema updates do not trigger PocketBase's `validation_collection_name_id_duplicate` check.
+- Pass `env` context through `PostgresConfig.resolve` when expanding `.env` parameter substitutions during replication.
+
 ## [0.1.0-RC6] - 2026-10-20
 
 ### Changed

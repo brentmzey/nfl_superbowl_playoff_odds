@@ -52,7 +52,7 @@ data class CollectionDef(
     val relations: List<RelationDef> = emptyList(),
     val extraIndexes: List<IndexDef> = emptyList(),
 ) {
-    val id: String get() = name
+    val id: String get() = "pbc_$name"
 
     /** Natural-key unique index first, then a plain index on every `rel_` column (SQLite does not index FKs), then extras. */
     val indexes: List<IndexDef>
@@ -126,12 +126,13 @@ data class ViewColumn(val alias: String, val field: FieldDef)
  * from [columns], so the query and the generated client types cannot drift apart.
  */
 data class ViewDef(val name: String, val typeName: String, val idAlias: String, val columns: List<ViewColumn>, val from: String) {
+    val id: String get() = "pbc_$name"
     val query: String
         get() = "SELECT $idAlias.id,\n       " + columns.joinToString(",\n       ") { "${it.alias}.${it.field.name}" } + "\n$from"
 
     fun json(): JsonObject = JsonObject(
         mapOf(
-            "id" to JsonPrimitive(name), "name" to JsonPrimitive(name), "type" to JsonPrimitive("view"),
+            "id" to JsonPrimitive(id), "name" to JsonPrimitive(name), "type" to JsonPrimitive("view"),
             "listRule" to JsonPrimitive(""), "viewRule" to JsonPrimitive(""), "viewQuery" to JsonPrimitive(query),
         ),
     )
@@ -158,7 +159,7 @@ data class PbRecord(val collection: String, val data: JsonObject, val relations:
  * Numbers and booleans are never `required` because PocketBase treats 0 / false as blank.
  */
 object PocketBaseSchema {
-    const val ENGINE_VERSION = "0.1.0-RC6-elo-mc"
+    const val ENGINE_VERSION = "0.1.0-RC7-elo-mc"
     const val ACTIVE = "ACTIVE"
     const val SUPERSEDED = "SUPERSEDED"
     val auditColumns = setOf("bool_is_active", "str_status_code", "int_created_epoch_ms_utc", "int_updated_epoch_ms_utc")

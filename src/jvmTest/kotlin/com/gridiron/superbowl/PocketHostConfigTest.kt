@@ -28,6 +28,43 @@ class PocketHostConfigTest {
     }
 
     @Test
+    fun acceptsPbAdminAliases() {
+        val env = mapOf("POCKETHOST_URL" to "https://a.pockethost.io", "PB_ADMIN_EMAIL" to "pb@b.c", "PB_ADMIN_PASSWORD" to "pbpw")
+        val cfg = PocketHostConfig.resolve(env, emptyList()).getOrThrow()
+        assertEquals("pb@b.c", cfg.user)
+        assertEquals("pbpw", cfg.password)
+    }
+
+    @Test
+    fun expandsBashParameterSubstitutions() {
+        val file = dir.resolve("sub.env").also {
+            Files.writeString(
+                it,
+                """
+                POCKETHOST_URL=${'$'}{HOST_URL:-https://default.pockethost.io}
+                POCKETHOST_USER=${'$'}{PB_ADMIN_EMAIL?PB_ADMIN_EMAIL is required}
+                POCKETHOST_PASSWORD=${'$'}{PB_ADMIN_PASSWORD:-fallback-pw}
+                OTHER=${'$'}{UNKNOWN:-}
+                """.trimIndent(),
+            )
+        }
+        val env = mapOf("PB_ADMIN_EMAIL" to "user@domain.com")
+        val parsed = PocketHostConfig.parseDotEnv(file, env)
+        assertEquals("https://default.pockethost.io", parsed["POCKETHOST_URL"])
+        assertEquals("user@domain.com", parsed["POCKETHOST_USER"])
+        assertEquals("fallback-pw", parsed["POCKETHOST_PASSWORD"])
+        assertEquals("", parsed["OTHER"])
+
+        // Error if required substitution is unset
+        val missingEnvFile = dir.resolve("missing_required.env").also {
+            Files.writeString(it, "POCKETHOST_USER=${'$'}{MISSING_USER?User is required}\n")
+        }
+        val res = PocketHostConfig.resolve(emptyMap(), listOf(missingEnvFile))
+        assertTrue(res.isFailure)
+        assertTrue(res.exceptionOrNull()!!.message!!.contains("User is required"))
+    }
+
+    @Test
     fun missingSettingsFailFastWithoutLeakingValues() {
         val result = PocketHostConfig.resolve(mapOf("POCKETHOST_PASSWORD" to "hunter2", "POCKETHOST_USER" to " "), emptyList())
         val message = result.exceptionOrNull()!!.message!!

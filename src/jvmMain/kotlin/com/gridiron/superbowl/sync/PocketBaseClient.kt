@@ -32,34 +32,58 @@ data class PocketHostConfig(val baseUrl: String, val user: String, val password:
     override fun toString(): String = "PocketHostConfig(baseUrl=$baseUrl, user=$user, password=***)"
 
     companion object {
-        /** Current names first, then the older `POCKETHOST_ADMIN_*` aliases used by the MLB repo. */
+        /** Current names first, then the older `POCKETHOST_ADMIN_*` and `PB_ADMIN_*` aliases. */
         private val URL_KEYS = listOf("POCKETHOST_URL")
-        private val USER_KEYS = listOf("POCKETHOST_USER", "POCKETHOST_ADMIN_EMAIL")
-        private val PASSWORD_KEYS = listOf("POCKETHOST_PASSWORD", "POCKETHOST_ADMIN_PASSWORD")
+        private val USER_KEYS = listOf("POCKETHOST_USER", "POCKETHOST_ADMIN_EMAIL", "PB_ADMIN_EMAIL")
+        private val PASSWORD_KEYS = listOf("POCKETHOST_PASSWORD", "POCKETHOST_ADMIN_PASSWORD", "PB_ADMIN_PASSWORD")
+        private val SUBSTITUTION_REGEX = Regex("""\$\{([A-Za-z_][A-Za-z0-9_]*)(?::?-([^}]*)|:?\?([^}]*))?\}""")
+
+        fun expandSubstitutions(value: String, lookup: Map<String, String>): String =
+            SUBSTITUTION_REGEX.replace(value) { match ->
+                val name = match.groupValues[1]
+                val hasDefault = match.groups[2] != null
+                val defaultValue = match.groupValues[2]
+                val hasError = match.groups[3] != null
+                val errorMessage = match.groupValues[3]
+
+                val current = lookup[name]?.takeIf { it.isNotBlank() }
+                when {
+                    current != null -> current
+                    hasDefault -> defaultValue
+                    hasError -> throw IllegalStateException(errorMessage.ifBlank { "$name is required" })
+                    else -> ""
+                }
+            }
 
         /**
          * Resolves settings from env vars, which win over `.env` files (earlier files win over later ones).
          * Returns a failure naming the missing keys, never their values, and there is no default instance URL.
          */
-        fun resolve(env: Map<String, String>, dotEnvFiles: List<Path>): Result<PocketHostConfig> {
-            val merged = dotEnvFiles.reversed().fold(emptyMap<String, String>()) { acc, f -> acc + parseDotEnv(f) } + env
+        fun resolve(env: Map<String, String>, dotEnvFiles: List<Path>): Result<PocketHostConfig> = runCatching {
+            val fromFiles = dotEnvFiles.reversed().fold(emptyMap<String, String>()) { acc, f -> acc + parseDotEnv(f, env + acc) }
+            val merged = fromFiles + env.filterValues { it.isNotBlank() }
             fun first(keys: List<String>) = keys.firstNotNullOfOrNull { k -> merged[k]?.takeIf { it.isNotBlank() } }
             val url = first(URL_KEYS)
             val user = first(USER_KEYS)
             val password = first(PASSWORD_KEYS)
             val missing = listOf(URL_KEYS to url, USER_KEYS to user, PASSWORD_KEYS to password).filter { it.second == null }.map { it.first.first() }
-            return if (url != null && user != null && password != null) Result.success(PocketHostConfig(url.trimEnd('/'), user, password))
-            else Result.failure(IllegalStateException("Missing PocketHost settings: ${missing.joinToString()} (copy .env.example to .env)"))
+            if (url != null && user != null && password != null) PocketHostConfig(url.trimEnd('/'), user, password)
+            else throw IllegalStateException("Missing PocketHost settings: ${missing.joinToString()} (copy .env.example to .env)")
         }
 
-        fun parseDotEnv(file: Path): Map<String, String> =
+        fun parseDotEnv(file: Path, env: Map<String, String> = System.getenv()): Map<String, String> =
             if (!Files.exists(file)) emptyMap()
-            else Files.readAllLines(file).map { it.trim() }
-                .filter { it.isNotEmpty() && !it.startsWith("#") && '=' in it }
-                .associate { line ->
-                    val (k, v) = line.removePrefix("export ").split("=", limit = 2)
-                    k.trim() to v.trim().removeSurrounding("\"").removeSurrounding("'")
-                }
+            else {
+                val result = mutableMapOf<String, String>()
+                Files.readAllLines(file).map { it.trim() }
+                    .filter { it.isNotEmpty() && !it.startsWith("#") && '=' in it }
+                    .forEach { line ->
+                        val (k, rawV) = line.removePrefix("export ").split("=", limit = 2)
+                        val trimmed = rawV.trim().removeSurrounding("\"").removeSurrounding("'")
+                        result[k.trim()] = expandSubstitutions(trimmed, env + result)
+                    }
+                result
+            }
     }
 }
 

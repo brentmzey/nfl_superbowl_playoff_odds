@@ -169,7 +169,7 @@ data class PostgresConfig(
 
     companion object {
         fun resolve(env: Map<String, String>, dotEnvFiles: List<Path>): PostgresConfig {
-            val merged = dotEnvFiles.reversed().fold(emptyMap<String, String>()) { acc, f -> acc + PocketHostConfig.parseDotEnv(f) } + env
+            val merged = dotEnvFiles.reversed().fold(emptyMap<String, String>()) { acc, f -> acc + PocketHostConfig.parseDotEnv(f, env + acc) } + env
             fun v(key: String, default: String) = merged[key]?.takeIf { it.isNotBlank() } ?: default
             return PostgresConfig(
                 host = v("LOCAL_PG_HOST", "localhost"),

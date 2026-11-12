@@ -326,8 +326,8 @@ export const FIELD_SPECS: { readonly [C in CollectionName]: Readonly<Record<stri
 
 /** Migration step fingerprints this file was generated from (compare with `tbl_schema_migrations`). */
 export const SCHEMA_FINGERPRINTS: Readonly<Record<string, string>> = {
-  '001_base_tables': 'b3b2f31e',
+  '001_base_tables': '82c1fd90',
   '002_foreign_keys': 'a3526e00',
   '003_indexes': '0b652f96',
-  '004_summary_views': 'c0ac36b9',
+  '004_summary_views': '39b26207',
 };

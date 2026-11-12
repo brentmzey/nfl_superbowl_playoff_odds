@@ -1,6 +1,6 @@
 [
     {
-        "id": "tbl_schema_migrations",
+        "id": "pbc_tbl_schema_migrations",
         "name": "tbl_schema_migrations",
         "type": "base",
         "listRule": "",
@@ -71,7 +71,7 @@
         ]
     },
     {
-        "id": "i_nfl_teams",
+        "id": "pbc_i_nfl_teams",
         "name": "i_nfl_teams",
         "type": "base",
         "listRule": "",
@@ -143,7 +143,7 @@
         ]
     },
     {
-        "id": "i_nfl_games",
+        "id": "pbc_i_nfl_games",
         "name": "i_nfl_games",
         "type": "base",
         "listRule": "",
@@ -271,7 +271,7 @@
         ]
     },
     {
-        "id": "m_simulation_runs",
+        "id": "pbc_m_simulation_runs",
         "name": "m_simulation_runs",
         "type": "base",
         "listRule": "",
@@ -379,7 +379,7 @@
         ]
     },
     {
-        "id": "o_team_outlooks",
+        "id": "pbc_o_team_outlooks",
         "name": "o_team_outlooks",
         "type": "base",
         "listRule": "",
@@ -542,7 +542,7 @@
         ]
     },
     {
-        "id": "o_superbowl_matchups",
+        "id": "pbc_o_superbowl_matchups",
         "name": "o_superbowl_matchups",
         "type": "base",
         "listRule": "",
@@ -648,7 +648,7 @@
         ]
     },
     {
-        "id": "s_latest_team_outlooks",
+        "id": "pbc_s_latest_team_outlooks",
         "name": "s_latest_team_outlooks",
         "type": "view",
         "listRule": "",

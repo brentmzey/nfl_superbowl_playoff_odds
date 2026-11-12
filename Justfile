@@ -7,6 +7,7 @@ default:
 refresh iterations="20000":
     #!/usr/bin/env bash
     set -euo pipefail
+    [ -f .env ] && set -a && . ./.env && set +a
     if [ -z "${POCKETHOST_PASSWORD:-}" ] && ! grep -qE '^POCKETHOST_PASSWORD=.+' .env 2>/dev/null; then
         echo "POCKETHOST_PASSWORD is not set. Run: just set-password   (or: just refresh-local)" >&2
         exit 1
